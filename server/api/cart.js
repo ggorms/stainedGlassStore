@@ -3,7 +3,7 @@ const router = express.Router();
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
-// Get user's active cart by their id
+// Get user's active cart by userId
 
 router.get("/:id", async (req, res, next) => {
   try {
@@ -44,17 +44,14 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-// Fulfill user's cart and create a new empty cart
+// Fulfill user's cart and create a new empty cart by cartId
 
-router.post("/fulfill", async (req, res, next) => {
+router.post("/fulfill/:id", async (req, res, next) => {
   try {
-    // cart Id
-    const { cartId } = req.body;
-
     // fulfill old cart
     const fulfilledCart = await prisma.cart.update({
       where: {
-        id: cartId,
+        id: +req.params.id,
       },
       data: {
         isFulfilled: true,

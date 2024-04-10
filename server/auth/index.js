@@ -3,6 +3,7 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const verify = require("./verify");
 
 // Register
 router.post("/register", async (req, res, next) => {
@@ -18,16 +19,13 @@ router.post("/register", async (req, res, next) => {
     });
 
     if (existingUser) {
-      res.status(500).json({ message: "Email is already in use" });
+      res.status(401).json({ message: "Email is already in use" });
       return;
     }
 
     // Encrpyt password from request body
     const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
 
-    ```
-    MAY HAVE TO REWORK CART CREATION ON REGISTER
-    ```;
     const newUser = await prisma.user.create({
       data: {
         email: email.toLowerCase(),
@@ -40,15 +38,9 @@ router.post("/register", async (req, res, next) => {
       },
     });
 
-    const token = jwt.sign(newUser.email, process.env.JWT);
+    const token = jwt.sign(newUser.id, process.env.JWT);
 
-    res.status(201).json({
-      userId: newUser.id,
-      email: newUser.email,
-      fName: newUser.fName,
-      lName: newUser.lName,
-      token,
-    });
+    res.status(201).json({ token });
   } catch (error) {
     next(error);
   }
@@ -66,7 +58,7 @@ router.post("/login", async (req, res, next) => {
     });
 
     if (!foundUser) {
-      res.status(404).json({ message: "Incorrect Email or Password" });
+      res.status(401).json({ message: "Incorrect Email or Password" });
       return;
     }
 
@@ -76,16 +68,37 @@ router.post("/login", async (req, res, next) => {
     const validPassword = await bcrypt.compare(password, userPassword);
 
     if (!validPassword) {
-      res.status(500).json({ message: "Incorrect Email or Password" });
+      res.status(401).json({ message: "Incorrect Email or Password" });
       return;
     }
 
-    const token = jwt.sign(foundUser.email, process.env.JWT);
+    const token = jwt.sign(foundUser.id, process.env.JWT);
+
+    res.status(200).json({ token });
+  } catch (error) {
+    next(error);
+  }
+});
+
+// Me
+router.get("/me", verify, async (req, res, next) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: +req.user,
+      },
+      select: {
+        id: true,
+        email: true,
+        fName: true,
+        lName: true,
+      },
+    });
 
     // Get the loggedin user's cart
     const cart = await prisma.cart.findFirst({
       where: {
-        userId: foundUser.id,
+        userId: user.id,
         isFulfilled: false,
       },
       select: {
@@ -108,17 +121,11 @@ router.post("/login", async (req, res, next) => {
       },
     });
 
-    if (!cart) {
-      res.status(404).json({ message: "User does not have an active cart" });
-      return;
-    }
-
     res.status(200).json({
-      userId: foundUser.id,
-      email: foundUser.email,
-      fName: foundUser.fName,
-      lName: foundUser.lName,
-      token,
+      userId: user.id,
+      email: user.email,
+      fName: user.fName,
+      lName: user.lName,
       cart,
     });
   } catch (error) {

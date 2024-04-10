@@ -80,4 +80,19 @@ router.put("/update/:id", async (req, res, next) => {
   }
 });
 
+// Delete an address
+
+router.delete("/delete/:id", async (req, res, next) => {
+  try {
+    const deletedAddress = await prisma.address.delete({
+      where: {
+        id: +req.params.id,
+      },
+    });
+    res.status(200).json(deletedAddress);
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = router;
