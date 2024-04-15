@@ -1,0 +1,50 @@
+.home-form-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(226, 218, 192);
+    height: 700px;
+}
+
+.home-form {
+    margin: 50px 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.home-form-name-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.home-form-name-field {
+    width: 49%;
+}
+
+.home-form-field {
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+.home-form-label {
+    font-size: large;
+}
+
+.home-form-input {
+    width: 100%;
+    height: 40px;
+}
+
+.message-input {
+    resize: vertical;
+    min-height: 100px;
+    height: 100px;
+    max-height: 500px;
+}
+
+
+
+.home-form-button {
+    margin: 15px auto;
+}

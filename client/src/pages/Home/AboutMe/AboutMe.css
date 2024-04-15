@@ -1,0 +1,16 @@
+.home-info {
+    background-color: rgb(226, 218, 192);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 900px;
+}
+
+.home-info-title {
+   padding: 0 15px;
+} 
+
+.home-info-text {
+    padding: 0 15px;
+    font-size: large;
+}

@@ -1,0 +1,43 @@
+footer {
+    height: 100px;
+    background-color: white;
+    width: 100%;
+    margin-top: auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.footer-link-internal-container {
+    list-style: none;
+}
+
+.footer-link-internal {
+    text-decoration: none;
+}
+
+.footer-link-internal:hover {
+    text-decoration: underline;
+    color: black;
+}
+
+.footer-link-internal-text {
+    color: black;
+    font-size: large;
+}
+
+.footer-link-external-container {
+    width: 100px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.footer-link-external {
+    height: 35px;
+    width: 35px;
+    border-radius: 6px;
+}
+
+.footer-link-image {
+    border-radius: 6px;
+}

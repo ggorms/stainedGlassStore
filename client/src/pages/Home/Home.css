@@ -1,0 +1,54 @@
+.home-root{
+
+}
+
+.home-banner {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 225px;
+}
+
+.home-banner-blur {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: inherit;
+    height: inherit;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.home-banner-text{
+    color: white;
+    cursor: default;
+}
+
+.home-content {
+    margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.home-content-segment {
+    box-shadow: 0 0 10px black;
+    border-radius: 8px;
+    margin: 20px 0;
+}
+
+.home-content-image{
+    height: 250px;
+    width: 250px;
+    object-fit: cover;
+    border: thin solid black;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.home-content-name {
+     text-align: center;
+     color: black;
+}
+
