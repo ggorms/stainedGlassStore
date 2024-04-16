@@ -5,7 +5,7 @@ function AboutMe() {
     <div className="home-info">
       <h2 className="home-info-title">About Me</h2>
       <p className="home-info-text">
-        I have also considered myself to be a creative person but I could not
+        I have always considered myself to be a creative person but I could not
         find an art form that would satisfy me for very long. That was until I
         took a stained glass class in high school. I was immediately drawn into
         being able to create something more tangible than a drawing or painting.

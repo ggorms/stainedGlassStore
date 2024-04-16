@@ -1,0 +1,30 @@
+.custom-selection-container {
+    display: flex;
+    align-items: center;
+    background-color: aqua;
+    height: 35px;
+    width: 100%;
+}
+
+.custom-selection-container div:nth-child(2) {
+    border-left: thin solid black;
+    border-right: thin solid black;
+}
+
+.custom-selection-option {
+    width: 33.33%;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    
+}
+
+.custom-selection-text {
+    /* width: 100%; */
+}
+
+.custom-selection-content-container {
+    background-color: beige;
+    height: 600px;
+    padding: 20px;
+}

@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { allProductsThunk } from "../../store/product";
 import Products from "./Products/Products";
 import { Link } from "react-router-dom";
+import BannerStyleEffect from "../../components/BannerStyleEffect/BannerStyleEffect";
 
 function PreMade() {
   const dispatch = useDispatch();
@@ -12,7 +13,7 @@ function PreMade() {
   useEffect(() => {
     dispatch(allProductsThunk());
   }, []);
-  console.log(allProducts);
+  // console.log(allProducts);
   return (
     <div className="premade-root">
       <div
@@ -23,6 +24,7 @@ function PreMade() {
           <h1 className="premade-banner-text">Pre-made Pieces</h1>
         </span>
       </div>
+      <BannerStyleEffect />
       <div className="premade-content">
         {allProducts.map((product) => (
           <Link

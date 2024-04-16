@@ -1,0 +1,17 @@
+.howItWorks-root {
+
+}
+
+.howItWorks-title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.howItWorks-list {
+    list-style-type: upper-roman;
+}
+
+.howItWorks-bullet {
+    margin-bottom: 15px;
+    padding-left: 10px;
+}
