@@ -9,15 +9,9 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Nav from "./components/Nav/Nav";
 import Footer from "./components/Footer/Footer";
+import SingleProduct from "./pages/SingleProduct/SingleProduct";
 
 function App() {
-  const dispatch = useDispatch();
-
-  const products = useSelector((state) => state.product.allProducts);
-  console.log(products);
-  useEffect(() => {
-    dispatch(allProductsThunk());
-  }, []);
   return (
     <div id="app">
       <Nav />
@@ -25,6 +19,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/auth" element={<Auth />} />
         <Route path="/premade" element={<PreMade />} />
+        <Route path="/premade/:id" element={<SingleProduct />} />
         <Route path="/custom" element={<RequestCustom />} />
         <Route path="*" element={<Navigate to={"/"} replace />} />
       </Routes>

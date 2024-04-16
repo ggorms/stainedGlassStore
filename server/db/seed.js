@@ -30,6 +30,10 @@ const main = async () => {
           name: product.name,
           imageId: product.imageId,
           price: product.price,
+          height: product.height,
+          width: product.width,
+          depth: product.depth,
+          description: product.description,
           inStock: product.inStock,
         },
       });

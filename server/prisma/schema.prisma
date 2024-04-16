@@ -18,12 +18,16 @@ model User {
 }
 
 model Product {
-  id       Int        @id @default(autoincrement())
-  name     String
-  imageId  Int        @unique
-  price    Int
-  inStock  Boolean
-  CartItem CartItem[]
+  id          Int        @id @default(autoincrement())
+  name        String
+  imageId     Int        @unique
+  price       Int
+  height      Int
+  width       Int
+  depth       Int?
+  description String
+  inStock     Boolean
+  CartItem    CartItem[]
 }
 
 model CartItem {

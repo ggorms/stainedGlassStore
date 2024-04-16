@@ -15,6 +15,10 @@ CREATE TABLE "Product" (
     "name" TEXT NOT NULL,
     "imageId" INTEGER NOT NULL,
     "price" INTEGER NOT NULL,
+    "height" INTEGER NOT NULL,
+    "width" INTEGER NOT NULL,
+    "depth" INTEGER,
+    "description" TEXT NOT NULL,
     "inStock" BOOLEAN NOT NULL,
 
     CONSTRAINT "Product_pkey" PRIMARY KEY ("id")

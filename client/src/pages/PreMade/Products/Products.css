@@ -1,0 +1,40 @@
+.products-root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* margin: 15px; */
+    box-shadow: 0 0 3px black;
+}
+
+.products-img {
+    height: 250px;
+    width: 250px;
+    margin-bottom: 10px;
+}
+
+.products-name {
+    font-size: x-large;
+    color: black;
+}
+
+.products-price {
+    font-size: larger;
+    color: black;
+}
+
+.products-instock {
+    font-size: large;
+}
+
+.inStock {
+    color: green;
+}
+
+.outOfStock {
+    color: red;
+}
+
+.premade-link {
+    text-decoration: none;
+    margin: 15px;
+}

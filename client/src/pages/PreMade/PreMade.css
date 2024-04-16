@@ -1,0 +1,47 @@
+.premade-root {
+
+}
+
+.premade-banner {
+    width: 100%;
+    height: 225px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.premade-banner-blur {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: inherit;
+    height: inherit;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.premade-banner-text {
+    color: white;
+    cursor: default;
+}
+
+.premade-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 40px 15px;
+}
+
+.premade-info {
+    background-color: rgb(226, 218, 192);
+    padding: 15px;
+}
+
+.premade-info-title {
+ font-size: larger;
+ margin-bottom: 10px;
+}
+
+.premade-info-text {
+    font-size: large;
+}
