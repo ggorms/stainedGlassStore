@@ -1,6 +1,7 @@
 import "./RequestCustom.css";
 import rainbow2 from "../../assets/rainbow2.jpeg";
 import CustomTextSelection from "./CustomTextSelection/CustomTextSelection";
+import RequestCustomForm from "./RequestCustomForm/RequestCustomForm";
 
 function RequestCustom() {
   return (
@@ -14,6 +15,7 @@ function RequestCustom() {
         </div>
       </div>
       <CustomTextSelection />
+      <RequestCustomForm />
     </div>
   );
 }
