@@ -1,14 +1,14 @@
 import axios from "axios";
 import { BASE_URL } from "./BASE_URL";
 
-const ADD_TO_CART = "ADD_TO_CART";
+// const ADD_TO_CART = "ADD_TO_CART";
 const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 const UPDATE_ITEM_QUANTITY = "UPDATE_ITEM_QUANTITY";
 
-const addToCart = (cartItem) => ({
-  type: ADD_TO_CART,
-  payload: cartItem,
-});
+// const addToCart = (cartItem) => ({
+//   type: ADD_TO_CART,
+//   payload: cartItem,
+// });
 
 const removeFromCart = (cartItem) => ({
   type: REMOVE_FROM_CART,
@@ -20,21 +20,21 @@ const updateItemQuantity = (cartItem) => ({
   payload: cartItem,
 });
 
-export const addToCartThunk = (cartItemInfo) => async (dispatch) => {
-  try {
-    const { cartId, productId } = cartItemInfo;
-    const { data: cartItem } = await axios.post(
-      `${BASE_URL}/api/cartItem/add`,
-      {
-        cartId,
-        productId,
-      }
-    );
-    return dispatch(addToCart(cartItem));
-  } catch (error) {
-    console.error(error);
-  }
-};
+// export const addToCartThunk = (cartItemInfo) => async (dispatch) => {
+//   try {
+//     const { cartId, productId } = cartItemInfo;
+//     const { data: cartItem } = await axios.post(
+//       `${BASE_URL}/api/cartItem/add`,
+//       {
+//         cartId,
+//         productId,
+//       }
+//     );
+//     return dispatch(addToCart(cartItem));
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
 
 export const removeFromCartThunk = (cartItemInfo) => async (dispatch) => {
   try {
@@ -77,8 +77,8 @@ const initialState = {
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    case ADD_TO_CART:
-      return { ...state, newCartItem: action.payload };
+    // case ADD_TO_CART:
+    //   return { ...state, newCartItem: action.payload };
     case UPDATE_ITEM_QUANTITY:
       return { ...state, updatedCartItem: action.payload };
     case REMOVE_FROM_CART:

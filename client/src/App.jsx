@@ -6,6 +6,7 @@ import PreMade from "./pages/PreMade/PreMade";
 import RequestCustom from "./pages/RequestCustom/RequestCustom";
 import Account from "./pages/Account/Account";
 import { me } from "./store/auth";
+import { getCartThunk } from "./store/cart";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Nav from "./components/Nav/Nav";
@@ -17,9 +18,18 @@ function App() {
   const [mobileMenuToggle, setMobileMenuToggle] = useState(false);
   const dispatch = useDispatch();
   const loggedInUser = useSelector((state) => state.auth.user);
+  const cart = useSelector((state) => state.cart.cart);
+
   useEffect(() => {
     dispatch(me());
   }, [loggedInUser.userId]);
+
+  useEffect(() => {
+    if (loggedInUser.userId) {
+      dispatch(getCartThunk(loggedInUser.userId));
+    }
+  }, [loggedInUser.userId]);
+
   return (
     <div id="app">
       {!loggedInUser.userId ? (
@@ -53,9 +63,12 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/account" element={<Account />} />
                 <Route path="/premade" element={<PreMade />} />
-                <Route path="/premade/:id" element={<SingleProduct />} />
+                <Route
+                  path="/premade/:id"
+                  element={<SingleProduct cartId={cart.id} />}
+                />
                 <Route path="/custom" element={<RequestCustom />} />
-                <Route path="/cart" element={<Cart />} />
+                <Route path="/cart" element={<Cart cart={cart} />} />
                 <Route path="*" element={<Navigate to={"/"} replace />} />
               </Routes>
             </div>

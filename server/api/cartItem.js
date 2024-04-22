@@ -28,6 +28,18 @@ router.post("/add", async (req, res, next) => {
         data: {
           qty: cartItemExists.qty + 1,
         },
+        select: {
+          qty: true,
+          product: {
+            select: {
+              id: true,
+              name: true,
+              imageId: true,
+              price: true,
+              inStock: true,
+            },
+          },
+        },
       });
       res.status(200).json(updateQuanity);
     }
@@ -38,6 +50,18 @@ router.post("/add", async (req, res, next) => {
           cartId,
           productId,
           qty: 1,
+        },
+        select: {
+          qty: true,
+          product: {
+            select: {
+              id: true,
+              name: true,
+              imageId: true,
+              price: true,
+              inStock: true,
+            },
+          },
         },
       });
       res.status(201).json(addProduct);

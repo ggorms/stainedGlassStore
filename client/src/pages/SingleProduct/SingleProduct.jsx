@@ -3,12 +3,13 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { singleProductThunk } from "../../store/product";
+import { addToCartThunk } from "../../store/cart";
 import Placeholder from "../../assets/placeholder.png";
 import Placeholder2 from "../../assets/placeholder2.png";
 import Placeholder3 from "../../assets/placeholder3.png";
 import Placeholder4 from "../../assets/placeholder4.png";
 
-function SingleProduct() {
+function SingleProduct({ cartId }) {
   const dispatch = useDispatch();
   const { id } = useParams();
   const product = useSelector((state) => state.product.singleProduct);
@@ -16,6 +17,15 @@ function SingleProduct() {
   useEffect(() => {
     dispatch(singleProductThunk(id));
   }, []);
+
+  const addToCart = () => {
+    const cartItemInfo = {
+      cartId,
+      productId: product.id,
+    };
+    dispatch(addToCartThunk(cartItemInfo));
+  };
+
   return (
     <div className="singleProduct-root">
       <div className="singleProduct-info-container">
@@ -75,7 +85,9 @@ function SingleProduct() {
           ""
         )}
       </div>
-      <button className="singleProduct-add-button">Add to Cart</button>
+      <button className="singleProduct-add-button" onClick={addToCart}>
+        Add to Cart
+      </button>
     </div>
   );
 }
