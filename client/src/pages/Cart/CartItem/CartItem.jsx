@@ -1,17 +1,33 @@
 import "./CartItem.css";
 import { useDispatch } from "react-redux";
 import Placeholder from "../../../assets/placeholder.png";
-import { removeFromCartThunk } from "../../../store/cart";
+import {
+  removeFromCartThunk,
+  updateItemQuantityThunk,
+} from "../../../store/cart";
 function CartItem({ item, cartId }) {
   const dispatch = useDispatch();
-  // console.log(cartId);
-  // console.log(item);
+  const cartItemInfo = {
+    cartId,
+    productId: item.product.id,
+    qty: item.qty,
+  };
   const removeFromCart = () => {
-    const cartItemInfo = {
-      cartId,
-      productId: item.product.id,
-    };
     dispatch(removeFromCartThunk(cartItemInfo));
+  };
+
+  const increaseQty = () => {
+    if (cartItemInfo.qty < 5) {
+      cartItemInfo.qty += 1;
+      dispatch(updateItemQuantityThunk(cartItemInfo));
+    }
+  };
+
+  const decreaseQty = () => {
+    if (cartItemInfo.qty > 1) {
+      cartItemInfo.qty -= 1;
+      dispatch(updateItemQuantityThunk(cartItemInfo));
+    }
   };
 
   return (
@@ -44,9 +60,27 @@ function CartItem({ item, cartId }) {
           </svg>
         </div>
         <div className="cartItem-qty-wrapper">
-          <button className="cartItem-qty-button">-</button>
+          <button
+            className={
+              cartItemInfo.qty > 1
+                ? "cartItem-qty-button"
+                : "cartItem-qty-button gray"
+            }
+            onClick={decreaseQty}
+          >
+            -
+          </button>
           <h6 className="cartItem-qty">{item.qty}</h6>
-          <button className="cartItem-qty-button">+</button>
+          <button
+            className={
+              cartItemInfo.qty < 5
+                ? "cartItem-qty-button"
+                : "cartItem-qty-button gray"
+            }
+            onClick={increaseQty}
+          >
+            +
+          </button>
         </div>
       </div>
     </div>

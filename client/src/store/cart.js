@@ -5,6 +5,7 @@ const GET_CART = "GET_CART";
 const FULFILL_CART = "FULFILL_CART";
 const ADD_TO_CART = "ADD_TO_CART";
 const REMOVE_FROM_CART = "REMOVE_FROM_CART";
+const UPDATE_ITEM_QUANTITY = "UPDATE_ITEM_QUANTITY";
 
 const getCart = (cart) => ({
   type: GET_CART,
@@ -23,6 +24,11 @@ const addToCart = (cartItem) => ({
 
 const removeFromCart = (cartItem) => ({
   type: REMOVE_FROM_CART,
+  payload: cartItem,
+});
+
+const updateItemQuantity = (cartItem) => ({
+  type: UPDATE_ITEM_QUANTITY,
   payload: cartItem,
 });
 
@@ -69,6 +75,23 @@ export const removeFromCartThunk = (cartItemInfo) => async (dispatch) => {
       `${BASE_URL}/api/cartItem/remove/${cartId}/${productId}`
     );
     return dispatch(removeFromCart(cartItem));
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const updateItemQuantityThunk = (cartItemInfo) => async (dispatch) => {
+  try {
+    const { cartId, productId, qty } = cartItemInfo;
+    const { data: cartItem } = await axios.put(
+      `${BASE_URL}/api/cartItem/update`,
+      {
+        cartId,
+        productId,
+        qty,
+      }
+    );
+    return dispatch(updateItemQuantity(cartItem));
   } catch (error) {
     console.error(error);
   }
@@ -122,6 +145,18 @@ export default function (state = initialState, action) {
           ...state.cart,
           CartItem: state.cart.CartItem.filter(
             (item) => item.product.id !== action.payload.product.id
+          ),
+        },
+      };
+    case UPDATE_ITEM_QUANTITY:
+      return {
+        ...state,
+        cart: {
+          ...state.cart,
+          CartItem: state.cart.CartItem.map((item) =>
+            item.product.id === action.payload.product.id
+              ? action.payload
+              : item
           ),
         },
       };

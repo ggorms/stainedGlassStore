@@ -98,6 +98,9 @@ function Nav({ loggedInUser, mobileMenuToggle, setMobileMenuToggle }) {
             <li onClick={() => setMobileMenuToggle(false)}>
               <Link to={"/account"}>Account</Link>
             </li>
+            <li onClick={() => setMobileMenuToggle(false)}>
+              <Link to={"/cart"}>Cart</Link>
+            </li>
           </ul>
         </div>
       )}
