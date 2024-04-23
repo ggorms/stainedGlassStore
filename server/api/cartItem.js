@@ -73,14 +73,26 @@ router.post("/add", async (req, res, next) => {
 
 // Remove item from cart
 
-router.delete("/remove", async (req, res, next) => {
+router.delete("/remove/:cartId/:productId", async (req, res, next) => {
   try {
-    const { cartId, productId } = req.body;
+    const { cartId, productId } = req.params;
     const removedItem = await prisma.cartItem.delete({
       where: {
         cartId_productId: {
-          cartId,
-          productId,
+          cartId: +cartId,
+          productId: +productId,
+        },
+      },
+      select: {
+        qty: true,
+        product: {
+          select: {
+            id: true,
+            name: true,
+            imageId: true,
+            price: true,
+            inStock: true,
+          },
         },
       },
     });
@@ -104,6 +116,18 @@ router.put("/update", async (req, res, next) => {
       },
       data: {
         qty,
+      },
+      select: {
+        qty: true,
+        product: {
+          select: {
+            id: true,
+            name: true,
+            imageId: true,
+            price: true,
+            inStock: true,
+          },
+        },
       },
     });
     res.status(200).json(updatedQuanity);

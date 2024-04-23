@@ -1,6 +1,19 @@
 import "./CartItem.css";
+import { useDispatch } from "react-redux";
 import Placeholder from "../../../assets/placeholder.png";
-function CartItem({ item }) {
+import { removeFromCartThunk } from "../../../store/cart";
+function CartItem({ item, cartId }) {
+  const dispatch = useDispatch();
+  // console.log(cartId);
+  // console.log(item);
+  const removeFromCart = () => {
+    const cartItemInfo = {
+      cartId,
+      productId: item.product.id,
+    };
+    dispatch(removeFromCartThunk(cartItemInfo));
+  };
+
   return (
     <div className="cartItem-root">
       <div className="cartItem-image-wrapper">
@@ -21,6 +34,7 @@ function CartItem({ item }) {
             strokeWidth={1.5}
             stroke="currentColor"
             className="cartItem-delete"
+            onClick={removeFromCart}
           >
             <path
               strokeLinecap="round"

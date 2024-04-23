@@ -2,7 +2,7 @@ import axios from "axios";
 import { BASE_URL } from "./BASE_URL";
 
 // const ADD_TO_CART = "ADD_TO_CART";
-const REMOVE_FROM_CART = "REMOVE_FROM_CART";
+// const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 const UPDATE_ITEM_QUANTITY = "UPDATE_ITEM_QUANTITY";
 
 // const addToCart = (cartItem) => ({
@@ -10,10 +10,10 @@ const UPDATE_ITEM_QUANTITY = "UPDATE_ITEM_QUANTITY";
 //   payload: cartItem,
 // });
 
-const removeFromCart = (cartItem) => ({
-  type: REMOVE_FROM_CART,
-  payload: cartItem,
-});
+// const removeFromCart = (cartItem) => ({
+//   type: REMOVE_FROM_CART,
+//   payload: cartItem,
+// });
 
 const updateItemQuantity = (cartItem) => ({
   type: UPDATE_ITEM_QUANTITY,
@@ -36,21 +36,21 @@ const updateItemQuantity = (cartItem) => ({
 //   }
 // };
 
-export const removeFromCartThunk = (cartItemInfo) => async (dispatch) => {
-  try {
-    const { cartId, productId } = cartItemInfo;
-    const { data: cartItem } = await axios.delete(
-      `${BASE_URL}/api/cartItem/remove`,
-      {
-        cartId,
-        productId,
-      }
-    );
-    return dispatch(removeFromCart(cartItem));
-  } catch (error) {
-    console.error(error);
-  }
-};
+// export const removeFromCartThunk = (cartItemInfo) => async (dispatch) => {
+//   try {
+//     const { cartId, productId } = cartItemInfo;
+//     const { data: cartItem } = await axios.delete(
+//       `${BASE_URL}/api/cartItem/remove`,
+//       {
+//         cartId,
+//         productId,
+//       }
+//     );
+//     return dispatch(removeFromCart(cartItem));
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
 
 export const updateItemQuantityThunk = (cartItemInfo) => async (dispatch) => {
   try {
@@ -81,8 +81,8 @@ export default function (state = initialState, action) {
     //   return { ...state, newCartItem: action.payload };
     case UPDATE_ITEM_QUANTITY:
       return { ...state, updatedCartItem: action.payload };
-    case REMOVE_FROM_CART:
-      return { ...state, deletedCartItem: action.payload };
+    // case REMOVE_FROM_CART:
+    //   return { ...state, deletedCartItem: action.payload };
     default:
       return state;
   }

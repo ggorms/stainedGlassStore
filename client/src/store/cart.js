@@ -4,6 +4,7 @@ import { BASE_URL } from "./BASE_URL";
 const GET_CART = "GET_CART";
 const FULFILL_CART = "FULFILL_CART";
 const ADD_TO_CART = "ADD_TO_CART";
+const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 
 const getCart = (cart) => ({
   type: GET_CART,
@@ -17,6 +18,11 @@ const fulfillCart = (cart) => ({
 
 const addToCart = (cartItem) => ({
   type: ADD_TO_CART,
+  payload: cartItem,
+});
+
+const removeFromCart = (cartItem) => ({
+  type: REMOVE_FROM_CART,
   payload: cartItem,
 });
 
@@ -51,6 +57,18 @@ export const addToCartThunk = (cartItemInfo) => async (dispatch) => {
       }
     );
     return dispatch(addToCart(cartItem));
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const removeFromCartThunk = (cartItemInfo) => async (dispatch) => {
+  try {
+    const { cartId, productId } = cartItemInfo;
+    const { data: cartItem } = await axios.delete(
+      `${BASE_URL}/api/cartItem/remove/${cartId}/${productId}`
+    );
+    return dispatch(removeFromCart(cartItem));
   } catch (error) {
     console.error(error);
   }
@@ -97,6 +115,16 @@ export default function (state = initialState, action) {
           },
         };
       }
+    case REMOVE_FROM_CART:
+      return {
+        ...state,
+        cart: {
+          ...state.cart,
+          CartItem: state.cart.CartItem.filter(
+            (item) => item.product.id !== action.payload.product.id
+          ),
+        },
+      };
     default:
       return state;
   }
