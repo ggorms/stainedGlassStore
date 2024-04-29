@@ -1,0 +1,36 @@
+.checkout-root {
+
+}
+
+.checkout-shipping-wrapper {
+    
+}
+
+.checkout-shipping-title-wrapper {
+    border-bottom: 1px solid lightgray;
+    padding: 10px 0;
+}
+
+.checkout-shipping-title-container {
+    margin: 15px;
+    display: flex;
+    align-items: center;
+    cursor: default;
+}
+
+.checkout-circle { 
+    height: 40px;
+    width: 40px;
+    background-color: blue;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.checkout-circle span {
+    color: white;
+    font-weight: bold;
+    font-size: larger;
+}

@@ -13,6 +13,7 @@ import Nav from "./components/Nav/Nav";
 import Footer from "./components/Footer/Footer";
 import SingleProduct from "./pages/SingleProduct/SingleProduct";
 import Cart from "./pages/Cart/Cart";
+import Checkout from "./pages/Checkout/Checkout";
 
 function App() {
   const [mobileMenuToggle, setMobileMenuToggle] = useState(false);
@@ -69,6 +70,7 @@ function App() {
                 />
                 <Route path="/custom" element={<RequestCustom />} />
                 <Route path="/cart" element={<Cart cart={cart} />} />
+                <Route path="/checkout" element={<Checkout />} />
                 <Route path="*" element={<Navigate to={"/"} replace />} />
               </Routes>
             </div>

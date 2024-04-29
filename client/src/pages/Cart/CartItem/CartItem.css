@@ -3,7 +3,7 @@
     width: 90%;
     display: flex;
     justify-content: space-between;
-    margin: 20px;
+    margin: 15px;
     border-bottom: 1px solid lightgray;
     padding: 20px 0;
     cursor: default;
@@ -24,7 +24,7 @@
 }
 
 .cartItem-name {
-    font-size: x-large;
+    font-size: larger;
 }
 
 .cartItem-price {
@@ -48,6 +48,11 @@
     height: 30px;
     width: 30px;
     cursor: pointer;
+    color: rgb(0, 195, 255);
+}
+
+.cartItem-delete:hover {
+    color:  rgb(5, 165, 213);;
 }
 
 .cartItem-qty-wrapper {
