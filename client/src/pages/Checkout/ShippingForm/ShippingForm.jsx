@@ -4,75 +4,58 @@ import { useState } from "react";
 
 function ShippingForm({ shippingInfo, setShippingInfo }) {
   console.log(shippingInfo);
+  const shippingInputFields = [
+    {
+      label: "First Name",
+      value: "fName",
+    },
+    {
+      label: "Last Name",
+      value: "lName",
+    },
+    {
+      label: "Phone Number",
+      value: "phone",
+    },
+    {
+      label: "Address",
+      value: "address",
+    },
+    {
+      label: "Apt / Suite (optional)",
+      value: "unit",
+    },
+    {
+      label: "City",
+      value: "city",
+    },
+    {
+      label: "State",
+      value: "state",
+    },
+    {
+      label: "Zip Code",
+      value: "zip",
+    },
+  ];
   return (
     <>
+      {/* If address is not confirmed, display inputs */}
       {!shippingInfo.addressEntered && (
         <form className="checkout-shipping-form">
           <h3>Enter Shipping Details</h3>
-          <div className="checkout-shipping-input-wrapper">
-            <StyledCustomization
-              label="First Name"
-              value={"fName"}
-              shippingInfo={shippingInfo}
-              setShippingInfo={setShippingInfo}
-            />
-          </div>
-          <div className="checkout-shipping-input-wrapper">
-            <StyledCustomization
-              label="Last Name"
-              value={"lName"}
-              shippingInfo={shippingInfo}
-              setShippingInfo={setShippingInfo}
-            />
-          </div>
-          <div className="checkout-shipping-input-wrapper">
-            <StyledCustomization
-              label="Phone Number"
-              value={"phone"}
-              shippingInfo={shippingInfo}
-              setShippingInfo={setShippingInfo}
-            />
-          </div>
-          <div className="checkout-shipping-input-wrapper">
-            <StyledCustomization
-              label="Address"
-              value={"address"}
-              shippingInfo={shippingInfo}
-              setShippingInfo={setShippingInfo}
-            />
-          </div>
-          <div className="checkout-shipping-input-wrapper">
-            <StyledCustomization
-              label="Apt / Suite (optional)"
-              value={"unit"}
-              shippingInfo={shippingInfo}
-              setShippingInfo={setShippingInfo}
-            />
-          </div>
-          <div className="checkout-shipping-input-wrapper">
-            <StyledCustomization
-              label="City"
-              value={"city"}
-              shippingInfo={shippingInfo}
-              setShippingInfo={setShippingInfo}
-            />
-          </div>
-          <div className="checkout-shipping-input-wrapper">
-            <StyledCustomization
-              label="State"
-              value={"state"}
-              shippingInfo={shippingInfo}
-              setShippingInfo={setShippingInfo}
-            />
-          </div>
-          <div className="checkout-shipping-input-wrapper">
-            <StyledCustomization
-              label="Zip Code"
-              value={"zip"}
-              shippingInfo={shippingInfo}
-              setShippingInfo={setShippingInfo}
-            />
-          </div>
+          {shippingInputFields.map((field) => (
+            <div key={field.value} className="checkout-shipping-input-wrapper">
+              {/* Custom MUI input - see ShippingInput.jsx */}
+              <StyledCustomization
+                label={field.label}
+                value={field.value}
+                shippingInfo={shippingInfo}
+                setShippingInfo={setShippingInfo}
+              />
+            </div>
+          ))}
+          {/* Confirm address button */}
           <button
             className="checkout-shipping-button"
             onClick={(e) => {
@@ -84,6 +67,7 @@ function ShippingForm({ shippingInfo, setShippingInfo }) {
           </button>
         </form>
       )}
+      {/* If address is confirmed, display it */}
       {shippingInfo.addressEntered && (
         <div className="checkout-shipping-entered-root">
           <h3>Your Shipping Address</h3>
@@ -98,6 +82,7 @@ function ShippingForm({ shippingInfo, setShippingInfo }) {
                 , {shippingInfo.state}, {shippingInfo.zip}, (
                 {shippingInfo.phone})
               </p>
+              {/* If shipping speed is confirmed, display it */}
               {shippingInfo.shippingSpeedEntered && (
                 <>
                   <span className="checkout-shipping-entered-info-subtitle">
@@ -107,6 +92,7 @@ function ShippingForm({ shippingInfo, setShippingInfo }) {
                 </>
               )}
             </div>
+            {/* Edit confirmed address button */}
             <div className="checkout-shipping-entered-edit">
               {shippingInfo.addressEntered &&
                 !shippingInfo.shippingSpeedEntered && (

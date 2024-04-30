@@ -45,6 +45,7 @@ function ShippingSpeed({ shippingInfo, setShippingInfo }) {
           <p>(1-2 business days)</p>
         </div>
       </div>
+      {/* Confirm shipping speed */}
       <button
         className="shipping-speed-button"
         onClick={() =>

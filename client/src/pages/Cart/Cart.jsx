@@ -16,6 +16,7 @@ function Cart({ cart }) {
   return (
     <div className="cart-root">
       <h1 className="cart-title">My Cart ({cartQty})</h1>
+      {/* Display cart items */}
       <div className="cart-cartItems-container">
         {cart?.CartItem?.map((item) => (
           <CartItem key={item.product.id} item={item} cartId={cart.id} />
@@ -41,11 +42,9 @@ function Cart({ cart }) {
             <span>$ {(total / 100).toFixed(2)}</span>
           </div>
         </div>
-        {/* <button className="cart-order-summary-checkout"> */}
         <Link className="cart-order-summary-checkout" to={"/checkout"}>
           <span>Checkout</span>
         </Link>
-        {/* </button> */}
       </div>
     </div>
   );

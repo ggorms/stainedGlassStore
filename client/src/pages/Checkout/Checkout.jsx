@@ -27,6 +27,7 @@ function Checkout() {
             </div>
             <h2 className="checkout-title">Shipping</h2>
           </div>
+          {/* Edit confirmed shipping speed */}
           {shippingInfo.addressEntered && shippingInfo.shippingSpeedEntered && (
             <button
               onClick={() =>
@@ -44,6 +45,7 @@ function Checkout() {
           shippingInfo={shippingInfo}
           setShippingInfo={setShippingInfo}
         />
+        {/* Only show shipping speed selection if address info is confirmed */}
         {shippingInfo.addressEntered && !shippingInfo.shippingSpeedEntered && (
           <ShippingSpeed
             shippingInfo={shippingInfo}
