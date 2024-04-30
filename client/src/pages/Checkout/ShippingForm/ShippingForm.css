@@ -59,12 +59,12 @@
 .checkout-shipping-entered-info p {
     margin-bottom: 15px;
 }
-/* 
+
 .checkout-shipping-entered-info-subtitle {
-    font-size: large;
+    font-size: small;
    
-    padding-top: 20px;
-} */
+    
+}
 
 .checkout-shipping-entered-edit {
     width: 20%;
