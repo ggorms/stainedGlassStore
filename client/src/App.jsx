@@ -20,7 +20,7 @@ function App() {
   const dispatch = useDispatch();
   const loggedInUser = useSelector((state) => state.auth.user);
   const cart = useSelector((state) => state.cart.cart);
-
+  console.log(cart);
   useEffect(() => {
     dispatch(me());
   }, [loggedInUser.userId]);
@@ -33,6 +33,7 @@ function App() {
 
   return (
     <div id="app">
+      {/* Guest Routes */}
       {!loggedInUser.userId ? (
         <>
           <Nav loggedInUser={loggedInUser} />
@@ -52,6 +53,7 @@ function App() {
           <Footer />
         </>
       ) : (
+        // User Routes
         <>
           <Nav
             loggedInUser={loggedInUser}
@@ -70,7 +72,17 @@ function App() {
                 />
                 <Route path="/custom" element={<RequestCustom />} />
                 <Route path="/cart" element={<Cart cart={cart} />} />
-                <Route path="/checkout" element={<Checkout />} />
+                {/* <Route path="/checkout" element={<Checkout />} /> */}
+                <Route
+                  path="/checkout"
+                  element={
+                    cart?.CartItem?.length > 0 ? (
+                      <Checkout cart={cart} />
+                    ) : (
+                      <Navigate to={"/"} replace />
+                    )
+                  }
+                />
                 <Route path="*" element={<Navigate to={"/"} replace />} />
               </Routes>
             </div>

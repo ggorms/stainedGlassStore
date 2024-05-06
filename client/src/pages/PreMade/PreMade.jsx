@@ -1,11 +1,10 @@
 import "./PreMade.css";
-import rainbow from "../../assets/rainbow.jpeg";
+import rainbow from "../../assets/background.jpeg";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { allProductsThunk } from "../../store/product";
 import Products from "./Products/Products";
 import { Link } from "react-router-dom";
-import BannerStyleEffect from "../../components/BannerStyleEffect/BannerStyleEffect";
 
 function PreMade() {
   const dispatch = useDispatch();
@@ -24,7 +23,6 @@ function PreMade() {
           <h1 className="premade-banner-text">Pre-made Pieces</h1>
         </span>
       </div>
-      <BannerStyleEffect />
       <div className="premade-content">
         {allProducts.map((product) => (
           <Link

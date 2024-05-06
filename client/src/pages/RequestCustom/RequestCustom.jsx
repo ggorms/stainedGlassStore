@@ -1,5 +1,5 @@
 import "./RequestCustom.css";
-import rainbow2 from "../../assets/rainbow2.jpeg";
+import rainbow2 from "../../assets/background.jpeg";
 import CustomTextSelection from "./CustomTextSelection/CustomTextSelection";
 import RequestCustomForm from "./RequestCustomForm/RequestCustomForm";
 

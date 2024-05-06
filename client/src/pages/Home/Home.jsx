@@ -1,10 +1,10 @@
 import "./Home.css";
 import custom from "../../assets/designing.jpeg";
 import premade from "../../assets/rainbow3.jpeg";
-import sunset from "../../assets/sunset.jpeg";
 import { Link } from "react-router-dom";
 import Form from "./Form/Form";
 import AboutMe from "./AboutMe/AboutMe";
+import Background from "../../assets/background.jpeg";
 
 function Home() {
   const productOfferings = [
@@ -13,32 +13,41 @@ function Home() {
   ];
 
   return (
-    <div className="home-root">
+    <>
       <div
-        className="home-banner"
-        style={{ backgroundImage: `url(${sunset})` }}
+        className="home-root"
+        style={{ backgroundImage: `url(${Background})` }}
       >
         <span className="home-banner-blur">
-          <h1 className="home-banner-text">Welcome to my store</h1>
+          <div className="home-content">
+            {productOfferings.map((offering, i) => (
+              <div className="home-content-segment" key={i}>
+                <Link
+                  to={offering.link}
+                  className="home-content-link"
+                  style={{ textDecoration: "none" }}
+                >
+                  {/* <img className="home-content-image" src={offering.image} />
+                  <h3 className="home-content-name">{offering.name}</h3> */}
+                  <div
+                    className="home-content-image"
+                    style={{ backgroundImage: `url(${offering.image})` }}
+                  >
+                    <span className="home-banner-blur">
+                      <h3 className="home-content-name">{offering.name}</h3>
+                    </span>
+                  </div>
+                </Link>
+              </div>
+            ))}
+          </div>
         </span>
       </div>
-      <div className="home-content">
-        {productOfferings.map((offering, i) => (
-          <div className="home-content-segment" key={i}>
-            <Link
-              to={offering.link}
-              className="home-content-link"
-              style={{ textDecoration: "none" }}
-            >
-              <img className="home-content-image" src={offering.image} />
-              <h3 className="home-content-name">{offering.name}</h3>
-            </Link>
-          </div>
-        ))}
+      <div>
+        <AboutMe />
+        <Form />
       </div>
-      <AboutMe />
-      <Form />
-    </div>
+    </>
   );
 }
 

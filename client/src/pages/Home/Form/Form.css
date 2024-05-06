@@ -3,8 +3,11 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: rgb(226, 218, 192);
-    height: 700px;
+    /* background-color: rgb(226, 218, 192); */
+    /* background-color: rgb(222, 221, 221); */
+    background-color: rgb(45, 45, 45);
+    color: white;
+    height: 750px;
 }
 
 .home-form {

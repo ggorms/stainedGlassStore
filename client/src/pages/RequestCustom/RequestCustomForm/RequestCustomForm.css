@@ -1,5 +1,6 @@
 .custom-form-root {
-    margin: 20px;
+    padding: 20px;
+    background-color: rgb(222, 221, 221);
 }
 
 .custom-form-title {
@@ -14,9 +15,6 @@
     display: flex;
     flex-direction: column;
 }
-
-
-
 
 .custom-form-subtitle {
     color: green;

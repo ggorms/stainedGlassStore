@@ -1,6 +1,9 @@
 .singleProduct-root {
     display: flex;
     flex-direction: column;
+    padding-top: 60px;
+    background-color: rgb(45, 45, 45);
+    color: white;
 }
 
 .singleProduct-info-container {

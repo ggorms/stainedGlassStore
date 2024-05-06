@@ -64,7 +64,7 @@ function CartItem({ item, cartId }) {
             className={
               cartItemInfo.qty > 1
                 ? "cartItem-qty-button"
-                : "cartItem-qty-button lightgray"
+                : "cartItem-qty-button unavailable"
             }
             onClick={decreaseQty}
           >
@@ -75,7 +75,7 @@ function CartItem({ item, cartId }) {
             className={
               cartItemInfo.qty < 5
                 ? "cartItem-qty-button"
-                : "cartItem-qty-button lightgray"
+                : "cartItem-qty-button unavailable"
             }
             onClick={increaseQty}
           >

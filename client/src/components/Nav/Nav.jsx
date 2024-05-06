@@ -1,21 +1,32 @@
 import "./Nav.css";
+import logo from "../../assets/logo.png";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
 function Nav({ loggedInUser, mobileMenuToggle, setMobileMenuToggle }) {
+  const [scroll, setScroll] = useState(false);
+  const changeColor = () => {
+    if (window.scrollY > 0) {
+      setScroll(true);
+    } else {
+      setScroll(false);
+    }
+  };
+
+  window.addEventListener("scroll", changeColor);
   return (
-    <nav>
+    <nav className={scroll ? "nav-root scrolled" : "nav-root"}>
       <div className="nav-spread">
         <div className="nav-logo">
           <Link className="nav-link" to={"/"}>
-            <h1>Stained Glass</h1>
+            <img src={logo} />
           </Link>
         </div>
         <ul className="nav-links-list">
           <Link className="nav-link">
             <li>Products</li>
           </Link>
-          {loggedInUser.userId ? (
+          {loggedInUser?.userId ? (
             <Link className="nav-link" to={"/account"}>
               <li>
                 {loggedInUser.fName} {loggedInUser.lName}
@@ -51,7 +62,7 @@ function Nav({ loggedInUser, mobileMenuToggle, setMobileMenuToggle }) {
       <div className="nav-condensed">
         <div className="nav-logo">
           <Link className="nav-link" to={"/"}>
-            <h1>Stained Glass</h1>
+            <img src={logo} />
           </Link>
         </div>
         <div className="nav-hamburger-container">

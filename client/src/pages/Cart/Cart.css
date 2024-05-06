@@ -1,5 +1,11 @@
 .cart-root {
-
+    background-color: rgb(45, 45, 45);
+    /* height: calc(100vh); */
+    /* height: 100%; */
+    /* min-height: min-content; */
+    /* margin-top: 60px; */
+    padding-top: 60px;
+    color: white;
 }
 
 .cart-title {
@@ -57,4 +63,26 @@
 
 .cart-order-summary-checkout:hover {
     background-color:  rgb(3, 94, 213);
+}
+
+
+.cart-empty-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 160px);
+}
+
+.cart-empty-text {
+    
+}
+
+.cart-empty-link {
+    color: white;
+    font-size: larger;
+}
+
+.cart-empty-link:hover {
+    color: lightgray;
 }

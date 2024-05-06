@@ -1,13 +1,8 @@
 .home-root{
-
-}
-
-.home-banner {
     background-repeat: no-repeat;
-    background-size: cover;
+    height: 100vh;
     background-position: center;
-    width: 100%;
-    height: 225px;
+    background-size:cover;
 }
 
 .home-banner-blur {
@@ -25,7 +20,7 @@
 }
 
 .home-content {
-    margin: 10px 0;
+    /* padding: 100px 0; */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -43,12 +38,16 @@
     width: 250px;
     object-fit: cover;
     border: thin solid black;
+    background-position: center;
+    background-size: cover;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
 }
 
 .home-content-name {
      text-align: center;
-     color: black;
+     color: white;
+     font-weight: bold;
+     font-size: larger;
 }
 
