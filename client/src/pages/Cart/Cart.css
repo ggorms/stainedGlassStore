@@ -81,6 +81,7 @@
 .cart-empty-link {
     color: white;
     font-size: larger;
+    text-decoration: none;
 }
 
 .cart-empty-link:hover {

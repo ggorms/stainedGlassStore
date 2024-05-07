@@ -54,7 +54,9 @@ function Cart({ cart }) {
         <div className="cart-empty-container">
           <h1 className="cart-empty-text">Your Cart is Empty</h1>
           <img src={sadFace} />
-          <Link className="cart-empty-link">Start Shopping {">"}</Link>
+          <Link className="cart-empty-link" to={"/premade"}>
+            Start Shopping {">"}
+          </Link>
         </div>
       )}
     </div>

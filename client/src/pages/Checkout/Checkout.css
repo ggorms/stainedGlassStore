@@ -91,3 +91,32 @@
 .gray {
     color: gray;
 }
+
+.checkout-payment-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin: 30px;
+    height: 90px;
+}
+
+.checkout-payment-content span {
+    font-size: larger;
+}
+
+.checkout-payment-content button {
+    border-radius: 8px;
+    background-color:  rgb(0, 110, 255);
+    color: white;
+    width: 100px;
+    border: none;
+    font-weight: bold;
+    height: 40px;
+    cursor: pointer;
+    font-size: large;
+}
+
+.checkout-payment-content button:hover {
+    background-color:  rgb(3, 94, 213);
+}

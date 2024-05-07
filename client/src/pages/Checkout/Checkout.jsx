@@ -117,6 +117,12 @@ function Checkout({ cart }) {
               </h2>
             </div>
           </div>
+          {shippingInfo.addressEntered && shippingInfo.shippingSpeedEntered && (
+            <div className="checkout-payment-content">
+              <span>Payment will be securly processed by Stripe</span>
+              <button>Pay Now</button>
+            </div>
+          )}
         </div>
         <OrderDetails cart={cart} shippingSpeed={shippingInfo.shippingSpeed} />
       </div>
