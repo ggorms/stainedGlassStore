@@ -3,6 +3,7 @@ import ShippingForm from "./ShippingForm/ShippingForm";
 import { useState } from "react";
 import ShippingSpeed from "./ShippingSpeed/ShippingSpeed";
 import OrderDetails from "./OrderDetails/OrderDetails";
+import PayButton from "./PayButton/PayButton";
 
 function Checkout({ cart }) {
   const [shippingInfo, setShippingInfo] = useState({
@@ -120,7 +121,7 @@ function Checkout({ cart }) {
           {shippingInfo.addressEntered && shippingInfo.shippingSpeedEntered && (
             <div className="checkout-payment-content">
               <span>Payment will be securly processed by Stripe</span>
-              <button>Pay Now</button>
+              <PayButton cartItems={cart.CartItem} />
             </div>
           )}
         </div>

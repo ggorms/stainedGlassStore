@@ -1,0 +1,15 @@
+.payment-button {
+    border-radius: 8px;
+    background-color:  rgb(0, 110, 255);
+    color: white;
+    width: 100px;
+    border: none;
+    font-weight: bold;
+    height: 40px;
+    cursor: pointer;
+    font-size: large;
+}
+
+.payment-button:hover {
+    background-color:  rgb(3, 94, 213);
+}

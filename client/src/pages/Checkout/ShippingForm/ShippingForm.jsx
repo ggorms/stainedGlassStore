@@ -1,9 +1,7 @@
 import "./ShippingForm.css";
 import StyledCustomization from "./ShippingInput";
-import { useState } from "react";
 
 function ShippingForm({ shippingInfo, setShippingInfo }) {
-  console.log(shippingInfo);
   const shippingInputFields = [
     {
       label: "First Name",

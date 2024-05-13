@@ -13,6 +13,7 @@ app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
 app.use("/api", require("./api"));
 app.use("/auth", require("./auth"));
+app.use("/stripe", require("./stripe"));
 
 app.listen(PORT, () => {
   console.log(`Server running on port: ${PORT}`);

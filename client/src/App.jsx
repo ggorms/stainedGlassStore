@@ -17,77 +17,84 @@ import Checkout from "./pages/Checkout/Checkout";
 
 function App() {
   const [mobileMenuToggle, setMobileMenuToggle] = useState(false);
+  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const loggedInUser = useSelector((state) => state.auth.user);
   const cart = useSelector((state) => state.cart.cart);
   console.log(cart);
   useEffect(() => {
     dispatch(me());
-  }, [loggedInUser.userId]);
-
-  useEffect(() => {
     if (loggedInUser.userId) {
+      // setLoading(true);
       dispatch(getCartThunk(loggedInUser.userId));
+      setLoading(false);
     }
   }, [loggedInUser.userId]);
 
+  // useEffect(() => {
+  //   if (loggedInUser.userId) {
+  //     // setLoading(true);
+  //     dispatch(getCartThunk(loggedInUser.userId));
+  //     setLoading(false);
+  //   }
+  // }, [loggedInUser.userId]);
+  console.log(loading);
   return (
     <div id="app">
-      {/* Guest Routes */}
-      {!loggedInUser.userId ? (
+      {!loading && (
         <>
-          <Nav loggedInUser={loggedInUser} />
-          {!mobileMenuToggle && (
-            <div className="content">
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/auth" element={<Auth />} />
-                <Route path="/premade" element={<PreMade />} />
-                <Route path="/premade/:id" element={<SingleProduct />} />
-                <Route path="/custom" element={<RequestCustom />} />
-                <Route path="/cart" element={<Cart />} />
-                <Route path="*" element={<Navigate to={"/"} replace />} />
-              </Routes>
-            </div>
+          {/* Guest Routes */}
+          {!loggedInUser.userId ? (
+            <>
+              <Nav loggedInUser={loggedInUser} />
+              {!mobileMenuToggle && (
+                <div className="content">
+                  <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/auth" element={<Auth />} />
+                    <Route path="/premade" element={<PreMade />} />
+                    <Route path="/premade/:id" element={<SingleProduct />} />
+                    <Route path="/custom" element={<RequestCustom />} />
+                    <Route path="/cart" element={<Cart />} />
+                    <Route path="*" element={<Navigate to={"/"} replace />} />
+                  </Routes>
+                </div>
+              )}
+              <Footer />
+            </>
+          ) : (
+            // User Routes
+
+            <>
+              <Nav
+                loggedInUser={loggedInUser}
+                mobileMenuToggle={mobileMenuToggle}
+                setMobileMenuToggle={setMobileMenuToggle}
+              />
+              {!mobileMenuToggle && (
+                <div className="content">
+                  <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/account" element={<Account />} />
+                    <Route path="/premade" element={<PreMade />} />
+                    <Route
+                      path="/premade/:id"
+                      element={<SingleProduct cartId={cart.id} />}
+                    />
+                    <Route path="/custom" element={<RequestCustom />} />
+                    <Route path="/cart" element={<Cart cart={cart} />} />
+                    {/* <Route path="/checkout" element={<Checkout />} /> */}
+                    <Route
+                      path="/checkout"
+                      element={<Checkout cart={cart} />}
+                    />
+                    <Route path="*" element={<Navigate to={"/"} replace />} />
+                  </Routes>
+                </div>
+              )}
+              <Footer />
+            </>
           )}
-          <Footer />
-        </>
-      ) : (
-        // User Routes
-        <>
-          <Nav
-            loggedInUser={loggedInUser}
-            mobileMenuToggle={mobileMenuToggle}
-            setMobileMenuToggle={setMobileMenuToggle}
-          />
-          {!mobileMenuToggle && (
-            <div className="content">
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/account" element={<Account />} />
-                <Route path="/premade" element={<PreMade />} />
-                <Route
-                  path="/premade/:id"
-                  element={<SingleProduct cartId={cart.id} />}
-                />
-                <Route path="/custom" element={<RequestCustom />} />
-                <Route path="/cart" element={<Cart cart={cart} />} />
-                {/* <Route path="/checkout" element={<Checkout />} /> */}
-                <Route
-                  path="/checkout"
-                  element={
-                    cart?.CartItem?.length > 0 ? (
-                      <Checkout cart={cart} />
-                    ) : (
-                      <Navigate to={"/"} replace />
-                    )
-                  }
-                />
-                <Route path="*" element={<Navigate to={"/"} replace />} />
-              </Routes>
-            </div>
-          )}
-          <Footer />
         </>
       )}
     </div>
