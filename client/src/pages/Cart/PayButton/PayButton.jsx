@@ -2,10 +2,10 @@ import "./PayButton.css";
 import axios from "axios";
 import { BASE_URL } from "../../../store/BASE_URL";
 
-function PayButton({ cartItems }) {
+function PayButton({ cartItems, user }) {
   const handlePayment = async () => {
     await axios
-      .post(`${BASE_URL}/stripe/create-checkout-session`, { cartItems })
+      .post(`${BASE_URL}/stripe/create-checkout-session`, { cartItems, user })
       .then((res) => {
         if (res.data.url) {
           window.location.href = res.data.url;
@@ -15,11 +15,11 @@ function PayButton({ cartItems }) {
   };
 
   return (
-    <>
+    <div className="payment-button-container">
       <button className="payment-button" onClick={handlePayment}>
-        Pay Now
+        Checkout with Stripe
       </button>
-    </>
+    </div>
   );
 }
 

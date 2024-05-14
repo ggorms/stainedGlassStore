@@ -70,6 +70,7 @@ function App() {
                 loggedInUser={loggedInUser}
                 mobileMenuToggle={mobileMenuToggle}
                 setMobileMenuToggle={setMobileMenuToggle}
+                cart={cart}
               />
               {!mobileMenuToggle && (
                 <div className="content">
@@ -82,12 +83,15 @@ function App() {
                       element={<SingleProduct cartId={cart.id} />}
                     />
                     <Route path="/custom" element={<RequestCustom />} />
-                    <Route path="/cart" element={<Cart cart={cart} />} />
-                    {/* <Route path="/checkout" element={<Checkout />} /> */}
                     <Route
+                      path="/cart"
+                      element={<Cart cart={cart} user={loggedInUser} />}
+                    />
+                    {/* <Route path="/checkout" element={<Checkout />} /> */}
+                    {/* <Route
                       path="/checkout"
                       element={<Checkout cart={cart} />}
-                    />
+                    /> */}
                     <Route path="*" element={<Navigate to={"/"} replace />} />
                   </Routes>
                 </div>

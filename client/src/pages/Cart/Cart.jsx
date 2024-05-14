@@ -2,8 +2,9 @@ import "./Cart.css";
 import CartItem from "./CartItem/CartItem";
 import sadFace from "../../assets/sadFace.png";
 import { Link } from "react-router-dom";
+import PayButton from "./PayButton/PayButton";
 
-function Cart({ cart }) {
+function Cart({ cart, user }) {
   const cartQty = cart?.CartItem?.reduce((acc, curr) => acc + curr.qty, 0);
   const cartSubtotal = cart?.CartItem?.reduce(
     (acc, curr) => acc + curr.qty * curr.product.price,
@@ -45,9 +46,7 @@ function Cart({ cart }) {
                 <span>$ {(total / 100).toFixed(2)}</span>
               </div>
             </div>
-            <Link className="cart-order-summary-checkout" to={"/checkout"}>
-              <span>Checkout</span>
-            </Link>
+            <PayButton cartItems={cart.CartItem} user={user} />
           </div>
         </>
       ) : (

@@ -49,12 +49,19 @@
 }
 
 .nav-link li:hover {
-    /* text-decoration: underline; */
     color: rgb(175, 173, 173);
 }
 
+.nav-cart-icon-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.nav-cart-icon-wrapper span {
+    font-size: medium;
+}
+
 .nav-cart-icon {
-    color: white;
     height: 30px;
     width: 30px;
 }
