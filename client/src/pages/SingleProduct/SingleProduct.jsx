@@ -9,7 +9,7 @@ import Placeholder2 from "../../assets/placeholder2.png";
 import Placeholder3 from "../../assets/placeholder3.png";
 import Placeholder4 from "../../assets/placeholder4.png";
 
-function SingleProduct({ cartId, guestCart }) {
+function SingleProduct({ userCartId, setGuestCart }) {
   const dispatch = useDispatch();
   const { id } = useParams();
   const product = useSelector((state) => state.product.singleProduct);
@@ -19,17 +19,55 @@ function SingleProduct({ cartId, guestCart }) {
   }, []);
 
   const addToCart = () => {
-    if (cartId) {
+    // User Cart
+    if (userCartId) {
       const cartItemInfo = {
-        cartId,
+        cartId: userCartId,
         productId: product.id,
       };
       dispatch(addToCartThunk(cartItemInfo));
-    } else {
-      window.sessionStorage.setItem(guestCart, [
-        ...guestCart.CartItem,
-        { hi: "sup" },
-      ]);
+    }
+    // Guest Cart
+    else {
+      const guestCart = JSON.parse(window.sessionStorage.getItem("guestCart"));
+      // If item is already in cart, increase quantity
+      if (guestCart.CartItem.some((item) => item.product.id === product.id)) {
+        window.sessionStorage.setItem(
+          "guestCart",
+          JSON.stringify({
+            ...guestCart,
+            CartItem: guestCart.CartItem.map((item) =>
+              item.product.id === product.id
+                ? { ...item, qty: (item.qty += 1) }
+                : item
+            ),
+          })
+        );
+        setGuestCart(window.sessionStorage.getItem("guestCart"));
+      }
+      //If item not in cart, add it
+      else {
+        window.sessionStorage.setItem(
+          "guestCart",
+          JSON.stringify({
+            ...guestCart,
+            CartItem: [
+              ...guestCart.CartItem,
+              {
+                qty: 1,
+                product: {
+                  id: product.id,
+                  name: product.name,
+                  inStock: product.inStock,
+                  imageId: product.imageId,
+                  price: product.price,
+                },
+              },
+            ],
+          })
+        );
+        setGuestCart(window.sessionStorage.getItem("guestCart"));
+      }
     }
   };
 

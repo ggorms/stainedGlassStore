@@ -13,70 +13,44 @@ import Nav from "./components/Nav/Nav";
 import Footer from "./components/Footer/Footer";
 import SingleProduct from "./pages/SingleProduct/SingleProduct";
 import Cart from "./pages/Cart/Cart";
-// import Checkout from "./pages/Checkout/Checkout";
 
 function App() {
   const dispatch = useDispatch();
   const [mobileMenuToggle, setMobileMenuToggle] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [guestCart, setGuestCart] = useState(
+    window.sessionStorage.getItem("guestCart")
+  );
 
   const loggedInUser = useSelector((state) => state.auth.user);
 
-  const cart =
-    useSelector((state) => state.cart.cart) ??
-    JSON.parse(window.sessionStorage.getItem("guestCart"));
-  console.log("cart", cart);
+  // console.log("test", guestCart);
+  const cart = useSelector((state) => state.cart.cart) ?? JSON.parse(guestCart);
+
+  // console.log("cart", cart);
 
   useEffect(() => {
     dispatch(me());
     setLoading(false);
+    const loadCart = () => {
+      if (loggedInUser?.userId) {
+        dispatch(getCartThunk(loggedInUser.userId));
+      } else {
+        const guestCartActive = JSON.parse(
+          window.sessionStorage.getItem("guestCart")
+        );
+        if (!guestCartActive) {
+          window.sessionStorage.setItem(
+            "guestCart",
+            JSON.stringify({
+              CartItem: [],
+            })
+          );
+        }
+      }
+    };
     loadCart();
   }, [loggedInUser?.userId, dispatch]);
-
-  const loadCart = () => {
-    if (loggedInUser?.userId) {
-      dispatch(getCartThunk(loggedInUser.userId));
-    } else {
-      window.sessionStorage.setItem(
-        "guestCart",
-        JSON.stringify({
-          CartItem: [],
-        })
-      );
-    }
-  };
-
-  // useEffect(() => {
-  //   // dispatch(me());
-  //   if (!loading.user) {
-  //     if (loggedInUser?.userId) {
-  //       // setLoading(true);
-  //       dispatch(getCartThunk(loggedInUser.userId));
-  //       setLoading({ ...loading, cart: false });
-  //     } else {
-  //       window.sessionStorage.setItem(
-  //         "guestCart",
-  //         JSON.stringify({
-  //           CartItem: ["hi"],
-  //         })
-  //       );
-  //       setLoading({ ...loading, cart: false });
-  //     }
-  //   }
-  // }, [dispatch, loggedInUser?.userId]);
-
-  console.log("user", loggedInUser);
-  // const guestCart = window.sessionStorage.getItem("guestCart") ?? null;
-  // console.log(guestCart.CartItem);
-  // useEffect(() => {
-  //   if (loggedInUser.userId) {
-  //     // setLoading(true);
-  //     dispatch(getCartThunk(loggedInUser.userId));
-  //     setLoading(false);
-  //   }
-  // }, [loggedInUser.userId]);
-  // console.log(loading);
-  console.log("loading", loading);
 
   return (
     <div id="app">
@@ -97,7 +71,15 @@ function App() {
                     <Route path="/" element={<Home />} />
                     <Route path="/auth" element={<Auth />} />
                     <Route path="/premade" element={<PreMade />} />
-                    <Route path="/premade/:id" element={<SingleProduct />} />
+                    <Route
+                      path="/premade/:id"
+                      element={
+                        <SingleProduct
+                          cart={cart}
+                          setGuestCart={setGuestCart}
+                        />
+                      }
+                    />
                     <Route path="/custom" element={<RequestCustom />} />
                     <Route path="/cart" element={<Cart cart={cart} />} />
                     <Route path="*" element={<Navigate to={"/"} replace />} />
@@ -108,7 +90,6 @@ function App() {
             </>
           ) : (
             // User Routes
-
             <>
               <Nav
                 loggedInUser={loggedInUser}
@@ -124,18 +105,13 @@ function App() {
                     <Route path="/premade" element={<PreMade />} />
                     <Route
                       path="/premade/:id"
-                      element={<SingleProduct cartId={cart?.id} />}
+                      element={<SingleProduct userCartId={cart?.id} />}
                     />
                     <Route path="/custom" element={<RequestCustom />} />
                     <Route
                       path="/cart"
                       element={<Cart cart={cart} user={loggedInUser} />}
                     />
-                    {/* <Route path="/checkout" element={<Checkout />} /> */}
-                    {/* <Route
-                      path="/checkout"
-                      element={<Checkout cart={cart} />}
-                    /> */}
                     <Route path="*" element={<Navigate to={"/"} replace />} />
                   </Routes>
                 </div>

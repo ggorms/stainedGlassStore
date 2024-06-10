@@ -5,6 +5,7 @@ import {
   removeFromCartThunk,
   updateItemQuantityThunk,
 } from "../../../store/cart";
+
 function CartItem({ item, cartId }) {
   const dispatch = useDispatch();
   const cartItemInfo = {
