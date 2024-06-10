@@ -13,24 +13,61 @@ import Nav from "./components/Nav/Nav";
 import Footer from "./components/Footer/Footer";
 import SingleProduct from "./pages/SingleProduct/SingleProduct";
 import Cart from "./pages/Cart/Cart";
-import Checkout from "./pages/Checkout/Checkout";
+// import Checkout from "./pages/Checkout/Checkout";
 
 function App() {
+  const dispatch = useDispatch();
   const [mobileMenuToggle, setMobileMenuToggle] = useState(false);
   const [loading, setLoading] = useState(true);
-  const dispatch = useDispatch();
+
   const loggedInUser = useSelector((state) => state.auth.user);
-  const cart = useSelector((state) => state.cart.cart);
-  console.log(cart);
+
+  const cart =
+    useSelector((state) => state.cart.cart) ??
+    JSON.parse(window.sessionStorage.getItem("guestCart"));
+  console.log("cart", cart);
+
   useEffect(() => {
     dispatch(me());
-    if (loggedInUser.userId) {
-      // setLoading(true);
-      dispatch(getCartThunk(loggedInUser.userId));
-      setLoading(false);
-    }
-  }, [loggedInUser.userId]);
+    setLoading(false);
+    loadCart();
+  }, [loggedInUser?.userId, dispatch]);
 
+  const loadCart = () => {
+    if (loggedInUser?.userId) {
+      dispatch(getCartThunk(loggedInUser.userId));
+    } else {
+      window.sessionStorage.setItem(
+        "guestCart",
+        JSON.stringify({
+          CartItem: [],
+        })
+      );
+    }
+  };
+
+  // useEffect(() => {
+  //   // dispatch(me());
+  //   if (!loading.user) {
+  //     if (loggedInUser?.userId) {
+  //       // setLoading(true);
+  //       dispatch(getCartThunk(loggedInUser.userId));
+  //       setLoading({ ...loading, cart: false });
+  //     } else {
+  //       window.sessionStorage.setItem(
+  //         "guestCart",
+  //         JSON.stringify({
+  //           CartItem: ["hi"],
+  //         })
+  //       );
+  //       setLoading({ ...loading, cart: false });
+  //     }
+  //   }
+  // }, [dispatch, loggedInUser?.userId]);
+
+  console.log("user", loggedInUser);
+  // const guestCart = window.sessionStorage.getItem("guestCart") ?? null;
+  // console.log(guestCart.CartItem);
   // useEffect(() => {
   //   if (loggedInUser.userId) {
   //     // setLoading(true);
@@ -38,15 +75,22 @@ function App() {
   //     setLoading(false);
   //   }
   // }, [loggedInUser.userId]);
-  console.log(loading);
+  // console.log(loading);
+  console.log("loading", loading);
+
   return (
     <div id="app">
       {!loading && (
         <>
           {/* Guest Routes */}
-          {!loggedInUser.userId ? (
+          {!loggedInUser ? (
             <>
-              <Nav loggedInUser={loggedInUser} />
+              <Nav
+                // loggedInUser={loggedInUser}
+                mobileMenuToggle={mobileMenuToggle}
+                setMobileMenuToggle={setMobileMenuToggle}
+                cart={cart}
+              />
               {!mobileMenuToggle && (
                 <div className="content">
                   <Routes>
@@ -55,7 +99,7 @@ function App() {
                     <Route path="/premade" element={<PreMade />} />
                     <Route path="/premade/:id" element={<SingleProduct />} />
                     <Route path="/custom" element={<RequestCustom />} />
-                    <Route path="/cart" element={<Cart />} />
+                    <Route path="/cart" element={<Cart cart={cart} />} />
                     <Route path="*" element={<Navigate to={"/"} replace />} />
                   </Routes>
                 </div>
@@ -80,7 +124,7 @@ function App() {
                     <Route path="/premade" element={<PreMade />} />
                     <Route
                       path="/premade/:id"
-                      element={<SingleProduct cartId={cart.id} />}
+                      element={<SingleProduct cartId={cart?.id} />}
                     />
                     <Route path="/custom" element={<RequestCustom />} />
                     <Route

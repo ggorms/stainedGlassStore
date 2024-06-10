@@ -6,6 +6,7 @@ const FULFILL_CART = "FULFILL_CART";
 const ADD_TO_CART = "ADD_TO_CART";
 const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 const UPDATE_ITEM_QUANTITY = "UPDATE_ITEM_QUANTITY";
+const LOGOUT = "LOGOUT";
 
 const getCart = (cart) => ({
   type: GET_CART,
@@ -97,14 +98,21 @@ export const updateItemQuantityThunk = (cartItemInfo) => async (dispatch) => {
   }
 };
 
+export const logoutCartHandler = () => {
+  return {
+    type: LOGOUT,
+    payload: null,
+  };
+};
+
 const initialState = {
-  cart: {
-    CartItem: [],
-  },
+  cart: null,
 };
 
 export default function (state = initialState, action) {
   switch (action.type) {
+    case LOGOUT:
+      return { ...state, cart: action.payload };
     case GET_CART:
       return { ...state, cart: action.payload };
     case FULFILL_CART:

@@ -9,7 +9,7 @@ import Placeholder2 from "../../assets/placeholder2.png";
 import Placeholder3 from "../../assets/placeholder3.png";
 import Placeholder4 from "../../assets/placeholder4.png";
 
-function SingleProduct({ cartId }) {
+function SingleProduct({ cartId, guestCart }) {
   const dispatch = useDispatch();
   const { id } = useParams();
   const product = useSelector((state) => state.product.singleProduct);
@@ -19,11 +19,18 @@ function SingleProduct({ cartId }) {
   }, []);
 
   const addToCart = () => {
-    const cartItemInfo = {
-      cartId,
-      productId: product.id,
-    };
-    dispatch(addToCartThunk(cartItemInfo));
+    if (cartId) {
+      const cartItemInfo = {
+        cartId,
+        productId: product.id,
+      };
+      dispatch(addToCartThunk(cartItemInfo));
+    } else {
+      window.sessionStorage.setItem(guestCart, [
+        ...guestCart.CartItem,
+        { hi: "sup" },
+      ]);
+    }
   };
 
   return (

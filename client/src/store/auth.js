@@ -1,5 +1,6 @@
 import axios from "axios";
 import { BASE_URL } from "./BASE_URL";
+import { logoutCartHandler } from "./cart";
 
 const TOKEN = "token";
 
@@ -64,12 +65,12 @@ export const logout = () => {
   window.localStorage.removeItem(TOKEN);
   return {
     type: USER,
-    payload: {},
+    payload: null,
   };
 };
 
 const initialState = {
-  user: {},
+  user: null,
   authError: null,
 };
 
