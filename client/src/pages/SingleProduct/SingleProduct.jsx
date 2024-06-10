@@ -9,7 +9,7 @@ import Placeholder2 from "../../assets/placeholder2.png";
 import Placeholder3 from "../../assets/placeholder3.png";
 import Placeholder4 from "../../assets/placeholder4.png";
 
-function SingleProduct({ userCartId, setGuestCart }) {
+function SingleProduct({ userCartId, setGuestCart, guestCart }) {
   const dispatch = useDispatch();
   const { id } = useParams();
   const product = useSelector((state) => state.product.singleProduct);
@@ -29,7 +29,6 @@ function SingleProduct({ userCartId, setGuestCart }) {
     }
     // Guest Cart
     else {
-      const guestCart = JSON.parse(window.sessionStorage.getItem("guestCart"));
       // If item is already in cart, increase quantity
       if (guestCart.CartItem.some((item) => item.product.id === product.id)) {
         window.sessionStorage.setItem(
@@ -43,7 +42,6 @@ function SingleProduct({ userCartId, setGuestCart }) {
             ),
           })
         );
-        setGuestCart(window.sessionStorage.getItem("guestCart"));
       }
       //If item not in cart, add it
       else {
@@ -66,8 +64,8 @@ function SingleProduct({ userCartId, setGuestCart }) {
             ],
           })
         );
-        setGuestCart(window.sessionStorage.getItem("guestCart"));
       }
+      setGuestCart(JSON.parse(window.sessionStorage.getItem("guestCart")));
     }
   };
 

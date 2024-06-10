@@ -6,28 +6,78 @@ import {
   updateItemQuantityThunk,
 } from "../../../store/cart";
 
-function CartItem({ item, cartId }) {
+function CartItem({ item, cartId, setGuestCart, guestCart }) {
   const dispatch = useDispatch();
   const cartItemInfo = {
     cartId,
     productId: item.product.id,
     qty: item.qty,
   };
+
   const removeFromCart = () => {
-    dispatch(removeFromCartThunk(cartItemInfo));
+    // User cart
+    if (cartId) {
+      dispatch(removeFromCartThunk(cartItemInfo));
+    } else {
+      // Guest Cart
+      window.sessionStorage.setItem(
+        "guestCart",
+        JSON.stringify({
+          ...guestCart,
+          CartItem: guestCart.CartItem.filter(
+            (cartItem) => cartItem.product.id !== item.product.id
+          ),
+        })
+      );
+      setGuestCart(JSON.parse(window.sessionStorage.getItem("guestCart")));
+    }
   };
 
   const increaseQty = () => {
     if (cartItemInfo.qty < 5) {
-      cartItemInfo.qty += 1;
-      dispatch(updateItemQuantityThunk(cartItemInfo));
+      // User Cart
+      if (cartId) {
+        cartItemInfo.qty += 1;
+        dispatch(updateItemQuantityThunk(cartItemInfo));
+      } else {
+        // Guest Cart
+        window.sessionStorage.setItem(
+          "guestCart",
+          JSON.stringify({
+            ...guestCart,
+            CartItem: guestCart.CartItem.map((cartItem) =>
+              cartItem.product.id === item.product.id
+                ? { ...cartItem, qty: (cartItem.qty += 1) }
+                : cartItem
+            ),
+          })
+        );
+        setGuestCart(JSON.parse(window.sessionStorage.getItem("guestCart")));
+      }
     }
   };
 
   const decreaseQty = () => {
     if (cartItemInfo.qty > 1) {
-      cartItemInfo.qty -= 1;
-      dispatch(updateItemQuantityThunk(cartItemInfo));
+      // User Cart
+      if (cartId) {
+        cartItemInfo.qty -= 1;
+        dispatch(updateItemQuantityThunk(cartItemInfo));
+      } else {
+        // Guest Cart
+        window.sessionStorage.setItem(
+          "guestCart",
+          JSON.stringify({
+            ...guestCart,
+            CartItem: guestCart.CartItem.map((cartItem) =>
+              cartItem.product.id === item.product.id
+                ? { ...cartItem, qty: (cartItem.qty -= 1) }
+                : cartItem
+            ),
+          })
+        );
+        setGuestCart(JSON.parse(window.sessionStorage.getItem("guestCart")));
+      }
     }
   };
 

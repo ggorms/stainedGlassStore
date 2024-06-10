@@ -4,7 +4,7 @@ import sadFace from "../../assets/sadFace.png";
 import { Link } from "react-router-dom";
 import PayButton from "./PayButton/PayButton";
 
-function Cart({ cart, user }) {
+function Cart({ cart, user, setGuestCart, guestCart }) {
   const cartQty = cart?.CartItem?.reduce((acc, curr) => acc + curr.qty, 0);
   const cartSubtotal = cart?.CartItem?.reduce(
     (acc, curr) => acc + curr.qty * curr.product.price,
@@ -23,7 +23,13 @@ function Cart({ cart, user }) {
           {/* Display cart items */}
           <div className="cart-cartItems-container">
             {cart?.CartItem?.map((item) => (
-              <CartItem key={item.product.id} item={item} cartId={cart.id} />
+              <CartItem
+                key={item.product.id}
+                item={item}
+                cartId={cart.id}
+                setGuestCart={setGuestCart}
+                guestCart={guestCart}
+              />
             ))}
           </div>
           <div className="cart-order-summary-wrapper">

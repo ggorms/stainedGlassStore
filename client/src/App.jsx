@@ -19,15 +19,15 @@ function App() {
   const [mobileMenuToggle, setMobileMenuToggle] = useState(false);
   const [loading, setLoading] = useState(true);
   const [guestCart, setGuestCart] = useState(
-    window.sessionStorage.getItem("guestCart")
+    JSON.parse(window.sessionStorage.getItem("guestCart"))
   );
 
   const loggedInUser = useSelector((state) => state.auth.user);
 
   // console.log("test", guestCart);
-  const cart = useSelector((state) => state.cart.cart) ?? JSON.parse(guestCart);
+  const cart = useSelector((state) => state.cart.cart) ?? guestCart;
 
-  // console.log("cart", cart);
+  console.log("cart", cart);
 
   useEffect(() => {
     dispatch(me());
@@ -77,11 +77,21 @@ function App() {
                         <SingleProduct
                           cart={cart}
                           setGuestCart={setGuestCart}
+                          guestCart={guestCart}
                         />
                       }
                     />
                     <Route path="/custom" element={<RequestCustom />} />
-                    <Route path="/cart" element={<Cart cart={cart} />} />
+                    <Route
+                      path="/cart"
+                      element={
+                        <Cart
+                          cart={cart}
+                          setGuestCart={setGuestCart}
+                          guestCart={guestCart}
+                        />
+                      }
+                    />
                     <Route path="*" element={<Navigate to={"/"} replace />} />
                   </Routes>
                 </div>
