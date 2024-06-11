@@ -6,7 +6,7 @@ import PreMade from "./pages/PreMade/PreMade";
 import RequestCustom from "./pages/RequestCustom/RequestCustom";
 import Account from "./pages/Account/Account";
 import { me } from "./store/auth";
-import { getCartThunk } from "./store/cart";
+import { getCartThunk, addToCartThunk } from "./store/cart";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Nav from "./components/Nav/Nav";
@@ -28,6 +28,7 @@ function App() {
   const cart = useSelector((state) => state.cart.cart) ?? guestCart;
 
   console.log("cart", cart);
+  console.log("guestCart", guestCart);
 
   useEffect(() => {
     dispatch(me());
@@ -46,11 +47,59 @@ function App() {
               CartItem: [],
             })
           );
+          setGuestCart(JSON.parse(window.sessionStorage.getItem("guestCart")));
         }
       }
     };
     loadCart();
   }, [loggedInUser?.userId, dispatch]);
+
+  useEffect(() => {
+    console.log("test", cart);
+    if (cart?.id) {
+      const delay = (ms) => {
+        return new Promise((resolve) => setTimeout(resolve, ms));
+      };
+      console.log("hit");
+
+      guestCart?.CartItem.map((item) => {
+        const duplicates = async () => {
+          for (let i = 0; i < item.qty; i++) {
+            const cartItemInfo = {
+              cartId: cart.id,
+              productId: item.product.id,
+            };
+
+            dispatch(addToCartThunk(cartItemInfo));
+            console.log("count", i + 1);
+            await delay(1);
+          }
+        };
+        duplicates();
+      });
+
+      window.sessionStorage.removeItem("guestCart");
+    }
+  }, [cart?.id]);
+
+  // useEffect(() => {
+  //   console.log("test", cart);
+  //   if (cart?.id) {
+  //     console.log("hit");
+  //     guestCart?.CartItem.map((item) => {
+  //       for (let i = 0; i < item.qty; i++) {
+  //         const cartItemInfo = {
+  //           cartId: cart.id,
+  //           productId: item.product.id,
+  //         };
+
+  //         dispatch(addToCartThunk(cartItemInfo));
+  //         console.log("count", i + 1);
+  //       }
+  //     });
+  //     window.sessionStorage.removeItem("guestCart");
+  //   }
+  // }, [cart?.id]);
 
   return (
     <div id="app">

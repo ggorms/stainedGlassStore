@@ -30,7 +30,7 @@ function SingleProduct({ userCartId, setGuestCart, guestCart }) {
     // Guest Cart
     else {
       // If item is already in cart, increase quantity
-      if (guestCart.CartItem.some((item) => item.product.id === product.id)) {
+      if (guestCart?.CartItem?.some((item) => item.product.id === product.id)) {
         window.sessionStorage.setItem(
           "guestCart",
           JSON.stringify({

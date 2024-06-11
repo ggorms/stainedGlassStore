@@ -1,6 +1,5 @@
 import axios from "axios";
 import { BASE_URL } from "./BASE_URL";
-import { logoutCartHandler } from "./cart";
 
 const TOKEN = "token";
 
