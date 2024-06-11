@@ -30,6 +30,7 @@ function App() {
   console.log("cart", cart);
   console.log("guestCart", guestCart);
 
+  // Handle loading cart for User or Guest
   useEffect(() => {
     dispatch(me());
     setLoading(false);
@@ -54,9 +55,11 @@ function App() {
     loadCart();
   }, [loggedInUser?.userId, dispatch]);
 
+  // Handle transfer of guest cart to user cart
   useEffect(() => {
     console.log("test", cart);
     if (cart?.id) {
+      // Ineffecient - try using create many or adjusting qty for duplicates on front end. Potentially use loading wheel for cart image
       const delay = (ms) => {
         return new Promise((resolve) => setTimeout(resolve, ms));
       };
