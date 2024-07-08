@@ -55,15 +55,12 @@ export const fulfillCartThunk = (cartId) => async (dispatch) => {
 
 export const addToCartThunk = (cartItemInfo) => async (dispatch) => {
   try {
-    const { cartId, productId } = cartItemInfo;
-    const { data: cartItem } = await axios.post(
-      `${BASE_URL}/api/cartItem/add`,
-      {
-        cartId,
-        productId,
-      }
-    );
-    return dispatch(addToCart(cartItem));
+    const { cartId, CartItems } = cartItemInfo;
+    const { data: items } = await axios.post(`${BASE_URL}/api/cartItem/add`, {
+      cartId,
+      CartItems,
+    });
+    return dispatch(addToCart(items));
   } catch (error) {
     console.error(error);
   }
@@ -118,34 +115,7 @@ export default function (state = initialState, action) {
     case FULFILL_CART:
       return { ...state, cart: action.payload };
     case ADD_TO_CART:
-      // If the item already exists in the cart - replace it, else - add it
-      if (
-        state.cart.CartItem.some(
-          (item) => item.product.id === action.payload.product.id
-        )
-      ) {
-        // Replace
-        return {
-          ...state,
-          cart: {
-            ...state.cart,
-            CartItem: state.cart.CartItem.map((item) =>
-              item.product.id === action.payload.product.id
-                ? action.payload
-                : item
-            ),
-          },
-        };
-      } else {
-        // Add
-        return {
-          ...state,
-          cart: {
-            ...state.cart,
-            CartItem: [...state.cart.CartItem, action.payload],
-          },
-        };
-      }
+      return { ...state, cart: { ...state.cart, CartItem: action.payload } };
     case REMOVE_FROM_CART:
       return {
         ...state,

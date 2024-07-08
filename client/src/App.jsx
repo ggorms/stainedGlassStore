@@ -27,9 +27,6 @@ function App() {
   // console.log("test", guestCart);
   const cart = useSelector((state) => state.cart.cart) ?? guestCart;
 
-  console.log("cart", cart);
-  console.log("guestCart", guestCart);
-
   // Handle loading cart for User or Guest
   useEffect(() => {
     dispatch(me());
@@ -57,52 +54,21 @@ function App() {
 
   // Handle transfer of guest cart to user cart
   useEffect(() => {
-    console.log("test", cart);
-    if (cart?.id) {
-      // Ineffecient - try using create many or adjusting qty for duplicates on front end. Potentially use loading wheel for cart image
-      const delay = (ms) => {
-        return new Promise((resolve) => setTimeout(resolve, ms));
+    if (cart?.id && guestCart?.CartItem.length > 0) {
+      const cartItemInfo = {
+        cartId: cart.id,
+        CartItems: guestCart?.CartItem.map((item) => ({
+          qty: item.qty,
+          product: {
+            id: item.product.id,
+          },
+        })),
       };
-      console.log("hit");
-
-      guestCart?.CartItem.map((item) => {
-        const duplicates = async () => {
-          for (let i = 0; i < item.qty; i++) {
-            const cartItemInfo = {
-              cartId: cart.id,
-              productId: item.product.id,
-            };
-
-            dispatch(addToCartThunk(cartItemInfo));
-            console.log("count", i + 1);
-            await delay(1);
-          }
-        };
-        duplicates();
-      });
+      dispatch(addToCartThunk(cartItemInfo));
 
       window.sessionStorage.removeItem("guestCart");
     }
   }, [cart?.id]);
-
-  // useEffect(() => {
-  //   console.log("test", cart);
-  //   if (cart?.id) {
-  //     console.log("hit");
-  //     guestCart?.CartItem.map((item) => {
-  //       for (let i = 0; i < item.qty; i++) {
-  //         const cartItemInfo = {
-  //           cartId: cart.id,
-  //           productId: item.product.id,
-  //         };
-
-  //         dispatch(addToCartThunk(cartItemInfo));
-  //         console.log("count", i + 1);
-  //       }
-  //     });
-  //     window.sessionStorage.removeItem("guestCart");
-  //   }
-  // }, [cart?.id]);
 
   return (
     <div id="app">

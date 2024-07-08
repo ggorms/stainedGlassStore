@@ -23,7 +23,14 @@ function SingleProduct({ userCartId, setGuestCart, guestCart }) {
     if (userCartId) {
       const cartItemInfo = {
         cartId: userCartId,
-        productId: product.id,
+        CartItems: [
+          {
+            qty: 1,
+            product: {
+              id: product.id,
+            },
+          },
+        ],
       };
       dispatch(addToCartThunk(cartItemInfo));
     }

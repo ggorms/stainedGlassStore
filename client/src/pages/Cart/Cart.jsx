@@ -13,8 +13,7 @@ function Cart({ cart, user, setGuestCart, guestCart }) {
   const shippingCost = 495;
   const taxCost = 347;
   const total = cartSubtotal + shippingCost + taxCost;
-  // console.log(cart);
-  // console.log(cartSubtotal);
+
   return (
     <div className="cart-root">
       {cartQty > 0 ? (
