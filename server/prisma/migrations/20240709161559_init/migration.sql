@@ -19,7 +19,7 @@ CREATE TABLE "Product" (
     "width" INTEGER NOT NULL,
     "depth" INTEGER,
     "description" TEXT NOT NULL,
-    "inStock" BOOLEAN NOT NULL,
+    "stockQty" INTEGER NOT NULL,
 
     CONSTRAINT "Product_pkey" PRIMARY KEY ("id")
 );

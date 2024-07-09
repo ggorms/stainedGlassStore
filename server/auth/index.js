@@ -113,7 +113,7 @@ router.get("/me", verify, async (req, res, next) => {
                 name: true,
                 imageId: true,
                 price: true,
-                inStock: true,
+                stockQty: true,
               },
             },
           },

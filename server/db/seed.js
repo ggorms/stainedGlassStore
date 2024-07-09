@@ -34,7 +34,7 @@ const main = async () => {
           width: product.width,
           depth: product.depth,
           description: product.description,
-          inStock: product.inStock,
+          stockQty: product.stockQty,
         },
       });
     })

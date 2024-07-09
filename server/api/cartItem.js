@@ -42,12 +42,11 @@ router.post("/add", async (req, res, next) => {
             name: true,
             imageId: true,
             price: true,
-            inStock: true,
+            stockQty: true,
           },
         },
       },
     });
-    console.log(updatedCart);
     res.status(200).json(updatedCart);
   } catch (error) {
     next(error);
@@ -74,7 +73,7 @@ router.delete("/remove/:cartId/:productId", async (req, res, next) => {
             name: true,
             imageId: true,
             price: true,
-            inStock: true,
+            stockQty: true,
           },
         },
       },
@@ -108,7 +107,7 @@ router.put("/update", async (req, res, next) => {
             name: true,
             imageId: true,
             price: true,
-            inStock: true,
+            stockQty: true,
           },
         },
       },

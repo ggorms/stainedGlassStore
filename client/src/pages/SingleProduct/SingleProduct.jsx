@@ -19,60 +19,64 @@ function SingleProduct({ userCartId, setGuestCart, guestCart }) {
   }, []);
 
   const addToCart = () => {
-    // User Cart
-    if (userCartId) {
-      const cartItemInfo = {
-        cartId: userCartId,
-        CartItems: [
-          {
-            qty: 1,
-            product: {
-              id: product.id,
-            },
-          },
-        ],
-      };
-      dispatch(addToCartThunk(cartItemInfo));
-    }
-    // Guest Cart
-    else {
-      // If item is already in cart, increase quantity
-      if (guestCart?.CartItem?.some((item) => item.product.id === product.id)) {
-        window.sessionStorage.setItem(
-          "guestCart",
-          JSON.stringify({
-            ...guestCart,
-            CartItem: guestCart.CartItem.map((item) =>
-              item.product.id === product.id
-                ? { ...item, qty: (item.qty += 1) }
-                : item
-            ),
-          })
-        );
-      }
-      //If item not in cart, add it
-      else {
-        window.sessionStorage.setItem(
-          "guestCart",
-          JSON.stringify({
-            ...guestCart,
-            CartItem: [
-              ...guestCart.CartItem,
-              {
-                qty: 1,
-                product: {
-                  id: product.id,
-                  name: product.name,
-                  inStock: product.inStock,
-                  imageId: product.imageId,
-                  price: product.price,
-                },
+    if (product.stockQty > 0) {
+      // User Cart
+      if (userCartId) {
+        const cartItemInfo = {
+          cartId: userCartId,
+          CartItems: [
+            {
+              qty: 1,
+              product: {
+                id: product.id,
               },
-            ],
-          })
-        );
+            },
+          ],
+        };
+        dispatch(addToCartThunk(cartItemInfo));
       }
-      setGuestCart(JSON.parse(window.sessionStorage.getItem("guestCart")));
+      // Guest Cart
+      else {
+        // If item is already in cart, increase quantity
+        if (
+          guestCart?.CartItem?.some((item) => item.product.id === product.id)
+        ) {
+          window.sessionStorage.setItem(
+            "guestCart",
+            JSON.stringify({
+              ...guestCart,
+              CartItem: guestCart.CartItem.map((item) =>
+                item.product.id === product.id
+                  ? { ...item, qty: (item.qty += 1) }
+                  : item
+              ),
+            })
+          );
+        }
+        //If item not in cart, add it
+        else {
+          window.sessionStorage.setItem(
+            "guestCart",
+            JSON.stringify({
+              ...guestCart,
+              CartItem: [
+                ...guestCart.CartItem,
+                {
+                  qty: 1,
+                  product: {
+                    id: product.id,
+                    name: product.name,
+                    inStock: product.inStock,
+                    imageId: product.imageId,
+                    price: product.price,
+                  },
+                },
+              ],
+            })
+          );
+        }
+        setGuestCart(JSON.parse(window.sessionStorage.getItem("guestCart")));
+      }
     }
   };
 
@@ -82,12 +86,12 @@ function SingleProduct({ userCartId, setGuestCart, guestCart }) {
         <h3 className="singleProduct-name">{product.name}</h3>
         <h3
           className={
-            product.inStock
+            product.stockQty > 0
               ? "singleProduct-instock inStock"
               : "singleProduct-instock outOfStock"
           }
         >
-          {product.inStock ? "In Stock" : "Out of Stock"}
+          {product.stockQty > 0 ? "In Stock" : "Out of Stock"}
         </h3>
         <h3 className="singleProduct-price">
           $ {(product.price / 100).toFixed(2)}
@@ -135,8 +139,15 @@ function SingleProduct({ userCartId, setGuestCart, guestCart }) {
           ""
         )}
       </div>
-      <button className="singleProduct-add-button" onClick={addToCart}>
-        Add to Cart
+      <button
+        className={
+          product.stockQty > 0
+            ? "singleProduct-add-button"
+            : "singleProduct-outOfStockButton"
+        }
+        onClick={addToCart}
+      >
+        {product.stockQty > 0 ? "Add to Cart" : "Out of Stock"}
       </button>
     </div>
   );

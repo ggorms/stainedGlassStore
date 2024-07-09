@@ -25,7 +25,7 @@ router.get("/:id", async (req, res, next) => {
                 name: true,
                 imageId: true,
                 price: true,
-                inStock: true,
+                stockQty: true,
               },
             },
           },
@@ -56,7 +56,43 @@ router.post("/fulfill/:id", async (req, res, next) => {
       data: {
         isFulfilled: true,
       },
+      select: {
+        id: true,
+        userId: true,
+        CartItem: {
+          select: {
+            productId: true,
+          },
+        },
+      },
     });
+
+    const test = await prisma.product.findMany({
+      where: {
+        id: {
+          in: fulfilledCart.CartItem.map((item) => item.productId),
+        },
+      },
+      select: {
+        id: true,
+        name: true,
+        stockQty: true,
+      },
+    });
+
+    // Decrease stock qty of purchased items
+    // await prisma.product.updateMany({
+    //   where: {
+    //     id: {
+    //       in: fulfilledCart.CartItem.map((item) => item.productId),
+    //     },
+    //   },
+    //   data: {
+    //     stockQty: {
+    //       decrement: 1,
+    //     },
+    //   },
+    // });
 
     // create a new empty cart
     const newCart = await prisma.cart.create({
@@ -65,7 +101,7 @@ router.post("/fulfill/:id", async (req, res, next) => {
       },
     });
 
-    res.status(200).json(newCart);
+    res.status(200).json(test);
   } catch (error) {
     next(error);
   }

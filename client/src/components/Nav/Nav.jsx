@@ -25,7 +25,7 @@ function Nav({ loggedInUser, mobileMenuToggle, setMobileMenuToggle, cart }) {
           </Link>
         </div>
         <ul className="nav-links-list">
-          <Link className="nav-link">
+          <Link className="nav-link" to={"/premade"}>
             <li>Products</li>
           </Link>
           {loggedInUser?.userId ? (
@@ -109,7 +109,7 @@ function Nav({ loggedInUser, mobileMenuToggle, setMobileMenuToggle, cart }) {
           </div>
           <ul>
             <li onClick={() => setMobileMenuToggle(false)}>
-              <Link>Products</Link>
+              <Link to={"/premade"}>Products</Link>
             </li>
             <li onClick={() => setMobileMenuToggle(false)}>
               <Link to={"/account"}>Account</Link>

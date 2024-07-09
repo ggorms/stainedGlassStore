@@ -1,10 +1,32 @@
 const router = require("express").Router();
+const { PrismaClient } = require("@prisma/client");
+const prisma = new PrismaClient();
 const stripe = require("stripe")(process.env.STRIPE_KEY);
 
 const CLEINT_URL = "http://localhost:5173";
 
 router.post(`/create-checkout-session`, async (req, res) => {
   const { cartItems, user } = req.body;
+  const productsInStock = await prisma.product.findMany({
+    where: {
+      id: {
+        in: cartItems.map((item) => item.product.id),
+      },
+    },
+    select: {
+      id: true,
+      name: true,
+      stockQty: true,
+    },
+  });
+
+  if (productsInStock.some((product) => product.stockQty < 1)) {
+    console.log("hit");
+    res
+      .status(400)
+      .json({ message: "One or more items in your cart are out of stock." });
+    return;
+  }
   const session = await stripe.checkout.sessions.create({
     customer_email: user.email,
     line_items: cartItems.map((item) => ({
