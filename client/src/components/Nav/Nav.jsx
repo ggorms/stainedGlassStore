@@ -78,7 +78,7 @@ function Nav({ loggedInUser, mobileMenuToggle, setMobileMenuToggle, cart }) {
             strokeWidth={1.5}
             stroke="currentColor"
             className="nav-hamburger"
-            onClick={() => setMobileMenuToggle(true)}
+            onClick={() => setMobileMenuToggle(!mobileMenuToggle)}
           >
             <path
               strokeLinecap="round"
@@ -88,38 +88,56 @@ function Nav({ loggedInUser, mobileMenuToggle, setMobileMenuToggle, cart }) {
           </svg>
         </div>
       </div>
-      {mobileMenuToggle && (
-        <div className="nav-condensed-display">
-          <div className="nav-condensed-close-container">
-            <svg
-              // xmlns="http://www.w3.org/2000/svg"
-              // fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="nav-condensed-close-button"
-              onClick={() => setMobileMenuToggle(false)}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 18 18 6M6 6l12 12"
-              />
-            </svg>
-          </div>
-          <ul>
-            <li onClick={() => setMobileMenuToggle(false)}>
-              <Link to={"/premade"}>Products</Link>
-            </li>
-            <li onClick={() => setMobileMenuToggle(false)}>
-              <Link to={"/account"}>Account</Link>
-            </li>
-            <li onClick={() => setMobileMenuToggle(false)}>
-              <Link to={"/cart"}>Cart</Link>
-            </li>
-          </ul>
+      {/* {mobileMenuToggle && ( */}
+      <div
+        className={
+          mobileMenuToggle
+            ? "nav-condensed-display-show"
+            : "nav-condensed-display-hidden"
+        }
+      >
+        <div className="nav-condensed-close-container">
+          <svg
+            // xmlns="http://www.w3.org/2000/svg"
+            // fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="nav-condensed-close-button"
+            onClick={() => setMobileMenuToggle(false)}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M6 18 18 6M6 6l12 12"
+            />
+          </svg>
         </div>
-      )}
+        <ul className="mobile-nav-links-list">
+          <li onClick={() => setMobileMenuToggle(false)}>
+            <Link className="mobile-nav-link" to={"/premade"}>
+              Products
+            </Link>
+          </li>
+          <li onClick={() => setMobileMenuToggle(false)}>
+            {loggedInUser?.userId ? (
+              <Link className="mobile-nav-link" to={"/account"}>
+                {loggedInUser.fName} {loggedInUser.lName}
+              </Link>
+            ) : (
+              <Link className="mobile-nav-link" to={"/auth"}>
+                Sign in
+              </Link>
+            )}
+          </li>
+          <li onClick={() => setMobileMenuToggle(false)}>
+            <Link className="mobile-nav-link" to={"/cart"}>
+              Cart
+            </Link>
+          </li>
+        </ul>
+      </div>
+      {/* )} */}
     </nav>
   );
 }

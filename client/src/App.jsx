@@ -76,76 +76,77 @@ function App() {
         <>
           {/* Guest Routes */}
           {!loggedInUser ? (
-            <>
+            <div className={mobileMenuToggle ? "contentMenuActive" : "content"}>
+              {mobileMenuToggle && <span className="blur"></span>}
               <Nav
                 // loggedInUser={loggedInUser}
                 mobileMenuToggle={mobileMenuToggle}
                 setMobileMenuToggle={setMobileMenuToggle}
                 cart={cart}
               />
-              {!mobileMenuToggle && (
-                <div className="content">
-                  <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/auth" element={<Auth />} />
-                    <Route path="/premade" element={<PreMade />} />
-                    <Route
-                      path="/premade/:id"
-                      element={
-                        <SingleProduct
-                          cart={cart}
-                          setGuestCart={setGuestCart}
-                          guestCart={guestCart}
-                        />
-                      }
-                    />
-                    <Route path="/custom" element={<RequestCustom />} />
-                    <Route
-                      path="/cart"
-                      element={
-                        <Cart
-                          cart={cart}
-                          setGuestCart={setGuestCart}
-                          guestCart={guestCart}
-                        />
-                      }
-                    />
-                    <Route path="*" element={<Navigate to={"/"} replace />} />
-                  </Routes>
-                </div>
-              )}
+              <>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/auth" element={<Auth />} />
+                  <Route path="/premade" element={<PreMade />} />
+                  <Route
+                    path="/premade/:id"
+                    element={
+                      <SingleProduct
+                        cart={cart}
+                        setGuestCart={setGuestCart}
+                        guestCart={guestCart}
+                      />
+                    }
+                  />
+                  <Route path="/custom" element={<RequestCustom />} />
+                  <Route
+                    path="/cart"
+                    element={
+                      <Cart
+                        cart={cart}
+                        setGuestCart={setGuestCart}
+                        guestCart={guestCart}
+                      />
+                    }
+                  />
+                  <Route path="*" element={<Navigate to={"/"} replace />} />
+                </Routes>
+              </>
               <Footer />
-            </>
+            </div>
           ) : (
             // User Routes
-            <>
+
+            <div className={mobileMenuToggle ? "contentMenuActive" : "content"}>
+              {mobileMenuToggle && <span className="blur"></span>}
               <Nav
                 loggedInUser={loggedInUser}
                 mobileMenuToggle={mobileMenuToggle}
                 setMobileMenuToggle={setMobileMenuToggle}
                 cart={cart}
               />
-              {!mobileMenuToggle && (
-                <div className="content">
-                  <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/account" element={<Account />} />
-                    <Route path="/premade" element={<PreMade />} />
-                    <Route
-                      path="/premade/:id"
-                      element={<SingleProduct userCartId={cart?.id} />}
-                    />
-                    <Route path="/custom" element={<RequestCustom />} />
-                    <Route
-                      path="/cart"
-                      element={<Cart cart={cart} user={loggedInUser} />}
-                    />
-                    <Route path="*" element={<Navigate to={"/"} replace />} />
-                  </Routes>
-                </div>
-              )}
+
+              <>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/account" element={<Account />} />
+                  <Route path="/premade" element={<PreMade />} />
+                  <Route
+                    path="/premade/:id"
+                    element={<SingleProduct userCartId={cart?.id} />}
+                  />
+                  <Route path="/custom" element={<RequestCustom />} />
+                  <Route
+                    path="/cart"
+                    element={<Cart cart={cart} user={loggedInUser} />}
+                  />
+                  <Route path="*" element={<Navigate to={"/"} replace />} />
+                </Routes>
+              </>
+
               <Footer />
-            </>
+            </div>
           )}
         </>
       )}

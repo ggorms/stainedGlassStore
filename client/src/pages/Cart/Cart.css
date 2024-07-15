@@ -1,11 +1,12 @@
 .cart-root {
     background-color: rgb(45, 45, 45);
     /* height: calc(100vh); */
-    /* height: 100%; */
+    height: calc(100vh - 100px);
     /* min-height: min-content; */
     /* margin-top: 60px; */
     padding-top: 60px;
     color: white;
+    
 }
 
 .cart-title {
