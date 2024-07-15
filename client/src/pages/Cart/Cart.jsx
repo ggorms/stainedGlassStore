@@ -14,7 +14,6 @@ function Cart({ cart, user, setGuestCart, guestCart }) {
   const taxCost = 347;
   const total = cartSubtotal + shippingCost + taxCost;
 
-  console.log(cart.CartItem);
   return (
     <div className="cart-root">
       {cartQty > 0 ? (
@@ -37,7 +36,13 @@ function Cart({ cart, user, setGuestCart, guestCart }) {
             <div className="cart-order-summary-info">
               <div className="cart-order-summary-container">
                 <span>Item Subtotal</span>
-                <span>$ {(cartSubtotal / 100).toFixed(2)}</span>
+                <span>
+                  ${" "}
+                  {(cartSubtotal / 100).toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
+                </span>
               </div>
               <div className="cart-order-summary-container">
                 <span>Shipping Cost</span>
@@ -49,7 +54,13 @@ function Cart({ cart, user, setGuestCart, guestCart }) {
               </div>
               <div className="cart-order-summary-container total">
                 <span>Total</span>
-                <span>$ {(total / 100).toFixed(2)}</span>
+                <span>
+                  ${" "}
+                  {(total / 100).toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
+                </span>
               </div>
             </div>
             <PayButton cartItems={cart.CartItem} user={user} />
