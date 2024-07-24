@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { singleProductThunk } from "../../store/product";
 import { addToCartThunk } from "../../store/cart";
+import CartPopup from "./AddToCartPopup/CartPopup";
 import Placeholder from "../../assets/placeholder.png";
 import Placeholder2 from "../../assets/placeholder2.png";
 import Placeholder3 from "../../assets/placeholder3.png";
@@ -14,6 +15,7 @@ function SingleProduct({ userCartId, setGuestCart, guestCart }) {
   const { id } = useParams();
   const product = useSelector((state) => state.product.singleProduct);
   const [photo, setPhoto] = useState(Placeholder);
+  const [showPopup, setShowPopup] = useState(false);
   useEffect(() => {
     dispatch(singleProductThunk(id));
   }, []);
@@ -145,10 +147,20 @@ function SingleProduct({ userCartId, setGuestCart, guestCart }) {
             ? "singleProduct-add-button"
             : "singleProduct-outOfStockButton"
         }
-        onClick={addToCart}
+        onClick={() => {
+          addToCart();
+          setShowPopup(true);
+        }}
       >
         {product.stockQty > 0 ? "Add to Cart" : "Out of Stock"}
       </button>
+      {showPopup && (
+        <CartPopup
+          showPopup={showPopup}
+          setShowPopup={setShowPopup}
+          product={product}
+        />
+      )}
     </div>
   );
 }

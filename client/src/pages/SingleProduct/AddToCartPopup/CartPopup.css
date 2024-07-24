@@ -1,0 +1,52 @@
+.cart-popup {
+    background-color: white;
+    width: 95%;
+    height: 120px;
+    position: fixed;
+    left: 0;
+    top: 60px;
+    z-index: 99;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 2.5%;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.cart-popup-wrapper {
+    display: flex;
+}
+
+.cart-popup img {
+    height: 80px;
+    width: 80px;
+}
+
+.cart-popup-info-container {
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 50px;
+}
+
+.cart-popup-info-container h3 {
+    color: black;
+    cursor: default;
+    font-weight: bolder;
+    font-size: larger;
+}
+
+.cart-popup-progressBar {
+    height: 10px;
+    width: 100%;
+    background-color: lightgray;
+    border-radius: 8px;
+}
+
+/* .cart-popup-progressBar-timer {
+    width: `${progress}%`,
+            height: "100%",
+            backgroundColor: "#f1c40f",
+} */
