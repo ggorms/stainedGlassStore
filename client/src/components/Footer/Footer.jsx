@@ -3,9 +3,10 @@ import { Link } from "react-router-dom";
 import tiktok from "../../assets/tiktokIcon.png";
 import instagram from "../../assets/instagramIcon.png";
 
-function Footer() {
+function Footer({ mobileMenuToggle }) {
   return (
     <footer>
+      {mobileMenuToggle && <span className="footerBlur"></span>}
       <ul className="footer-link-internal-container">
         <Link className="footer-link-internal">
           <li className="footer-link-internal-text">About me</li>

@@ -33,7 +33,7 @@
 
 .cart-popup-info-container h3 {
     color: black;
-    cursor: default;
+    /* cursor: default; */
     font-weight: bolder;
     font-size: larger;
 }

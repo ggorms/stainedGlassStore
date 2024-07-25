@@ -1,10 +1,11 @@
 .cart-root {
     background-color: rgb(45, 45, 45);
     /* height: calc(100vh); */
-    height: calc(100vh - 100px);
+    /* height: calc(100vh - 100px); */
+    height: min-content;
     /* min-height: min-content; */
     /* margin-top: 60px; */
-    padding-top: 60px;
+    padding: 60px 0;
     color: white;
     
 }

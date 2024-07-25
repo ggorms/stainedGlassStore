@@ -22,6 +22,13 @@ function App() {
     JSON.parse(window.sessionStorage.getItem("guestCart"))
   );
 
+  // If mobile menu is active, disable scrolling, else enable scrolling
+  if (mobileMenuToggle) {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "auto";
+  }
+
   const loggedInUser = useSelector((state) => state.auth.user);
 
   // console.log("test", guestCart);

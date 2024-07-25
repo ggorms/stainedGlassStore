@@ -9,7 +9,7 @@ function Form() {
     message: "",
   });
   return (
-    <div className="home-form-container">
+    <div className="home-form-container" id="home-form">
       <h2>Questions or Comments?</h2>
       <h2>Contact me below!</h2>
       <form className="home-form">

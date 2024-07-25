@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import "./CartPopup.css";
 import Placeholder from "../../../assets/placeholder.png";
+import { Link } from "react-router-dom";
 
 const CartPopup = ({ product, showPopup, setShowPopup }) => {
   const [progress, setProgress] = useState(100);
@@ -25,26 +26,28 @@ const CartPopup = ({ product, showPopup, setShowPopup }) => {
   }, [setShowPopup, showPopup]);
 
   return (
-    <div className="cart-popup">
-      <div className="cart-popup-wrapper">
-        <img src={Placeholder} alt={product.name} />
-        <div className="cart-popup-info-container">
-          <h3>{product.name} added to cart!</h3>
-          <h3>$ {(product.price / 100).toFixed(2)}</h3>
+    <Link to={"/cart"}>
+      <div className="cart-popup">
+        <div className="cart-popup-wrapper">
+          <img src={Placeholder} alt={product.name} />
+          <div className="cart-popup-info-container">
+            <h3>{product.name} added to cart!</h3>
+            <h3>$ {(product.price / 100).toFixed(2)}</h3>
+          </div>
+        </div>
+        <div className="cart-popup-progressBar">
+          <div
+            style={{
+              width: `${progress}%`,
+              height: "100%",
+              backgroundColor: "blue",
+              borderRadius: "8px",
+              transition: "ease-in-out width",
+            }}
+          />
         </div>
       </div>
-      <div className="cart-popup-progressBar">
-        <div
-          style={{
-            width: `${progress}%`,
-            height: "100%",
-            backgroundColor: "blue",
-            borderRadius: "8px",
-            transition: "ease-in-out width",
-          }}
-        />
-      </div>
-    </div>
+    </Link>
   );
 };
 

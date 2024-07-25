@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { allProductsThunk } from "../../store/product";
 import Products from "./Products/Products";
 import { Link } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
 
 function PreMade() {
   const dispatch = useDispatch();
@@ -38,11 +39,12 @@ function PreMade() {
         <h2 className="premade-info-title">Please Note</h2>
         <p className="premade-info-text">
           See something you like but it&#39;s out of stock? Want something in a
-          different color? <Link>Send me a message</Link> and i&#39;ll do my
-          best to accommodate you! Please note that the final price may vary due
-          to differences in material costs. All products are handmade and
-          therefore may not look exactly as advertised - although I make every
-          effort to do so.
+          different color?{" "}
+          <HashLink to={"/#home-form"}>Send me a message</HashLink> and i&#39;ll
+          do my best to accommodate you! Please note that the final price may
+          vary due to differences in material costs. All products are handmade
+          and therefore may not look exactly as advertised - although I make
+          every effort to do so.
         </p>
       </div>
     </div>

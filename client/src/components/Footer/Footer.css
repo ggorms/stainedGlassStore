@@ -7,7 +7,17 @@ footer {
     display: flex;
     justify-content: space-around;
     align-items: center;
+
 }
+
+/* .footerBlur {
+    background-color: rgba(0, 0, 0, 0.8);
+    transition: background-color .75s ease-in-out;
+    position: absolute;
+    margin-top: -10px;
+    height: 100px;
+    width: 100%;
+} */
 
 .footer-link-internal-container {
     list-style: none;
