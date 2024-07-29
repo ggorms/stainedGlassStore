@@ -1,0 +1,24 @@
+.hidden {
+    display: none;
+}
+
+.custom-form-file label {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+}
+.custom-form-file p {
+    font-size: small;
+    cursor: default;
+    text-align: center;
+}
+
+.uploadImg {
+    height: 80px;
+    width: 80px;
+    cursor: pointer;
+}

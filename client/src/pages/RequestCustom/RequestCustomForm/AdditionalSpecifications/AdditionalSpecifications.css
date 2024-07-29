@@ -1,0 +1,9 @@
+.custom-form-comments {
+    margin: 10px;
+}
+
+.custom-form-text {
+    resize: vertical;
+    min-height: 100px;
+    width: 100%;
+}

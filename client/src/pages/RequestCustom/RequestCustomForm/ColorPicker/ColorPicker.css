@@ -1,0 +1,62 @@
+.custom-form-color-picker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    padding: 15px;
+}
+
+.custom-form-color-option {
+    width: 40px;
+    height: 40px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+
+.custom-form-color-buttons {
+    border: 1px solid gray;
+    width: 100px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 8px;
+    cursor: default;
+}
+
+.custom-form-color-buttons button {
+    border: none;
+    background-color: unset;
+    cursor: pointer;
+    text-align: center;
+    width: 33%;
+    font-size: larger;
+    font-weight: bold;
+}
+
+.disabled {
+    color: gray;
+    cursor: default;
+    pointer-events: none;
+}
+
+.custom-form-color-buttons span {
+    border-right: 1px solid gray;
+    border-left: 1px solid gray;
+    width: 33%;
+    text-align: center;
+    color: black;
+    font-size: larger;
+}
+
+.custom-form-color-option::-webkit-color-swatch {
+    border-radius: 50%;
+    border: thin solid black;
+  }
+
+.custom-form-color-option::-moz-color-swatch {
+    border-radius: 50%;
+    border: thin solid black;
+  }
