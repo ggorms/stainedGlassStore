@@ -1,6 +1,7 @@
 .custom-form-root {
     padding: 20px;
-    background-color: rgb(222, 221, 221);
+    /* background-color: rgb(222, 221, 221); */
+    background-color: white;
 }
 
 .custom-form-title {
@@ -17,35 +18,47 @@
     height: 30px;
     font-size: 20px;
     font-weight: bold;
+    cursor: default;
+    margin-bottom: 15px;
 }
 
 .custom-form-segment-container {
-    display: flex;
+    /* display: flex; */
 
     /* padding: 10px 20px; */
-    background-color: white;
+    /* background-color: white; */
     border-radius: 8px;
-    box-shadow: 0 0 2px black;
-    margin: 10px 0;
+    box-shadow: 0 0 1px rgb(122, 122, 122);
+    margin: 15px 0;
 }
 
 .custom-form-segment-wrapper {
-    width: 50%;
+    width: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 10px 0;
 }
 
 .custom-form-radio {
+    width: 70%;
     display: flex;
-    flex-direction: column;
+    justify-content: space-around;
+    /* flex-direction: column; */
     margin: 10px 0;
     /* width: 50%; */
 }
 
+.custom-form-radio div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 .custom-form-radio-label {
-    margin-left: 20px;
+    /* margin-left: 20px; */
 }
 
 .custom-form-submit {
@@ -63,4 +76,41 @@
 
 .custom-form-submit:hover {
     background-color: rgb(5, 165, 213);
+}
+
+.custom-form-radio-option {
+    display: none;
+}
+
+.custom-form-radio-outerCircle {
+    height: 70px;
+    width: 70px;
+    /* background-color: rgb(166, 228, 249); */
+    background-color: rgb(45, 45, 45);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.custom-form-radio-innerCircle {
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: rgb(166, 228, 249); */
+    background-color: rgb(45, 45, 45);
+}
+
+.selected {
+    /* background-color: rgb(65, 122, 255); */
+    background-color: rgb(38, 204, 237);
+}
+
+.custom-form-sublabel {
+    text-align: center;
+    margin-top: 5px;
+    cursor: default;
 }

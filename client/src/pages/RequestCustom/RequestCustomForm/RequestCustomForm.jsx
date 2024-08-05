@@ -4,7 +4,8 @@ import ColorPicker from "./ColorPicker/ColorPicker";
 import ContactInfo from "./ContactInfo/ContactInfo";
 import DimensionAndEnclosure from "./DimensionAndEnclosure/DimensionAndEnclosure";
 import OpacityAndJointColor from "./OpacityAndJointColor/OpacityAndJointColor";
-import SizeAndFile from "./SizeAndFile/SizeAndFile";
+import FileUpload from "./FileUpload/FileUpload";
+import Size from "./Size/Size";
 import AdditionalSpecifications from "./AdditionalSpecifications/AdditionalSpecifications";
 
 function RequestCustomForm() {
@@ -33,9 +34,10 @@ function RequestCustomForm() {
   const components = [
     { id: 1, name: DimensionAndEnclosure },
     { id: 2, name: OpacityAndJointColor },
-    { id: 3, name: ColorPicker },
-    { id: 4, name: SizeAndFile },
-    { id: 5, name: AdditionalSpecifications },
+    { id: 3, name: Size },
+    { id: 4, name: ColorPicker },
+    { id: 5, name: FileUpload },
+    { id: 6, name: AdditionalSpecifications },
   ];
 
   return (

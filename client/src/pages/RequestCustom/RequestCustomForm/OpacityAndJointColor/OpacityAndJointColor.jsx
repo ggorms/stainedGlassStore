@@ -1,13 +1,16 @@
-import React from "react";
+import FlashlightOnOutlinedIcon from "@mui/icons-material/FlashlightOnOutlined";
+import FlashlightOffOutlinedIcon from "@mui/icons-material/FlashlightOffOutlined";
+import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 
 function OpacityAndJointColor({ formData, setFormData }) {
   return (
     <>
       <div className="custom-form-segment-wrapper">
+        <h5 className="custom-form-subtitle">Select Opacity</h5>
         <div className="custom-form-radio">
-          <label className="custom-form-subtitle">Opacity</label>
           <div>
             <input
+              className="custom-form-radio-option"
               type="radio"
               name="opacity"
               id="translucent"
@@ -17,11 +20,25 @@ function OpacityAndJointColor({ formData, setFormData }) {
               }
             />
             <label className="custom-form-radio-label" htmlFor="translucent">
-              Translucent
+              <div className="custom-form-radio-outerCircle">
+                <div
+                  className={
+                    formData.opacity === "translucent"
+                      ? "custom-form-radio-innerCircle selected"
+                      : "custom-form-radio-innerCircle"
+                  }
+                >
+                  <FlashlightOnOutlinedIcon
+                    sx={{ fontSize: 30, color: "white" }}
+                  />
+                </div>
+              </div>
             </label>
+            <p className="custom-form-sublabel">Translucent</p>
           </div>
           <div>
             <input
+              className="custom-form-radio-option"
               type="radio"
               name="opacity"
               id="opaque"
@@ -31,17 +48,31 @@ function OpacityAndJointColor({ formData, setFormData }) {
               }
             />
             <label className="custom-form-radio-label" htmlFor="opaque">
-              Opaque
+              <div className="custom-form-radio-outerCircle">
+                <div
+                  className={
+                    formData.opacity === "opaque"
+                      ? "custom-form-radio-innerCircle selected"
+                      : "custom-form-radio-innerCircle"
+                  }
+                >
+                  <FlashlightOffOutlinedIcon
+                    sx={{ fontSize: 30, color: "white" }}
+                  />
+                </div>
+              </div>
             </label>
+            <p className="custom-form-sublabel">Opaque</p>
           </div>
         </div>
       </div>
       {/* Joint Color */}
       <div className="custom-form-segment-wrapper">
+        <h5 className="custom-form-subtitle">Select Joint Color</h5>
         <div className="custom-form-radio">
-          <label className="custom-form-subtitle">Joint Color</label>
           <div>
             <input
+              className="custom-form-radio-option"
               type="radio"
               name="joint"
               id="silver"
@@ -51,11 +82,25 @@ function OpacityAndJointColor({ formData, setFormData }) {
               }
             />
             <label className="custom-form-radio-label" htmlFor="silver">
-              Silver
+              <div className="custom-form-radio-outerCircle">
+                <div
+                  className={
+                    formData.joint === "silver"
+                      ? "custom-form-radio-innerCircle selected"
+                      : "custom-form-radio-innerCircle"
+                  }
+                >
+                  <ModeEditOutlineOutlinedIcon
+                    sx={{ fontSize: 30, color: "white" }}
+                  />
+                </div>
+              </div>
             </label>
+            <p className="custom-form-sublabel">Silver</p>
           </div>
           <div>
             <input
+              className="custom-form-radio-option"
               type="radio"
               name="joint"
               id="black"
@@ -65,8 +110,21 @@ function OpacityAndJointColor({ formData, setFormData }) {
               }
             />
             <label className="custom-form-radio-label" htmlFor="black">
-              Black
+              <div className="custom-form-radio-outerCircle">
+                <div
+                  className={
+                    formData.joint === "black"
+                      ? "custom-form-radio-innerCircle selected"
+                      : "custom-form-radio-innerCircle"
+                  }
+                >
+                  <ModeEditOutlineOutlinedIcon
+                    sx={{ fontSize: 30, color: "white" }}
+                  />
+                </div>
+              </div>
             </label>
+            <p className="custom-form-sublabel">Black</p>
           </div>
         </div>
       </div>

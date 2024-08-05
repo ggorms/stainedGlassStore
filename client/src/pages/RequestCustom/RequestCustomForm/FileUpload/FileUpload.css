@@ -1,5 +1,9 @@
-.hidden {
-    display: none;
+.custom-form-file {
+    background-color: rgb(45, 45, 45);
+    width: 150px;
+    height: 150px;
+    border-radius: 16px;
+    margin: 10px 0;
 }
 
 .custom-form-file label {
@@ -10,15 +14,23 @@
     font-weight: bold;
     text-align: center;
     cursor: pointer;
+    height: inherit;
+    width: inherit;
 }
 .custom-form-file p {
-    font-size: small;
-    cursor: default;
+    font-size: medium;
+    font-weight: bold;
+    /* cursor: default; */
     text-align: center;
+    color: white;
 }
 
 .uploadImg {
     height: 80px;
     width: 80px;
     cursor: pointer;
+}
+
+.hidden {
+    display: none;
 }

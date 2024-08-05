@@ -6,7 +6,7 @@ function ColorPicker({ formData, setFormData }) {
   const numOfColorsArray = Array.from({ length: numOfColors }, (_, i) => i);
   return (
     <div className="custom-form-color-picker">
-      <label className="custom-form-subtitle">Color(s)</label>
+      <h5 className="custom-form-subtitle">Color(s)</h5>
 
       <div className="">
         <input

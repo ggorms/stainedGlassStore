@@ -4,10 +4,10 @@
     justify-content: space-around;
     align-items: center;
     background-color: white;
-    box-shadow: 0 0 2px black;
+    box-shadow: 0 0 1px rgb(122, 122, 122);
     border-radius: 8px;
     padding: 20px;
-    margin: 10px 0;
+    margin: 15px 0;
     height: 300px;
 }
 
