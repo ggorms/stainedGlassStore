@@ -4,7 +4,7 @@
 
 .premade-banner {
     width: 100%;
-    height: 225px;
+    height: 280px;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -55,4 +55,52 @@
 .premade-link {
     text-decoration: none;
     margin: 10px;
+}
+
+@media screen and (min-width: 370px) {
+    .premade-banner {
+        height: 250px;
+    }
+}
+
+@media screen and (min-width: 420px) {
+    .premade-banner {
+        height: 280px;
+    }
+}
+
+@media screen and (min-width: 760px) {
+    .premade-banner {
+        height: 500px;
+    }
+}
+
+@media screen and (min-width: 820px) {
+    .premade-banner {
+        height: 540px;
+    }
+}
+
+@media screen and (min-width: 1000px) {
+    .premade-banner {
+        height: 670px;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .premade-banner {
+        height: 820px;
+    }
+}
+
+@media screen and (min-width: 1400px) {
+    .premade-banner {
+        height: 940px;
+    }
+}
+
+@media screen and (min-width: 1500px) {
+    .premade-banner {
+        height: 1240px;
+    }
 }

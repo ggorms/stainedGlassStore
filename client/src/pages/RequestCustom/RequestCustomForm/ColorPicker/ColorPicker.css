@@ -54,7 +54,7 @@
 
 .custom-form-color-option::-webkit-color-swatch {
     border-radius: 50%;
-    border: thin solid black;
+    border: thick solid black;
   }
 
 .custom-form-color-option::-moz-color-swatch {

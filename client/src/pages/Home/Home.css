@@ -1,6 +1,7 @@
 .home-root{
     background-repeat: no-repeat;
-    height: 100vh;
+    /* height: 100vh; */
+    width: 100%;
     background-position: center;
     background-size:cover;
 }
@@ -25,6 +26,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    background-color: rgb(45, 45, 45);
 }
 
 .home-content-segment {
@@ -51,3 +53,50 @@
      font-size: larger;
 }
 
+@media screen and (min-width: 370px) {
+    .home-root {
+        height: 250px;
+    }
+}
+
+@media screen and (min-width: 420px) {
+    .home-root {
+        height: 285px;
+    }
+}
+
+@media screen and (min-width: 750px) {
+    .home-root {
+        height: 500px;
+    }
+}
+
+@media screen and (min-width: 830px) {
+    .home-root {
+        height: 550px;
+    }
+}
+
+@media screen and (min-width: 1000px) {
+    .home-root {
+        height: 680px;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .home-root {
+        height: 830px;
+    }
+}
+
+@media screen and (min-width: 1400px) {
+    .home-root {
+        height: 950px;
+    }
+}
+
+@media screen and (min-width: 1500px) {
+    .home-root {
+        height: 1240px;
+    }
+}
