@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const { PrismaClient } = require("@prisma/client");
+
 const prisma = new PrismaClient();
 const stripe = require("stripe")(process.env.STRIPE_KEY);
 
@@ -27,8 +28,34 @@ router.post(`/create-checkout-session`, async (req, res) => {
       .json({ message: "One or more items in your cart are out of stock." });
     return;
   }
+
+  // If loggedInUser, search stripe customers with user email
+  const checkIfUserAndExistingCustomer = async () => {
+    if (user) {
+      const findCustomer = await stripe.customers.search({
+        query: `email:'${user.email}'`, //user.email
+        limit: 1,
+      });
+      // Save stripe id of user, if it exists, else undefined
+      const findCustomerId =
+        findCustomer.data.length > 0 ? findCustomer.data[0].id : undefined;
+      return findCustomerId;
+    }
+    // If guest user return undefined
+    else {
+      return undefined;
+    }
+  };
+
+  const customerId = await checkIfUserAndExistingCustomer();
+
   const session = await stripe.checkout.sessions.create({
-    customer_email: user.email,
+    // CusomerId if found, undefined if not
+    customer: customerId,
+    // If user and customerId is found, do not create new customer. If user and no customerId, create customer. No user -> guest customer will be created
+    customer_creation: user ? (customerId ? undefined : "always") : undefined,
+    // If user and customerId is found, do not populate email, it will already be populated. If user and no customerId, populate email. No user -> do not populate email
+    customer_email: user ? (customerId ? undefined : user.email) : undefined,
     line_items: cartItems.map((item) => ({
       price_data: {
         currency: "usd",
@@ -46,20 +73,29 @@ router.post(`/create-checkout-session`, async (req, res) => {
     shipping_address_collection: {
       allowed_countries: ["US"],
     },
-    shipping_options: [
-      { shipping_rate: "shr_1PG7ULJHFmNzdCGuMKCpGwsr" },
-      { shipping_rate: "shr_1PG7lcJHFmNzdCGuYTBjof2h" },
-      { shipping_rate: "shr_1PG7nkJHFmNzdCGuVuhP4WKq" },
-    ],
+    // shipping_options: [
+    //   { shipping_rate: "shr_1PG7ULJHFmNzdCGuMKCpGwsr" },
+    //   { shipping_rate: "shr_1PG7lcJHFmNzdCGuYTBjof2h" },
+    //   { shipping_rate: "shr_1PG7nkJHFmNzdCGuVuhP4WKq" },
+    // ],
     phone_number_collection: {
       enabled: true,
     },
-
-    success_url: `${CLEINT_URL}?success=true`,
+    // success_url: `${CLEINT_URL}/confirmation?success=true`,
+    success_url: `${CLEINT_URL}/order/success?session_id={CHECKOUT_SESSION_ID}`,
+    // "http://yoursite.com/order/success?session_id={CHECKOUT_SESSION_ID}"
     cancel_url: `${CLEINT_URL}/cart`,
   });
 
   res.send({ url: session.url });
+});
+
+router.get("/order/success", async (req, res, next) => {
+  // const { sessionId } = req.body;
+  const session = await stripe.checkout.sessions.retrieve(req.query.session_id);
+  const customer = await stripe.customers.retrieve(session.customer);
+  console.log(customer);
+  res.status(200).json(customer);
 });
 
 module.exports = router;

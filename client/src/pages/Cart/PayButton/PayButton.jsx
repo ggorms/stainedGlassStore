@@ -13,7 +13,7 @@ function PayButton({ cartItems, user }) {
       })
       .catch((err) => console.log(err));
   };
-
+  console.log(user);
   return (
     <div className="payment-button-container">
       <button className="payment-button" onClick={handlePayment}>

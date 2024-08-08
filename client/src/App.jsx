@@ -13,6 +13,7 @@ import Nav from "./components/Nav/Nav";
 import Footer from "./components/Footer/Footer";
 import SingleProduct from "./pages/SingleProduct/SingleProduct";
 import Cart from "./pages/Cart/Cart";
+import OrderConfirmation from "./pages/OrderConfirmation/OrderConfirmation";
 
 function App() {
   const dispatch = useDispatch();
@@ -117,7 +118,8 @@ function App() {
                       />
                     }
                   />
-                  <Route path="*" element={<Navigate to={"/"} replace />} />
+                  <Route path="/order/sucess" element={<OrderConfirmation />} />
+                  {/* <Route path="*" element={<Navigate to={"/"} replace />} /> */}
                 </Routes>
               </>
               <Footer />
@@ -148,7 +150,11 @@ function App() {
                     path="/cart"
                     element={<Cart cart={cart} user={loggedInUser} />}
                   />
-                  <Route path="*" element={<Navigate to={"/"} replace />} />
+                  <Route
+                    path="/order/success"
+                    element={<OrderConfirmation />}
+                  />
+                  {/* <Route path="*" element={<Navigate to={"/"} replace />} /> */}
                 </Routes>
               </>
 
