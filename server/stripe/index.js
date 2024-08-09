@@ -76,11 +76,7 @@ router.post(`/create-checkout-session`, async (req, res) => {
     shipping_address_collection: {
       allowed_countries: ["US"],
     },
-    // shipping_options: [
-    //   { shipping_rate: "shr_1PG7ULJHFmNzdCGuMKCpGwsr" },
-    //   { shipping_rate: "shr_1PG7lcJHFmNzdCGuYTBjof2h" },
-    //   { shipping_rate: "shr_1PG7nkJHFmNzdCGuVuhP4WKq" },
-    // ],
+    shipping_options: [{ shipping_rate: "shr_1Pm03EJHFmNzdCGuCRHNbG18" }],
     phone_number_collection: {
       enabled: true,
     },
@@ -127,6 +123,8 @@ router.get("/confirmation", async (req, res, next) => {
       price: item.price.unit_amount,
       qty: item.quantity,
     })),
+    shippingCost: session.shipping_cost.amount_total,
+    orderTotal: session.amount_total,
   };
   res.status(200).json(sessionData);
 });
