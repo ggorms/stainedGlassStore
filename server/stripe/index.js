@@ -31,18 +31,21 @@ router.post(`/create-checkout-session`, async (req, res) => {
 
   // If loggedInUser, search stripe customers with user email
   const checkIfUserAndExistingCustomer = async () => {
-    if (user) {
+    if (!user) {
+      // If guest user, return undefined
+      return undefined;
+    }
+
+    try {
       const findCustomer = await stripe.customers.search({
-        query: `email:'${user.email}'`, //user.email
+        query: `email:'${user.email}'`,
         limit: 1,
       });
-      // Save stripe id of user, if it exists, else undefined
-      const findCustomerId =
-        findCustomer.data.length > 0 ? findCustomer.data[0].id : undefined;
-      return findCustomerId;
-    }
-    // If guest user return undefined
-    else {
+
+      // Return stripe id of user if it exists, otherwise undefined
+      return findCustomer.data.length > 0 ? findCustomer.data[0].id : undefined;
+    } catch (error) {
+      console.error("Error searching for customer:", error);
       return undefined;
     }
   };
@@ -52,10 +55,10 @@ router.post(`/create-checkout-session`, async (req, res) => {
   const session = await stripe.checkout.sessions.create({
     // CusomerId if found, undefined if not
     customer: customerId,
-    // If user and customerId is found, do not create new customer. If user and no customerId, create customer. No user -> guest customer will be created
-    customer_creation: user ? (customerId ? undefined : "always") : undefined,
-    // If user and customerId is found, do not populate email, it will already be populated. If user and no customerId, populate email. No user -> do not populate email
-    customer_email: user ? (customerId ? undefined : user.email) : undefined,
+    // If there is a user but they are not an existing stripe customer, enable customer creation, else undefined -> no customer creation
+    customer_creation: user && !customerId ? "always" : undefined,
+    // If there is a user but they are not an existing stripe customer, provide their email, else undefined.
+    customer_email: user && !customerId ? user.email : undefined,
     line_items: cartItems.map((item) => ({
       price_data: {
         currency: "usd",
@@ -82,7 +85,7 @@ router.post(`/create-checkout-session`, async (req, res) => {
       enabled: true,
     },
     // success_url: `${CLEINT_URL}/confirmation?success=true`,
-    success_url: `${CLEINT_URL}/order/success?session_id={CHECKOUT_SESSION_ID}`,
+    success_url: `${CLEINT_URL}/confirmation?session_id={CHECKOUT_SESSION_ID}`,
     // "http://yoursite.com/order/success?session_id={CHECKOUT_SESSION_ID}"
     cancel_url: `${CLEINT_URL}/cart`,
   });
@@ -90,12 +93,42 @@ router.post(`/create-checkout-session`, async (req, res) => {
   res.send({ url: session.url });
 });
 
-router.get("/order/success", async (req, res, next) => {
+router.get("/confirmation", async (req, res, next) => {
   // const { sessionId } = req.body;
   const session = await stripe.checkout.sessions.retrieve(req.query.session_id);
-  const customer = await stripe.customers.retrieve(session.customer);
-  console.log(customer);
-  res.status(200).json(customer);
+  console.log("session", session);
+  const lineItems = await stripe.checkout.sessions.listLineItems(session.id);
+  if (session.customer) {
+  }
+  // const customer =
+  //   session.customer && (await stripe.customers.retrieve(session.customer));
+  const paymentIntent = await stripe.paymentIntents.retrieve(
+    session.payment_intent
+  );
+  const paymentMethod = await stripe.paymentMethods.retrieve(
+    paymentIntent.payment_method
+  );
+  console.log(paymentMethod);
+
+  const sessionData = {
+    id: session.id,
+    customerName: session.customer_details.name,
+    email: session.customer_details.email,
+    phone: session.customer_details.phone,
+    shippingAddress: session.shipping_details,
+    billingAddress: paymentMethod.billing_details,
+    paymentMethod: {
+      brand: paymentMethod.card.brand,
+      card: paymentMethod.card.last4,
+    },
+    orderItems: lineItems.data.map((item) => ({
+      id: item.id,
+      name: item.description,
+      price: item.price.unit_amount,
+      qty: item.quantity,
+    })),
+  };
+  res.status(200).json(sessionData);
 });
 
 module.exports = router;

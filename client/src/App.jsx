@@ -118,7 +118,7 @@ function App() {
                       />
                     }
                   />
-                  <Route path="/order/sucess" element={<OrderConfirmation />} />
+                  <Route path="/confirmation" element={<OrderConfirmation />} />
                   {/* <Route path="*" element={<Navigate to={"/"} replace />} /> */}
                 </Routes>
               </>
@@ -150,10 +150,7 @@ function App() {
                     path="/cart"
                     element={<Cart cart={cart} user={loggedInUser} />}
                   />
-                  <Route
-                    path="/order/success"
-                    element={<OrderConfirmation />}
-                  />
+                  <Route path="/confirmation" element={<OrderConfirmation />} />
                   {/* <Route path="*" element={<Navigate to={"/"} replace />} /> */}
                 </Routes>
               </>
