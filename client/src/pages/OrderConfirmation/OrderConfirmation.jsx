@@ -6,9 +6,11 @@ import axios from "axios";
 
 function OrderConfirmation() {
   const [sessionData, setSessionData] = useState(null);
+  const [map, setMap] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
+  // Retreive Session
   useEffect(() => {
     const retreiveSession = async () => {
       const urlParams = new URLSearchParams(window.location.search);
@@ -33,8 +35,35 @@ function OrderConfirmation() {
     retreiveSession();
   }, []);
   console.log(sessionData);
+
+  // Get Map
+
+  useEffect(() => {
+    const fetchMap = async () => {
+      if (!loading) {
+        try {
+          const shippingAddress = sessionData.shippingAddress.address;
+          const formattedAddress = `${shippingAddress.line1}, ${shippingAddress.city}, ${shippingAddress.state}, ${shippingAddress.postal_code}`;
+          const map = await axios.get(
+            `${BASE_URL}/mapQuest/map/${formattedAddress}`
+          );
+          // console.log(formattedAddress);
+          setMap(map.data);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    };
+    fetchMap();
+  }, [loading]);
+  // console.log(map);
   return (
-    <>{!loading && <div className="beep">{sessionData.customerName}</div>}</>
+    <>
+      {!loading && <div className="beep">{sessionData.customerName}</div>}
+      <div>
+        <img src={map?.mapUrl} className="map" />
+      </div>
+    </>
   );
 }
 

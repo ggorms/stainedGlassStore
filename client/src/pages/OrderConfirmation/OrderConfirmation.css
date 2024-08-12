@@ -3,3 +3,8 @@
     padding-top: 100px;
     font-size: 100px;
 }
+
+.map {
+    height: 400px;
+    width: 400px;
+}

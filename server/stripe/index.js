@@ -92,7 +92,7 @@ router.post(`/create-checkout-session`, async (req, res) => {
 router.get("/confirmation", async (req, res, next) => {
   // const { sessionId } = req.body;
   const session = await stripe.checkout.sessions.retrieve(req.query.session_id);
-  console.log("session", session);
+  // console.log("session", session);
   const lineItems = await stripe.checkout.sessions.listLineItems(session.id);
   if (session.customer) {
   }
@@ -104,7 +104,7 @@ router.get("/confirmation", async (req, res, next) => {
   const paymentMethod = await stripe.paymentMethods.retrieve(
     paymentIntent.payment_method
   );
-  console.log(paymentMethod);
+  // console.log(paymentMethod);
 
   const sessionData = {
     id: session.id,
