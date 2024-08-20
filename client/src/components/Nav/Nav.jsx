@@ -116,7 +116,12 @@ function Nav({ loggedInUser, mobileMenuToggle, setMobileMenuToggle, cart }) {
         <ul className="mobile-nav-links-list">
           <li onClick={() => setMobileMenuToggle(false)}>
             <Link className="mobile-nav-link" to={"/premade"}>
-              Products
+              Premade
+            </Link>
+          </li>
+          <li onClick={() => setMobileMenuToggle(false)}>
+            <Link className="mobile-nav-link" to={"/custom"}>
+              Custom
             </Link>
           </li>
           <li onClick={() => setMobileMenuToggle(false)}>

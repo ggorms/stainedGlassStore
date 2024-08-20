@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import Form from "./Form/Form";
 import AboutMe from "./AboutMe/AboutMe";
 import Background from "../../assets/background.jpeg";
+import image7 from "../../assets/image7.jpeg";
 
 function Home() {
   const productOfferings = [
@@ -45,7 +46,7 @@ function Home() {
         <AboutMe />
         <div
           className="home-image-segment"
-          style={{ backgroundImage: `url(${Background})` }}
+          style={{ backgroundImage: `url(${image7})` }}
         ></div>
         <Form />
       </div>

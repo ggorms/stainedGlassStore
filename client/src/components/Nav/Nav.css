@@ -159,7 +159,7 @@
 
 .mobile-nav-link:hover {
     color: rgb(49, 82, 246);
-    text-decoration: underline;
+    /* text-decoration: underline; */
 }
 
 

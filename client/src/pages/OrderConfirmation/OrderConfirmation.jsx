@@ -4,12 +4,23 @@ import { useNavigate, Link } from "react-router-dom";
 import { BASE_URL } from "../../store/BASE_URL";
 import axios from "axios";
 import Placeholder from "../../assets/placeholder.png";
+import amex from "../../assets/amex.png";
+import visa from "../../assets/visa.png";
+import discover from "../../assets/discover.png";
+import mastercard from "../../assets/mastercard.png";
 
 function OrderConfirmation() {
   const [sessionData, setSessionData] = useState(null);
   const [map, setMap] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+
+  const cardTypes = {
+    visa: visa,
+    amex: amex,
+    mastercard: mastercard,
+    discover: discover,
+  };
 
   // Retreive Session
   useEffect(() => {
@@ -122,7 +133,10 @@ function OrderConfirmation() {
                   <p>United States</p>
                   <p>{sessionData.phone}</p>
                   <h6>Payment Method</h6>
-                  <p>VISA ending in 4242</p>
+                  <p className="confirmation-customerInfo-paymentMethod">
+                    <img src={cardTypes[sessionData.paymentMethod.brand]} />{" "}
+                    ending in 4242
+                  </p>
                 </div>
               </div>
             </div>
