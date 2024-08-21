@@ -34,3 +34,65 @@
     color: red;
 }
 
+@media screen and (min-width: 760px) {
+    .products-img {
+        height: 190px;
+        width: 220px;
+    }
+}
+
+
+@media screen and (min-width: 820px) {
+    .products-img {
+        height: 210px;
+        width: 240px;
+    }
+}
+
+@media screen and (min-width: 1000px) {
+    .products-img {
+        height: 260px;
+        width: 290px;
+    }
+    .products-name {
+        font-size: xx-large;
+    }
+    .products-price {
+        font-size: x-large;
+    }
+    .products-instock {
+        font-size: larger;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .products-img {
+        height: 230px;
+        width: 260px;
+    }
+    .products-name {
+        font-size: x-large;
+    }
+    .products-price {
+        font-size: larger;
+    }
+    .products-instock {
+        font-size: large;
+    }
+}
+
+@media screen and (min-width: 1400px) {
+    .products-img {
+        height: 280px;
+        width: 310px;
+    }
+    .products-name {
+        font-size: xx-large;
+    }
+    .products-price {
+        font-size: x-large;
+    }
+    .products-instock {
+        font-size: larger;
+    }
+}

@@ -50,11 +50,16 @@
 
 .premade-info-text {
     font-size: large;
+    font-weight: bold;
 }
 
 .premade-link {
     text-decoration: none;
     margin: 10px;
+}
+
+.premade-hashLink {
+    color: rgb(64, 173, 232);
 }
 
 @media screen and (min-width: 370px) {
@@ -71,36 +76,79 @@
 
 @media screen and (min-width: 760px) {
     .premade-banner {
-        height: 500px;
+        height: 400px;
+    }
+    .premade-info-text {
+        font-size:20px;
+    }
+    .premade-info-title {
+        font-size: 25px;
     }
 }
+
+
 
 @media screen and (min-width: 820px) {
     .premade-banner {
-        height: 540px;
+        height: 440px;
+    }
+    .premade-info-text {
+        font-size: 23px;
+    }
+    .premade-info-title {
+        font-size: 28px;
     }
 }
+
 
 @media screen and (min-width: 1000px) {
     .premade-banner {
-        height: 670px;
+        height: 540px;
+    }
+    .premade-info-text {
+        font-size: 30px;
+    }
+    .premade-info-title {
+        font-size: 35px;
     }
 }
+
+
 
 @media screen and (min-width: 1200px) {
     .premade-banner {
-        height: 820px;
+        height: 650px;
+    }
+    .premade-info-text {
+        font-size: 20px;
+    }
+    .premade-info-title {
+        font-size: 25px;
+    }
+    .premade-link {
+        margin: 20px;
+    }
+    .premade-banner-text {
+        font-size: 50px;
     }
 }
+
 
 @media screen and (min-width: 1400px) {
     .premade-banner {
-        height: 940px;
+        height: 740px;
+    }
+    .premade-info-text {
+        font-size: 25px;
+    }
+    .premade-info-title {
+        font-size: 30px;
     }
 }
-
+        
+        
 @media screen and (min-width: 1500px) {
     .premade-banner {
-        height: 1240px;
+        height: 930px;
     }
 }

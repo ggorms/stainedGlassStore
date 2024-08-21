@@ -40,11 +40,13 @@ function PreMade() {
         <p className="premade-info-text">
           See something you like but it&#39;s out of stock? Want something in a
           different color?{" "}
-          <HashLink to={"/#home-form"}>Send me a message</HashLink> and i&#39;ll
-          do my best to accommodate you! Please note that the final price may
-          vary due to differences in material costs. All products are handmade
-          and therefore may not look exactly as advertised - although I make
-          every effort to do so.
+          <HashLink to={"/#home-form"} className="premade-hashLink">
+            Send me a message
+          </HashLink>{" "}
+          and i&#39;ll do my best to accommodate you! Please note that the final
+          price may vary due to differences in material costs. All products are
+          handmade and therefore may not look exactly as advertised - although I
+          make every effort to do so.
         </p>
       </div>
     </div>
