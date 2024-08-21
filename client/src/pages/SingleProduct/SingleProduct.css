@@ -1,9 +1,17 @@
 .singleProduct-root {
-    display: flex;
+    display: grid;
     flex-direction: column;
     padding-top: 60px;
     background-color: rgb(45, 45, 45);
     color: white;
+}
+
+.singleProduct-desktop {
+    
+}
+
+.singleProduct-desktop-sub {
+
 }
 
 .singleProduct-info-container {
@@ -76,7 +84,7 @@
 .singleProduct-add-button {
     width: 35%;
     height: 35px;
-    margin: 20px auto;
+    margin: 40px auto;
     cursor: pointer;
     border: none;
     border-radius: 8px;
@@ -93,7 +101,7 @@
 .singleProduct-outOfStockButton {
     width: 35%;
     height: 35px;
-    margin: 20px auto;
+    margin: 40px auto;
     border: none;
     border-radius: 8px;
     background-color: gray;
@@ -102,3 +110,180 @@
     font-weight: bold;
     cursor: not-allowed;
 }
+
+.singleProduct-desc-and-button {
+    display: flex;
+    flex-direction: column;
+}
+
+@media screen and (min-width: 750px) {
+    .singleProduct-name {
+        font-size: 40px;
+    }
+    .singleProduct-instock {
+        font-size: large;
+    }
+    .singleProduct-price {
+        font-size: x-large;
+    }
+    .singleProduct-img-main {
+        height: 450px;
+    }
+    .singleProduct-img-sub {
+        height: 150px;
+        width: 24.5%;
+    }
+    .singleProduct-description {
+        font-size: x-large;
+    }
+    .singleProduct-dimensions-title {
+        font-size: xx-large;
+    }
+    .singleProduct-dimensions {
+        font-size: x-large;
+    }
+    .singleProduct-add-button {
+        font-size: x-large;
+        height: 45px;
+    }
+    .singleProduct-dimensions span {
+        font-size: 20px;
+    }
+    .singleProduct-outOfStockButton {
+        font-size: x-large;
+        height: 45px;
+    }
+}
+
+@media screen and (min-width: 830px) {
+    .singleProduct-img-main {
+        height: 490px;
+    }
+    .singleProduct-img-sub {
+        height: 160px;
+    }
+    .singleProduct-description {
+        font-size: 26px;
+    }
+    .singleProduct-dimensions-title {
+        font-size: 35px;
+    }
+    .singleProduct-dimensions {
+        font-size: 25px;
+    }
+    .singleProduct-dimensions span {
+        font-size: 21px;
+    }
+    .singleProduct-add-button {
+        font-size: 28px;
+        height: 48px;
+    }
+    .singleProduct-outOfStockButton {
+        font-size: 28px;
+        height: 48px;
+    }
+}
+
+@media screen and (min-width: 1000px) {
+    .singleProduct-name {
+        font-size: 50px;
+    }
+    .singleProduct-instock {
+        font-size: x-large;
+    }
+    .singleProduct-price {
+        font-size: xx-large;
+    }
+    .singleProduct-img-main {
+        height: 580px;
+    }
+    .singleProduct-img-sub {
+        height: 190px;
+    }
+    .singleProduct-description {
+        font-size: 33px;
+    }
+    .singleProduct-dimensions-title {
+        font-size: 38px;
+    }
+    .singleProduct-dimensions {
+        font-size: 28px;
+    }
+    .singleProduct-dimensions span {
+        font-size: 25px;
+    }
+    .singleProduct-add-button {
+        font-size: 32px;
+        height: 55px;
+    }
+    .singleProduct-outOfStockButton {
+        font-size: 32px;
+        height: 55px;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+   .singleProduct-root {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 90px;
+    padding: 70px 8% 0 8%;
+    /* gap: 10px; */
+   }
+   .singleProduct-imgs-container {
+    grid-column: 1;
+    grid-row: 1;
+    width: 500px;
+   }
+   .singleProduct-info-container {
+    grid-column: 2;
+    grid-row: 1;
+    margin: -10px 5px 0 5px;
+   }
+   .singleProduct-name {
+    font-size: 35px;
+    }
+    .singleProduct-instock {
+    font-size: large;
+    }
+    .singleProduct-price {
+    font-size: x-large;
+    }
+   
+   .singleProduct-img-main {
+    height: 400px;
+    width: 500px;
+    }
+    .singleProduct-img-sub {
+    height: 130px;
+    width: 24.3%;
+    }
+    .singleProduct-desc-and-button {
+        grid-column: 2;
+        grid-row: 1;
+        margin-top: 200px;
+    }
+    .singleProduct-description {
+        font-size: 22px;
+        margin: 0;
+        text-align: left;
+    }
+    .singleProduct-dimensions-title {
+        font-size: 20px;
+    }
+    .singleProduct-dimensions {
+        font-size: 15px;
+    }
+    .singleProduct-dimensions span {
+        font-size: 13px;
+    }
+    .singleProduct-add-button {
+        font-size: 23px;
+        height: 35px;
+    }
+    .singleProduct-outOfStockButton {
+        font-size: 32px;
+        height: 55px;
+    }
+}
+

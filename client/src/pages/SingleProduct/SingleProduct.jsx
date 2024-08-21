@@ -16,6 +16,7 @@ function SingleProduct({ userCartId, setGuestCart, guestCart }) {
   const product = useSelector((state) => state.product.singleProduct);
   const [photo, setPhoto] = useState(Placeholder);
   const [showPopup, setShowPopup] = useState(false);
+
   useEffect(() => {
     dispatch(singleProductThunk(id));
   }, []);
@@ -99,6 +100,7 @@ function SingleProduct({ userCartId, setGuestCart, guestCart }) {
           $ {(product.price / 100).toFixed(2)}
         </h3>
       </div>
+
       <div className="singleProduct-imgs-container">
         <img className="singleProduct-img-main" src={photo} />
         <div className="singleProduct-img-sub-container">
@@ -124,36 +126,38 @@ function SingleProduct({ userCartId, setGuestCart, guestCart }) {
           />
         </div>
       </div>
-      <p className="singleProduct-description">{product.description}</p>
-      <div className="singleProduct-dimensions-container">
-        <h2 className="singleProduct-dimensions-title">Dimensions</h2>
-        <h3 className="singleProduct-dimensions">
-          Height: <span>{product.height} inches</span>
-        </h3>
-        <h3 className="singleProduct-dimensions">
-          Width: <span>{product.width} inches</span>
-        </h3>
-        {product.depth ? (
+      <div className="singleProduct-desc-and-button">
+        <p className="singleProduct-description">{product.description}</p>
+        <div className="singleProduct-dimensions-container">
+          <h2 className="singleProduct-dimensions-title">Dimensions</h2>
           <h3 className="singleProduct-dimensions">
-            Depth: <span>{product.depth} inches</span>
+            Height: <span>{product.height} inches</span>
           </h3>
-        ) : (
-          ""
-        )}
+          <h3 className="singleProduct-dimensions">
+            Width: <span>{product.width} inches</span>
+          </h3>
+          {product.depth ? (
+            <h3 className="singleProduct-dimensions">
+              Depth: <span>{product.depth} inches</span>
+            </h3>
+          ) : (
+            ""
+          )}
+        </div>
+        <button
+          className={
+            product.stockQty > 0
+              ? "singleProduct-add-button"
+              : "singleProduct-outOfStockButton"
+          }
+          onClick={() => {
+            addToCart();
+            setShowPopup(true);
+          }}
+        >
+          {product.stockQty > 0 ? "Add to Cart" : "Out of Stock"}
+        </button>
       </div>
-      <button
-        className={
-          product.stockQty > 0
-            ? "singleProduct-add-button"
-            : "singleProduct-outOfStockButton"
-        }
-        onClick={() => {
-          addToCart();
-          setShowPopup(true);
-        }}
-      >
-        {product.stockQty > 0 ? "Add to Cart" : "Out of Stock"}
-      </button>
       {showPopup && (
         <CartPopup
           showPopup={showPopup}
