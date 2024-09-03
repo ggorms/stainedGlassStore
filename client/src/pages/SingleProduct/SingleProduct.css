@@ -61,7 +61,7 @@
 }
 
 .singleProduct-dimensions-container {
-    margin: 20px;
+    margin: 30px;
     text-align: center;
     cursor: default;
 }
@@ -82,12 +82,12 @@
 
 
 .singleProduct-add-button {
-    width: 35%;
-    height: 35px;
+    width: 50%;
+    height: 50px;
     margin: 40px auto;
     cursor: pointer;
     border: none;
-    border-radius: 8px;
+    border-radius: 30px;
     color: white;
     font-size: larger;
     font-weight: bold;
@@ -99,11 +99,11 @@
 }
 
 .singleProduct-outOfStockButton {
-    width: 35%;
-    height: 35px;
+    width: 50%;
+    height: 50px;
     margin: 40px auto;
     border: none;
-    border-radius: 8px;
+    border-radius: 30px;
     background-color: gray;
     color: white;
     font-size: larger;
@@ -114,6 +114,7 @@
 .singleProduct-desc-and-button {
     display: flex;
     flex-direction: column;
+    margin-bottom: 30px;
 }
 
 @media screen and (min-width: 750px) {
@@ -144,14 +145,14 @@
     }
     .singleProduct-add-button {
         font-size: x-large;
-        height: 45px;
+        height: 60px;
     }
     .singleProduct-dimensions span {
         font-size: 20px;
     }
     .singleProduct-outOfStockButton {
         font-size: x-large;
-        height: 45px;
+        height: 60px;
     }
 }
 
@@ -176,11 +177,9 @@
     }
     .singleProduct-add-button {
         font-size: 28px;
-        height: 48px;
     }
     .singleProduct-outOfStockButton {
         font-size: 28px;
-        height: 48px;
     }
 }
 
@@ -214,11 +213,11 @@
     }
     .singleProduct-add-button {
         font-size: 32px;
-        height: 55px;
+        height: 75px;
     }
     .singleProduct-outOfStockButton {
         font-size: 32px;
-        height: 55px;
+        height: 75px;
     }
 }
 
@@ -227,18 +226,15 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     margin-top: 90px;
-    padding: 70px 8% 0 8%;
+    padding: 70px 8% 70px 8%;
+    height: 100%;
     /* gap: 10px; */
-   }
-   .singleProduct-imgs-container {
-    grid-column: 1;
-    grid-row: 1;
-    width: 500px;
    }
    .singleProduct-info-container {
     grid-column: 2;
     grid-row: 1;
-    margin: -10px 5px 0 5px;
+    margin: -10px 60px 0 60px;
+    height: 200px;
    }
    .singleProduct-name {
     font-size: 35px;
@@ -249,10 +245,14 @@
     .singleProduct-price {
     font-size: x-large;
     }
-   
-   .singleProduct-img-main {
-    height: 400px;
-    width: 500px;
+    .singleProduct-imgs-container {
+        grid-column: 1;
+        grid-row: 1;
+        width: 600px;
+    }
+    .singleProduct-img-main {
+    height: 500px;
+    width: 600px;
     }
     .singleProduct-img-sub {
     height: 130px;
@@ -261,7 +261,13 @@
     .singleProduct-desc-and-button {
         grid-column: 2;
         grid-row: 1;
-        margin-top: 200px;
+        height: 430px;
+        margin-top: 180px;
+        margin-bottom: 0;
+        padding: 0 60px;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr 0.5fr;
     }
     .singleProduct-description {
         font-size: 22px;
@@ -269,21 +275,57 @@
         text-align: left;
     }
     .singleProduct-dimensions-title {
-        font-size: 20px;
+        font-size: 25px;
     }
     .singleProduct-dimensions {
-        font-size: 15px;
+        font-size: 20px;
     }
     .singleProduct-dimensions span {
-        font-size: 13px;
+        font-size: 18px;
     }
     .singleProduct-add-button {
         font-size: 23px;
-        height: 35px;
+        width: 80%;
+        height: 70px;
+        margin-bottom: 0;
+        margin-top: 0;
+        /* margin-top: 100px; */
     }
     .singleProduct-outOfStockButton {
         font-size: 32px;
-        height: 55px;
+        height: 70px;
+        /* margin-top: 100px; */
+        width: 80%;
     }
 }
 
+@media screen and (min-width:1400px) {
+    .singleProduct-add-button {
+        margin-top: 70px;
+    }
+}
+
+@media screen and (min-width: 1500px) {
+    .singleProduct-root {
+        padding: 70px 12% 70px 12%;
+    }
+    .singleProduct-info-container {
+        margin: -10px 40px 0 40px;
+    }
+    .singleProduct-desc-and-button {
+        padding: 0 40px;
+    }
+    .singleProduct-add-button {
+        margin-top: 60px;
+    }
+}
+
+@media screen and (min-width: 1600px) {
+    .singleProduct-root {
+        padding: 70px 15% 70px 15%;
+    }
+    .singleProduct-add-button {
+        margin-top: 100px;
+        height: 65px;
+    }
+}
