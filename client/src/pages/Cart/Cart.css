@@ -89,3 +89,12 @@
 .cart-empty-link:hover {
     color: lightgray;
 }
+
+@media screen and (min-width: 750px) {
+    .cart-order-summary-container {
+        font-size: larger;
+    }
+    .total {
+        font-size: x-large;
+    }
+}
