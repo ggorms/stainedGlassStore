@@ -98,3 +98,40 @@
         font-size: x-large;
     }
 }
+
+@media screen and (min-width:1000px) {
+    .cart-title {
+        font-size: 34px;
+    }
+    .cart-order-summary-title {
+        font-size: 36px;
+    }
+    .cart-order-summary-container {
+        font-size: 28px;
+    }
+}
+
+@media screen and (min-width:1200px) {
+    .cart-root {
+        padding: 80px 0;
+    }
+    .cart-title {
+        font-size: 28px;
+    }
+    .cart-layout-container {
+        display: flex;
+        justify-content: space-between;
+    }
+    .cart-layout-wrapper {
+        width: 55%;
+    }
+    .cart-order-summary-wrapper {
+        width: 40%;
+    }
+    .cart-order-summary-title {
+        font-size: 28px;
+    }
+    .cart-order-summary-container {
+        font-size: 20px;
+    }
+}

@@ -17,19 +17,21 @@ function Cart({ cart, user, setGuestCart, guestCart }) {
   return (
     <div className="cart-root">
       {cartQty > 0 ? (
-        <>
-          <h1 className="cart-title">My Cart ({cartQty})</h1>
-          {/* Display cart items */}
-          <div className="cart-cartItems-container">
-            {cart?.CartItem?.map((item) => (
-              <CartItem
-                key={item.product.id}
-                item={item}
-                cartId={cart.id}
-                setGuestCart={setGuestCart}
-                guestCart={guestCart}
-              />
-            ))}
+        <div className="cart-layout-container">
+          <div className="cart-layout-wrapper">
+            <h1 className="cart-title">My Cart ({cartQty})</h1>
+            {/* Display cart items */}
+            <div className="cart-cartItems-container">
+              {cart?.CartItem?.map((item) => (
+                <CartItem
+                  key={item.product.id}
+                  item={item}
+                  cartId={cart.id}
+                  setGuestCart={setGuestCart}
+                  guestCart={guestCart}
+                />
+              ))}
+            </div>
           </div>
           <div className="cart-order-summary-wrapper">
             <h1 className="cart-order-summary-title">Order Summary</h1>
@@ -65,7 +67,7 @@ function Cart({ cart, user, setGuestCart, guestCart }) {
             </div>
             <PayButton cartItems={cart.CartItem} user={user} />
           </div>
-        </>
+        </div>
       ) : (
         <div className="cart-empty-container">
           <h1 className="cart-empty-text">Your Cart is Empty</h1>
