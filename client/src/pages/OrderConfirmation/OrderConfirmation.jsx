@@ -8,8 +8,11 @@ import amex from "../../assets/amex.png";
 import visa from "../../assets/visa.png";
 import discover from "../../assets/discover.png";
 import mastercard from "../../assets/mastercard.png";
+import { fulfillCartThunk } from "../../store/cart";
+import { useDispatch } from "react-redux";
 
-function OrderConfirmation() {
+function OrderConfirmation({ cart, setGuestCart }) {
+  const dispatch = useDispatch();
   const [sessionData, setSessionData] = useState(null);
   const [map, setMap] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -21,6 +24,34 @@ function OrderConfirmation() {
     mastercard: mastercard,
     discover: discover,
   };
+
+  console.log("cart", cart);
+
+  // Handle cart fulfillment
+  useEffect(() => {
+    if (cart?.CartItem?.length > 0) {
+      // User cart
+      if (cart?.id) {
+        dispatch(fulfillCartThunk(cart?.id));
+      }
+      // Guest cart
+      else {
+        const updateGuestCart = async () => {
+          try {
+            await axios.put(`${BASE_URL}/api/cart/fulfill-guest`, cart);
+          } catch (error) {
+            console.error(error);
+          }
+          window.sessionStorage.setItem(
+            "guestCart",
+            JSON.stringify({ CartItem: [] })
+          );
+          setGuestCart(JSON.parse(window.sessionStorage.getItem("guestCart")));
+        };
+        updateGuestCart();
+      }
+    }
+  }, [cart?.CartItem?.length, cart?.id, dispatch]);
 
   // Retreive Session
   useEffect(() => {

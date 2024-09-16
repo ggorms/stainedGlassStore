@@ -67,32 +67,32 @@ router.post("/fulfill/:id", async (req, res, next) => {
       },
     });
 
-    const test = await prisma.product.findMany({
-      where: {
-        id: {
-          in: fulfilledCart.CartItem.map((item) => item.productId),
-        },
-      },
-      select: {
-        id: true,
-        name: true,
-        stockQty: true,
-      },
-    });
-
-    // Decrease stock qty of purchased items
-    // await prisma.product.updateMany({
+    // const test = await prisma.product.findMany({
     //   where: {
     //     id: {
     //       in: fulfilledCart.CartItem.map((item) => item.productId),
     //     },
     //   },
-    //   data: {
-    //     stockQty: {
-    //       decrement: 1,
-    //     },
+    //   select: {
+    //     id: true,
+    //     name: true,
+    //     stockQty: true,
     //   },
     // });
+
+    // Decrease stock qty of purchased items
+    await prisma.product.updateMany({
+      where: {
+        id: {
+          in: fulfilledCart.CartItem.map((item) => item.productId),
+        },
+      },
+      data: {
+        stockQty: {
+          decrement: 1,
+        },
+      },
+    });
 
     // create a new empty cart
     const newCart = await prisma.cart.create({
@@ -101,10 +101,31 @@ router.post("/fulfill/:id", async (req, res, next) => {
       },
     });
 
-    res.status(200).json(test);
+    res.status(200).json(newCart);
   } catch (error) {
     next(error);
   }
+});
+
+// Decrease product stock after successful guestCart checkout
+
+router.put("/fulfill-guest", async (req, res) => {
+  const { CartItem } = req.body;
+
+  const updatedQty = await prisma.product.updateMany({
+    where: {
+      id: {
+        in: CartItem.map((item) => item.product.id),
+      },
+    },
+    data: {
+      stockQty: {
+        decrement: 1,
+      },
+    },
+  });
+
+  res.status(200).json(updatedQty);
 });
 
 module.exports = router;

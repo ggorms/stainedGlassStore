@@ -58,7 +58,7 @@ function App() {
       }
     };
     loadCart();
-  }, [loggedInUser?.userId, dispatch]);
+  }, [loggedInUser?.userId, dispatch, cart?.id]);
 
   // Handle transfer of guest cart to user cart
   useEffect(() => {
@@ -118,7 +118,15 @@ function App() {
                       />
                     }
                   />
-                  <Route path="/confirmation" element={<OrderConfirmation />} />
+                  <Route
+                    path="/confirmation"
+                    element={
+                      <OrderConfirmation
+                        cart={cart}
+                        setGuestCart={setGuestCart}
+                      />
+                    }
+                  />
                   {/* <Route path="*" element={<Navigate to={"/"} replace />} /> */}
                 </Routes>
               </>
@@ -150,7 +158,10 @@ function App() {
                     path="/cart"
                     element={<Cart cart={cart} user={loggedInUser} />}
                   />
-                  <Route path="/confirmation" element={<OrderConfirmation />} />
+                  <Route
+                    path="/confirmation"
+                    element={<OrderConfirmation cart={cart} />}
+                  />
                   {/* <Route path="*" element={<Navigate to={"/"} replace />} /> */}
                 </Routes>
               </>
