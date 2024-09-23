@@ -15,6 +15,7 @@ app.use("/api", require("./api"));
 app.use("/auth", require("./auth"));
 app.use("/stripe", require("./stripe"));
 app.use("/mapQuest", require("./mapQuest"));
+app.use("/sendGrid", require("./sendGrid"));
 
 app.listen(PORT, () => {
   console.log(`Server running on port: ${PORT}`);

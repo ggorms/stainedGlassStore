@@ -1,0 +1,44 @@
+.formPopup-outterBlur {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    z-index: 100;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.formPopup-content-container {
+    background-color: white;
+    height: 40%;
+    width: 80%;
+    border-radius: 12px;
+}
+
+.formPopup-button-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    height: 35px;
+}
+
+.formPopup-button {
+    border: none;
+    background-color: unset;
+    cursor: pointer;
+    color: black;
+    margin: 5px;
+}
+
+.formPopup-content {
+    color: black;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 200px;
+}

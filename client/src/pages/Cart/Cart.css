@@ -2,7 +2,8 @@
     background-color: rgb(45, 45, 45);
     /* height: calc(100vh); */
     /* height: calc(100vh - 100px); */
-    height: min-content;
+    /* height: min-content; */
+    height: 100vh;
     /* min-height: min-content; */
     /* margin-top: 60px; */
     padding: 60px 0;
