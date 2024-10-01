@@ -1,12 +1,12 @@
 .formPopup-outterBlur {
-    position: absolute;
+    position: fixed;
     left: 0;
     bottom: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    z-index: 100;
+    z-index: 99;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.5);
 }

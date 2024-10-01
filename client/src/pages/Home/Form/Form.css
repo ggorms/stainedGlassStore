@@ -3,12 +3,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* background-color: rgb(226, 218, 192); */
-    /* background-color: rgb(222, 221, 221); */
     background-color: rgb(45, 45, 45);
     color: white;
     height: 850px;
-    position: relative;
 }
 
 .home-form {

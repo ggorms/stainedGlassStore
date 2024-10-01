@@ -97,13 +97,13 @@ function Form() {
             Submit
           </button>
         </form>
-        {toggleFormPopup && (
-          <FormPopup
-            setToggleFormPopup={setToggleFormPopup}
-            toggleFormPopup={toggleFormPopup}
-          />
-        )}
       </div>
+      {toggleFormPopup && (
+        <FormPopup
+          setToggleFormPopup={setToggleFormPopup}
+          toggleFormPopup={toggleFormPopup}
+        />
+      )}
     </>
   );
 }

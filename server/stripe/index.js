@@ -8,6 +8,7 @@ const CLEINT_URL = "http://localhost:5173";
 
 router.post(`/create-checkout-session`, async (req, res) => {
   const { cartItems, user } = req.body;
+  // console.log("cartItems", cartItems);
   const productsInStock = await prisma.product.findMany({
     where: {
       id: {
@@ -21,11 +22,43 @@ router.post(`/create-checkout-session`, async (req, res) => {
     },
   });
 
+  // console.log("productsinstock", productsInStock);
+
   if (productsInStock.some((product) => product.stockQty < 1)) {
-    console.log("hit");
-    res
-      .status(400)
-      .json({ message: "One or more items in your cart are out of stock." });
+    const outOfStockProducts = productsInStock.filter(
+      (product) => product.stockQty < 1
+    );
+    // console.log("outofstock", outOfStockProducts);
+
+    res.status(409).json({
+      message: "are out of stock",
+      solution: "Please remove them from your cart.",
+      products: outOfStockProducts.map((product) => product.name),
+    });
+    return;
+  }
+
+  const verifySufficientStockQty = () => {
+    const insufficientStockItems = [];
+    for (let i = 0; i < cartItems.length; i++) {
+      const product = productsInStock.find(
+        (product) => product.id === cartItems[i].product.id
+      );
+      if (product.stockQty < cartItems[i].qty) {
+        insufficientStockItems.push(cartItems[i].product.name);
+      }
+    }
+    return insufficientStockItems;
+  };
+
+  const insufficientStockItems = verifySufficientStockQty();
+
+  if (insufficientStockItems.length > 0) {
+    res.status(409).json({
+      message: "have insufficient stock",
+      solution: "Please decrease the quantity in your cart.",
+      products: insufficientStockItems,
+    });
     return;
   }
 
@@ -105,7 +138,7 @@ router.post("/confirmation", async (req, res, next) => {
     paymentIntent.payment_method
   );
   // console.log(paymentMethod);
-  console.log("session", session);
+  // console.log("session", session);
   const sessionData = {
     id: session.id,
     customerName: session.customer_details.name,
