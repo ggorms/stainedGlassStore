@@ -3,6 +3,8 @@ const mail = require("@sendgrid/mail");
 
 mail.setApiKey(process.env.SENDGRID_KEY);
 
+// Contact Form
+
 router.post("/email/contact-form", (req, res) => {
   const { fName, lName, customerEmail, content } = req.body;
   console.log("Fname", fName);
@@ -12,7 +14,7 @@ router.post("/email/contact-form", (req, res) => {
   const message = {
     to: "garrettgorman1@gmail.com",
     from: {
-      name: "Customer Inquiry",
+      name: "Dimensional Glassworks",
       email: "garrettgorman1@gmail.com",
     },
     replyTo: customerEmail,

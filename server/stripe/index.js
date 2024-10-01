@@ -1,8 +1,8 @@
 const router = require("express").Router();
 const { PrismaClient } = require("@prisma/client");
-
 const prisma = new PrismaClient();
 const stripe = require("stripe")(process.env.STRIPE_KEY);
+const mail = require("@sendgrid/mail").setApiKey(process.env.SENDGRID_KEY);
 
 const CLEINT_URL = "http://localhost:5173";
 
@@ -89,9 +89,9 @@ router.post(`/create-checkout-session`, async (req, res) => {
   res.send({ url: session.url });
 });
 
-router.get("/confirmation", async (req, res, next) => {
-  // const { sessionId } = req.body;
-  const session = await stripe.checkout.sessions.retrieve(req.query.session_id);
+router.post("/confirmation", async (req, res, next) => {
+  const { session_id, sendEmail } = req.body;
+  const session = await stripe.checkout.sessions.retrieve(session_id);
   // console.log("session", session);
   const lineItems = await stripe.checkout.sessions.listLineItems(session.id);
   if (session.customer) {
@@ -105,7 +105,7 @@ router.get("/confirmation", async (req, res, next) => {
     paymentIntent.payment_method
   );
   // console.log(paymentMethod);
-
+  console.log("session", session);
   const sessionData = {
     id: session.id,
     customerName: session.customer_details.name,
@@ -126,7 +126,79 @@ router.get("/confirmation", async (req, res, next) => {
     shippingCost: session.shipping_cost.amount_total,
     orderTotal: session.amount_total,
   };
-  res.status(200).json(sessionData);
+
+  const message = {
+    to: "garrettgorman1@gmail.com",
+    from: {
+      name: "Dimensional Glassworks",
+      email: "garrettgorman1@gmail.com",
+    },
+    templateId: process.env.CONFIRMATION_TEMPLATE_ID,
+    dynamic_template_data: {
+      // Shipping Data
+      shipping_name: session.shipping_details.name,
+      shipping_address: `${session.shipping_details.address.line1}, ${
+        session.shipping_details.address.line2 ?? ""
+      }`,
+      shipping_city: session.shipping_details.address.city,
+      shipping_state: session.shipping_details.address.state,
+      shipping_zip: session.shipping_details.address.postal_code,
+      shipping_phone: session.customer_details.phone,
+      // Billing Data
+      billing_name: paymentMethod.billing_details.name,
+      fName: paymentMethod.billing_details.name.split(" ")[0],
+      billing_address: `${paymentMethod.billing_details.address.line1}, ${
+        paymentMethod.billing_details.address.line2 ?? ""
+      }`,
+      billing_city: paymentMethod.billing_details.address.city,
+      billing_state: paymentMethod.billing_details.address.state,
+      billing_zip: paymentMethod.billing_details.address.postal_code,
+      billing_phone: paymentMethod.billing_details.phone,
+      billing_cardType: paymentMethod.card.brand,
+      billing_card_last4: paymentMethod.card.last4,
+      // Order Data
+      order_id: session.id.slice(50),
+      order_subtotal: (
+        lineItems.data.reduce((acc, curr) => acc + curr.amount_total, 0) / 100
+      ).toFixed(2), // adjust
+      order_shipping_cost: (session.shipping_cost.amount_total / 100).toFixed(
+        2
+      ),
+      order_shipping_type: "Express-saver", // adjust
+      order_tax: "10.37", // adjust
+      order_total: (session.amount_total / 100).toFixed(2),
+      // Cart Data
+      cartItems: lineItems.data.map((item) => ({
+        name: item.description,
+        price: (item.price.unit_amount / 100).toFixed(2),
+        qty: item.quantity,
+        total: ((item.price.unit_amount * item.quantity) / 100).toFixed(2),
+      })),
+    },
+  };
+  if (sendEmail) {
+    mail
+      .send(message)
+      .then(() => {
+        //   console.log("Email sent Successfully");
+        res.status(200).json({
+          emailConfirmation: "Email sent successfully",
+          sessionData: sessionData,
+        });
+      })
+      .catch((err) => {
+        //   console.error(err);
+        res.status(500).send({
+          message: "Email not sent",
+          error: err.message,
+          sessionData: sessionData,
+        });
+      });
+  } else {
+    res.status(200).json({ sessionData: sessionData });
+  }
+
+  // res.status(200).json(sessionData);
 });
 
 module.exports = router;

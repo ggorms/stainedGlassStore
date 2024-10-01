@@ -27,6 +27,11 @@ function OrderConfirmation({ cart, setGuestCart }) {
 
   console.log("cart", cart);
 
+  //////////////////////////////////////////////////////////////////
+  //// FIND FIX FOR USERS BEING ABLE TO CONTINUE SHOPPING AND RETURN
+  //// TO THE CONFIRMATION PAGE AND SENDING A NEW CONFIRMATION EMAIL
+  //////////////////////////////////////////////////////////////////
+
   // Handle cart fulfillment
   useEffect(() => {
     if (cart?.CartItem?.length > 0) {
@@ -64,12 +69,13 @@ function OrderConfirmation({ cart, setGuestCart }) {
         return;
       }
       try {
-        const response = await axios.get(`${BASE_URL}/stripe/confirmation`, {
-          params: {
-            session_id: sessionId,
-          },
+        const response = await axios.post(`${BASE_URL}/stripe/confirmation`, {
+          // params: {
+          session_id: sessionId,
+          sendEmail: cart?.CartItem?.length > 0 ? true : false, // MAYBE HAVE TO CHANGE THIS
+          // },
         });
-        setSessionData(response.data);
+        setSessionData(response.data.sessionData);
         setLoading(false);
       } catch (error) {
         console.error(error);
@@ -119,7 +125,7 @@ function OrderConfirmation({ cart, setGuestCart }) {
                 </span>
                 <div className="confirmation-header-info">
                   <p>Order #1234</p>
-                  <h5>Thank You {sessionData?.customerName.split(" ")[0]}!</h5>
+                  <h5>Thank You {sessionData?.customerName?.split(" ")[0]}!</h5>
                 </div>
               </div>
             </div>
@@ -187,7 +193,15 @@ function OrderConfirmation({ cart, setGuestCart }) {
             <div className="confirmation-orderInfo-subtotals">
               <div>
                 <p>Subtotal</p>
-                <h6>10000</h6>
+                <h6>
+                  $
+                  {(
+                    sessionData.orderItems.reduce(
+                      (acc, curr) => acc + curr.price,
+                      0
+                    ) / 100
+                  ).toFixed(2)}
+                </h6>
               </div>
               <div>
                 <p>Shipping</p>
