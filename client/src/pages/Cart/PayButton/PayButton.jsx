@@ -32,23 +32,8 @@ function PayButton({ cartItems, user }) {
         </button>
       </div>
       {error && (
-        <div className="formPopup-outterBlur">
-          <div className="formPopup-content-container">
-            <div className="formPopup-button-container">
-              <svg
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="formPopup-button"
-                onClick={() => setError(null)}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 18 18 6M6 6l12 12"
-                />
-              </svg>
-            </div>
+        <div className="payment-error-outterBlur">
+          <div className="payment-error-content-container">
             <div className="payment-error-content">
               <p className="payment-error-message">
                 The Following Items <span>{error.message} </span>
@@ -59,9 +44,15 @@ function PayButton({ cartItems, user }) {
                 ))}
                 <p className="payment-error-message">{error.solution}</p>
                 <p className="payment-error-message">
-                  We aplogize for the inconvience.
+                  We aplogize for the inconvenience.
                 </p>
               </div>
+              <button
+                className="payment-error-button"
+                onClick={() => setError(null)}
+              >
+                OK
+              </button>
             </div>
           </div>
         </div>
