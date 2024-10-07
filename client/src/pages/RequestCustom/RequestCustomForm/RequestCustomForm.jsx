@@ -7,12 +7,14 @@ import OpacityAndJointColor from "./OpacityAndJointColor/OpacityAndJointColor";
 import FileUpload from "./FileUpload/FileUpload";
 import Size from "./Size/Size";
 import AdditionalSpecifications from "./AdditionalSpecifications/AdditionalSpecifications";
+import axios from "axios";
+import { BASE_URL } from "../../../store/BASE_URL";
 
 function RequestCustomForm() {
   const [formData, setFormData] = useState({
     fName: "",
     lName: "",
-    email: "",
+    customerEmail: "",
     phone: "",
     size: "",
     dimension: "",
@@ -27,7 +29,7 @@ function RequestCustomForm() {
       color5: "",
       color6: "",
     },
-    additional: "",
+    description: "",
   });
   console.log("formData", formData);
 
@@ -39,6 +41,15 @@ function RequestCustomForm() {
     { id: 5, name: FileUpload },
     { id: 6, name: AdditionalSpecifications },
   ];
+
+  const submitCustomRequestForm = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post(`${BASE_URL}/sendGrid/email/custom-request`, formData);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div className="custom-form-root">
@@ -52,7 +63,10 @@ function RequestCustomForm() {
             </div>
           );
         })}
-        <button className="custom-form-submit" type="submit">
+        <button
+          className="custom-form-submit"
+          onClick={(e) => submitCustomRequestForm(e)}
+        >
           Submit Request
         </button>
       </form>

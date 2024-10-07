@@ -161,10 +161,10 @@ router.post("/confirmation", async (req, res, next) => {
   };
 
   const message = {
-    to: "garrettgorman1@gmail.com",
+    to: process.env.CONTACT_EMAIL,
     from: {
       name: "Dimensional Glassworks",
-      email: "garrettgorman1@gmail.com",
+      email: process.env.CONTACT_EMAIL,
     },
     templateId: process.env.CONFIRMATION_TEMPLATE_ID,
     dynamic_template_data: {

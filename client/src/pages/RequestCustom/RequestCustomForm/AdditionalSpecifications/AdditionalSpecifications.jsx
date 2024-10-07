@@ -1,4 +1,3 @@
-import React from "react";
 import "./AdditionalSpecifications.css";
 
 function AdditionalSpecifications({ formData, setFormData }) {
@@ -9,7 +8,7 @@ function AdditionalSpecifications({ formData, setFormData }) {
         className="custom-form-text"
         placeholder="Describe your desired piece in as much detail as possible. If your description does not make what you want VERY CLEAR, your request will not be considered."
         onChange={(e) =>
-          setFormData({ ...formData, additional: e.target.value })
+          setFormData({ ...formData, description: e.target.value })
         }
       ></textarea>
     </div>

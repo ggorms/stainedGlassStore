@@ -8,7 +8,7 @@ function FileUpload({ formData, setFormData }) {
       <h5 className="custom-form-subtitle"> Sketch Upload (optional)</h5>
       <div className="custom-form-file">
         <label>
-          <input type="file" className="hidden" />
+          <input type="file" className="hidden" accept="image/*" required />
           <img src={UploadImg} alt="Upload file" className="uploadImg" />
           <p>
             Accepted Files <br /> .jpg, .jpeg, .png

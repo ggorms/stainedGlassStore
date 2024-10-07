@@ -58,7 +58,9 @@ function ContactInfo({ formData, setFormData }) {
           },
           "& .css-14lo706": { width: 40 },
         }}
-        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+        onChange={(e) =>
+          setFormData({ ...formData, customerEmail: e.target.value })
+        }
       />
       <TextField
         label="Phone"
