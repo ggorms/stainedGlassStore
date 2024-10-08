@@ -2,7 +2,7 @@ import FlashlightOnOutlinedIcon from "@mui/icons-material/FlashlightOnOutlined";
 import FlashlightOffOutlinedIcon from "@mui/icons-material/FlashlightOffOutlined";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 
-function OpacityAndJointColor({ formData, setFormData }) {
+function OpacityAndJointColor({ formData, setFormData, formFormatError }) {
   return (
     <>
       <div className="custom-form-segment-wrapper">
@@ -65,6 +65,7 @@ function OpacityAndJointColor({ formData, setFormData }) {
             <p className="custom-form-sublabel">Opaque</p>
           </div>
         </div>
+        <p className="form-formatError">{formFormatError.opacity}</p>
       </div>
       {/* Joint Color */}
       <div className="custom-form-segment-wrapper">
@@ -127,6 +128,7 @@ function OpacityAndJointColor({ formData, setFormData }) {
             <p className="custom-form-sublabel">Black</p>
           </div>
         </div>
+        <p className="form-formatError">{formFormatError.joint}</p>
       </div>
     </>
   );

@@ -8,6 +8,6 @@
     border-radius: 8px;
     padding: 20px;
     margin: 15px 0;
-    height: 300px;
+    height: min-content;
 }
 

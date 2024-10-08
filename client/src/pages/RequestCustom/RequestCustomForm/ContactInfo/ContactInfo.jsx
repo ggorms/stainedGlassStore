@@ -1,17 +1,17 @@
 import { TextField } from "@mui/material";
 import "./ContactInfo.css";
 
-function ContactInfo({ formData, setFormData }) {
+function ContactInfo({ formData, setFormData, formFormatError }) {
   return (
     <div className="custom-form-contact">
       <TextField
         label="First Name"
         className="custom-form-input"
         type="text"
+        value={formData.fName}
         sx={{
           width: 300,
-          // marginLeft: 5,
-          // marginRight: 5,
+          marginBottom: 0.5,
           backgroundColor: "white",
           borderRadius: "8px",
           "& .MuiInputBase-input": { height: "1.5rem", fontSize: 16 },
@@ -22,16 +22,15 @@ function ContactInfo({ formData, setFormData }) {
         }}
         onChange={(e) => setFormData({ ...formData, fName: e.target.value })}
       />
-
+      <p className="form-formatError">{formFormatError.fName}</p>
       <TextField
         label="Last Name"
         className="custom-form-input"
         type="text"
+        value={formData.lName}
         sx={{
           width: 300,
-          // marginTop: 5,
-          // marginLeft: 5,
-          // marginRight: 5,
+          marginTop: 1,
           backgroundColor: "white",
           borderRadius: "8px",
           "& .MuiInputBase-input": { height: "1.5rem", fontSize: 16 },
@@ -42,14 +41,16 @@ function ContactInfo({ formData, setFormData }) {
         }}
         onChange={(e) => setFormData({ ...formData, lName: e.target.value })}
       />
-
+      <p className="form-formatError">{formFormatError.lName}</p>
       <TextField
         label="Email"
         className="custom-form-input"
         type="email"
+        value={formData.customerEmail}
         sx={{
           width: 300,
           // margin: 5,
+          marginTop: 1,
           backgroundColor: "white",
           borderRadius: "8px",
           "& .MuiInputBase-input": { height: "1.5rem", fontSize: 16 },
@@ -62,13 +63,16 @@ function ContactInfo({ formData, setFormData }) {
           setFormData({ ...formData, customerEmail: e.target.value })
         }
       />
+      <p className="form-formatError">{formFormatError.customerEmail}</p>
       <TextField
         label="Phone"
         className="custom-form-input"
         type="tel"
+        value={formData.phone}
         sx={{
           width: 300,
           // margin: 5,
+          marginTop: 1,
           backgroundColor: "white",
           borderRadius: "8px",
           "& .MuiInputBase-input": { height: "1.5rem", fontSize: 16 },
@@ -79,6 +83,7 @@ function ContactInfo({ formData, setFormData }) {
         }}
         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
       />
+      <p className="form-formatError">{formFormatError.phone}</p>
     </div>
   );
 }

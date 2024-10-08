@@ -1,6 +1,6 @@
 import "./Size.css";
 
-function Size({ formData, setFormData }) {
+function Size({ formData, setFormData, formFormatError }) {
   return (
     <div className="custom-form-segment-wrapper">
       <h5 className="custom-form-subtitle">Select Size</h5>
@@ -75,6 +75,7 @@ function Size({ formData, setFormData }) {
           </label>
         </div>
       </div>
+      <p className="form-formatError">{formFormatError.size}</p>
     </div>
   );
 }

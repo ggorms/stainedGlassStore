@@ -73,22 +73,23 @@ function Form() {
     setFormFormatError(formatErrors);
 
     setToggleFormPopup(true);
-    // try {
-    //   await axios
-    //     .post(`${BASE_URL}/sendGrid/email/contact-form`, questionsForm)
-    //     .then(() => {
-    //       setQuestionsForm({
-    //         fName: "",
-    //         lName: "",
-    //         customerEmail: "",
-    //         content: "",
-    //       });
-    //     });
-    // } catch (error) {
-    //   console.error(error);
-    // }
+    try {
+      await axios.post(
+        `${BASE_URL}/sendGrid/email/contact-form`,
+        questionsForm
+      );
+      setQuestionsForm({
+        fName: "",
+        lName: "",
+        customerEmail: "",
+        content: "",
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
+  console.log(questionsForm);
   return (
     <>
       <div className="home-form-container" id="home-form">
@@ -100,27 +101,30 @@ function Form() {
               <label className="home-form-label">First Name</label>
               <input
                 className="home-form-input"
+                value={questionsForm.fName}
                 onChange={(e) =>
                   setQuestionsForm({ ...questionsForm, fName: e.target.value })
                 }
               />
-              <p className="home-form-formatError">{formFormatError.fName}</p>
+              <p className="form-formatError">{formFormatError.fName}</p>
             </div>
             <div className="home-form-name-field">
               <label className="home-form-label">Last Name</label>
               <input
                 className="home-form-input"
+                value={questionsForm.lName}
                 onChange={(e) =>
                   setQuestionsForm({ ...questionsForm, lName: e.target.value })
                 }
               />
-              <p className="home-form-formatError">{formFormatError.lName}</p>
+              <p className="form-formatError">{formFormatError.lName}</p>
             </div>
           </div>
           <div className="home-form-field">
             <label className="home-form-label">Email</label>
             <input
               className="home-form-input"
+              value={questionsForm.customerEmail}
               onChange={(e) =>
                 setQuestionsForm({
                   ...questionsForm,
@@ -128,19 +132,18 @@ function Form() {
                 })
               }
             />
-            <p className="home-form-formatError">
-              {formFormatError.customerEmail}
-            </p>
+            <p className="form-formatError">{formFormatError.customerEmail}</p>
           </div>
           <div className="home-form-field">
             <label className="home-form-label">Message</label>
             <textarea
               className="home-form-input message-input"
+              value={questionsForm.content}
               onChange={(e) =>
                 setQuestionsForm({ ...questionsForm, content: e.target.value })
               }
             ></textarea>
-            <p className="home-form-formatError">{formFormatError.content}</p>
+            <p className="form-formatError">{formFormatError.content}</p>
           </div>
           <button
             className="home-form-button"

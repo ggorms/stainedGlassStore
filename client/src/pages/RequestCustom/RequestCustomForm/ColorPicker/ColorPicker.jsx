@@ -1,18 +1,18 @@
 import { useState } from "react";
 import "./ColorPicker.css";
 
-function ColorPicker({ formData, setFormData }) {
-  const [numOfColors, setNumOfColors] = useState(0);
+function ColorPicker({ formData, setFormData, numOfColors, setNumOfColors }) {
   const numOfColorsArray = Array.from({ length: numOfColors }, (_, i) => i);
   return (
     <div className="custom-form-color-picker">
-      <h5 className="custom-form-subtitle">Color(s)</h5>
+      <h5 className="custom-form-subtitle">Select Color(s)</h5>
 
       <div className="">
         <input
           className="custom-form-color-option"
           id="color1"
           type="color"
+          value={formData.color.color1}
           onChange={(e) =>
             setFormData({
               ...formData,
@@ -49,7 +49,7 @@ function ColorPicker({ formData, setFormData }) {
                 ...formData,
                 color: {
                   ...formData.color,
-                  [`color${numOfColors + 2}`]: "000000",
+                  [`color${numOfColors + 2}`]: "#000000",
                 },
               });
             }

@@ -1,11 +1,11 @@
-import React from "react";
 import CropSquareOutlinedIcon from "@mui/icons-material/CropSquareOutlined";
 import OpenInNewOffOutlinedIcon from "@mui/icons-material/OpenInNewOffOutlined";
 import OpenInNewOutlinedIcon from "@mui/icons-material/OpenInNewOutlined";
 import ViewInArIcon from "@mui/icons-material/ViewInAr";
 
-function DimensionAndEnclosure({ formData, setFormData }) {
+function DimensionAndEnclosure({ formData, setFormData, formFormatError }) {
   console.log(formData);
+  // console.log("format error", formFormatError.dimension);
   return (
     <>
       <div className="custom-form-segment-wrapper">
@@ -70,6 +70,7 @@ function DimensionAndEnclosure({ formData, setFormData }) {
             <p className="custom-form-sublabel">3D</p>
           </div>
         </div>
+        <p className="form-formatError">{formFormatError.dimension}</p>
       </div>
       {/* Enclosure */}
       <div className="custom-form-segment-wrapper">
@@ -134,6 +135,7 @@ function DimensionAndEnclosure({ formData, setFormData }) {
                 <p className="custom-form-sublabel">One Side Open</p>
               </div>
             </div>
+            <p className="form-formatError">{formFormatError.enclosure}</p>
           </>
         )}
       </div>

@@ -62,20 +62,20 @@
 }
 
 .custom-form-submit {
-    width: 50%;
-    border-radius: 8px;
-    border: none;
-    background-color: rgb(0, 195, 255);
+    border-radius: 30px;
+    background-color:  rgb(0, 110, 255);
     color: white;
+    width: 200px;
+    border: none;
     font-weight: bold;
-    font-size: large;
-    height: 40px;
-    margin: 15px auto;
+    height: 45px;
     cursor: pointer;
+    font-size: medium;
+    margin: 30px auto 20px auto;
 }
 
 .custom-form-submit:hover {
-    background-color: rgb(5, 165, 213);
+    background-color:  rgb(3, 94, 213);
 }
 
 .custom-form-radio-option {
