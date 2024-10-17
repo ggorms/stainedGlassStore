@@ -11,6 +11,8 @@ router.post("/email/contact-form", (req, res) => {
   // console.log("lName", lName);
   // console.log("email", customerEmail);
   // console.log("content", content);
+  const formatFName = fName[0].toUpperCase() + fName.slice(1).toLowerCase();
+  const formatLName = lName[0].toUpperCase() + lName.slice(1).toLowerCase();
   const message = {
     to: process.env.CONTACT_EMAIL,
     from: {
@@ -18,9 +20,9 @@ router.post("/email/contact-form", (req, res) => {
       email: process.env.CONTACT_EMAIL,
     },
     replyTo: customerEmail,
-    subject: `Customer Inquiry - ${fName} ${lName}`,
+    subject: `Customer Inquiry - ${formatFName} ${formatLName}`,
     text: content,
-    html: `<h2>${fName} ${lName}</h2><h2>${customerEmail}</h2><br/><p>${content}</p>`,
+    html: `<h2>${formatFName} ${formatLName}</h2><h2>${customerEmail}</h2><br/><p>${content}</p>`,
   };
 
   mail
@@ -72,8 +74,8 @@ router.post("/email/custom-request", (req, res) => {
     replyTo: customerEmail,
     template_id: process.env.CUSTOM_REQUEST_TEMPLATE_ID,
     dynamic_template_data: {
-      fName,
-      lName,
+      fName: fName[0].toUpperCase() + fName.slice(1).toLowerCase(),
+      lName: lName[0].toUpperCase() + lName.slice(1).toLowerCase(),
       customerEmail,
       phone,
       size,

@@ -115,7 +115,6 @@ router.post(`/create-checkout-session`, async (req, res) => {
     },
     // success_url: `${CLEINT_URL}/confirmation?success=true`,
     success_url: `${CLEINT_URL}/confirmation?session_id={CHECKOUT_SESSION_ID}`,
-    // "http://yoursite.com/order/success?session_id={CHECKOUT_SESSION_ID}"
     cancel_url: `${CLEINT_URL}/cart`,
   });
 
@@ -123,7 +122,7 @@ router.post(`/create-checkout-session`, async (req, res) => {
 });
 
 router.post("/confirmation", async (req, res, next) => {
-  const { session_id, sendEmail } = req.body;
+  const { session_id } = req.body;
   const session = await stripe.checkout.sessions.retrieve(session_id);
   // console.log("session", session);
   const lineItems = await stripe.checkout.sessions.listLineItems(session.id);
@@ -139,8 +138,17 @@ router.post("/confirmation", async (req, res, next) => {
   );
   // console.log(paymentMethod);
   // console.log("session", session);
+
+  // Check if order has already been confirmed
+  const orderConfirmed = await prisma.orderHistory.findUnique({
+    where: {
+      sessionId: session.id,
+    },
+  });
+
   const sessionData = {
     id: session.id,
+    confirmed: true,
     customerName: session.customer_details.name,
     email: session.customer_details.email,
     phone: session.customer_details.phone,
@@ -160,56 +168,68 @@ router.post("/confirmation", async (req, res, next) => {
     orderTotal: session.amount_total,
   };
 
-  const message = {
-    to: process.env.CONTACT_EMAIL,
-    from: {
-      name: "Dimensional Glassworks",
-      email: process.env.CONTACT_EMAIL,
-    },
-    templateId: process.env.CONFIRMATION_TEMPLATE_ID,
-    dynamic_template_data: {
-      // Shipping Data
-      shipping_name: session.shipping_details.name,
-      shipping_address: `${session.shipping_details.address.line1}, ${
-        session.shipping_details.address.line2 ?? ""
-      }`,
-      shipping_city: session.shipping_details.address.city,
-      shipping_state: session.shipping_details.address.state,
-      shipping_zip: session.shipping_details.address.postal_code,
-      shipping_phone: session.customer_details.phone,
-      // Billing Data
-      billing_name: paymentMethod.billing_details.name,
-      fName: paymentMethod.billing_details.name.split(" ")[0],
-      billing_address: `${paymentMethod.billing_details.address.line1}, ${
-        paymentMethod.billing_details.address.line2 ?? ""
-      }`,
-      billing_city: paymentMethod.billing_details.address.city,
-      billing_state: paymentMethod.billing_details.address.state,
-      billing_zip: paymentMethod.billing_details.address.postal_code,
-      billing_phone: paymentMethod.billing_details.phone,
-      billing_cardType: paymentMethod.card.brand,
-      billing_card_last4: paymentMethod.card.last4,
-      // Order Data
-      order_id: session.id.slice(50),
-      order_subtotal: (
-        lineItems.data.reduce((acc, curr) => acc + curr.amount_total, 0) / 100
-      ).toFixed(2), // adjust
-      order_shipping_cost: (session.shipping_cost.amount_total / 100).toFixed(
-        2
-      ),
-      order_shipping_type: "Express-saver", // adjust
-      order_tax: "10.37", // adjust
-      order_total: (session.amount_total / 100).toFixed(2),
-      // Cart Data
-      cartItems: lineItems.data.map((item) => ({
-        name: item.description,
-        price: (item.price.unit_amount / 100).toFixed(2),
-        qty: item.quantity,
-        total: ((item.price.unit_amount * item.quantity) / 100).toFixed(2),
-      })),
-    },
-  };
-  if (sendEmail) {
+  // If order has NOT been confirmed yet
+  if (!orderConfirmed) {
+    await prisma.orderHistory.create({
+      data: {
+        sessionId: session.id,
+        email: session.customer_details.email,
+      },
+    });
+
+    sessionData.confirmed = false;
+
+    // Email Content
+    const message = {
+      to: process.env.CONTACT_EMAIL,
+      from: {
+        name: "Dimensional Glassworks",
+        email: process.env.CONTACT_EMAIL,
+      },
+      templateId: process.env.CONFIRMATION_TEMPLATE_ID,
+      dynamic_template_data: {
+        // Shipping Data
+        shipping_name: session.shipping_details.name,
+        shipping_address: `${session.shipping_details.address.line1}, ${
+          session.shipping_details.address.line2 ?? ""
+        }`,
+        shipping_city: session.shipping_details.address.city,
+        shipping_state: session.shipping_details.address.state,
+        shipping_zip: session.shipping_details.address.postal_code,
+        shipping_phone: session.customer_details.phone,
+        // Billing Data
+        billing_name: paymentMethod.billing_details.name,
+        fName: paymentMethod.billing_details.name.split(" ")[0],
+        billing_address: `${paymentMethod.billing_details.address.line1}, ${
+          paymentMethod.billing_details.address.line2 ?? ""
+        }`,
+        billing_city: paymentMethod.billing_details.address.city,
+        billing_state: paymentMethod.billing_details.address.state,
+        billing_zip: paymentMethod.billing_details.address.postal_code,
+        billing_phone: paymentMethod.billing_details.phone,
+        billing_cardType: paymentMethod.card.brand,
+        billing_card_last4: paymentMethod.card.last4,
+        // Order Data
+        order_id: session.id.slice(50),
+        order_subtotal: (
+          lineItems.data.reduce((acc, curr) => acc + curr.amount_total, 0) / 100
+        ).toFixed(2), // adjust
+        order_shipping_cost: (session.shipping_cost.amount_total / 100).toFixed(
+          2
+        ),
+        order_shipping_type: "Express-saver", // adjust
+        order_tax: "10.37", // adjust
+        order_total: (session.amount_total / 100).toFixed(2),
+        // Cart Data
+        cartItems: lineItems.data.map((item) => ({
+          name: item.description,
+          price: (item.price.unit_amount / 100).toFixed(2),
+          qty: item.quantity,
+          total: ((item.price.unit_amount * item.quantity) / 100).toFixed(2),
+        })),
+      },
+    };
+
     mail
       .send(message)
       .then(() => {
@@ -230,8 +250,6 @@ router.post("/confirmation", async (req, res, next) => {
   } else {
     res.status(200).json({ sessionData: sessionData });
   }
-
-  // res.status(200).json(sessionData);
 });
 
 module.exports = router;

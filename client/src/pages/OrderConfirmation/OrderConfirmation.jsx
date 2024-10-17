@@ -27,14 +27,33 @@ function OrderConfirmation({ cart, setGuestCart }) {
 
   console.log("cart", cart);
 
-  //////////////////////////////////////////////////////////////////
-  //// FIND FIX FOR USERS BEING ABLE TO CONTINUE SHOPPING AND RETURN
-  //// TO THE CONFIRMATION PAGE AND SENDING A NEW CONFIRMATION EMAIL
-  //////////////////////////////////////////////////////////////////
+  // Retreive Session
+  useEffect(() => {
+    const retreiveSession = async () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const sessionId = urlParams.get("session_id");
+      console.log(sessionId);
+      if (!sessionId) {
+        navigate("/");
+        return;
+      }
+      try {
+        const response = await axios.post(`${BASE_URL}/stripe/confirmation`, {
+          session_id: sessionId,
+        });
+        setSessionData(response.data.sessionData);
+        setLoading(false);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    retreiveSession();
+  }, []);
+  console.log(sessionData);
 
   // Handle cart fulfillment
   useEffect(() => {
-    if (cart?.CartItem?.length > 0) {
+    if (!loading && !sessionData?.confirmed) {
       // User cart
       if (cart?.id) {
         dispatch(fulfillCartThunk(cart?.id));
@@ -56,56 +75,30 @@ function OrderConfirmation({ cart, setGuestCart }) {
         updateGuestCart();
       }
     }
-  }, [cart?.CartItem?.length, cart?.id, dispatch]);
-
-  // Retreive Session
-  useEffect(() => {
-    const retreiveSession = async () => {
-      const urlParams = new URLSearchParams(window.location.search);
-      const sessionId = urlParams.get("session_id");
-      console.log(sessionId);
-      if (!sessionId) {
-        navigate("/");
-        return;
-      }
-      try {
-        const response = await axios.post(`${BASE_URL}/stripe/confirmation`, {
-          // params: {
-          session_id: sessionId,
-          sendEmail: cart?.CartItem?.length > 0 ? true : false, // MAYBE HAVE TO CHANGE THIS
-          // },
-        });
-        setSessionData(response.data.sessionData);
-        setLoading(false);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    retreiveSession();
-  }, []);
-  console.log(sessionData);
+  }, [sessionData?.confirmed, loading, dispatch]);
 
   // Get Map
 
-  useEffect(() => {
-    const fetchMap = async () => {
-      if (!loading) {
-        try {
-          const shippingAddress = sessionData.shippingAddress.address;
-          const formattedAddress = `${shippingAddress.line1}, ${shippingAddress.city}, ${shippingAddress.state}, ${shippingAddress.postal_code}`;
-          const map = await axios.get(
-            `${BASE_URL}/mapQuest/map/${formattedAddress}`
-          );
-          // console.log(formattedAddress);
-          setMap(map.data);
-        } catch (error) {
-          console.error(error);
-        }
-      }
-    };
-    fetchMap();
-  }, [loading]);
-  console.log(map);
+  // useEffect(() => {
+  //   const fetchMap = async () => {
+  //     if (!loading) {
+  //       try {
+  //         const shippingAddress = sessionData.shippingAddress.address;
+  //         const formattedAddress = `${shippingAddress.line1}, ${shippingAddress.city}, ${shippingAddress.state}, ${shippingAddress.postal_code}`;
+  //         const map = await axios.get(
+  //           `${BASE_URL}/mapQuest/map/${formattedAddress}`
+  //         );
+  //         // console.log(formattedAddress);
+  //         setMap(map.data);
+  //       } catch (error) {
+  //         console.error(error);
+  //       }
+  //     }
+  //   };
+  //   fetchMap();
+  // }, [loading]);
+
+  // console.log(map);
   return (
     <div className="confirmation-root">
       {!loading && (

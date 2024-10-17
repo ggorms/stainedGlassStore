@@ -59,3 +59,9 @@ model Address {
   zip     String
   country String
 }
+
+model OrderHistory {
+  id        Int    @id @default(autoincrement())
+  email     String @unique
+  sessionId String @unique
+}
