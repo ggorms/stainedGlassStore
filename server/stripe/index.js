@@ -168,88 +168,114 @@ router.post("/confirmation", async (req, res, next) => {
     orderTotal: session.amount_total,
   };
 
-  // If order has NOT been confirmed yet
-  if (!orderConfirmed) {
-    await prisma.orderHistory.create({
-      data: {
-        sessionId: session.id,
-        email: session.customer_details.email,
-      },
-    });
+  // If order has already been confirmed
 
-    sessionData.confirmed = false;
-
-    // Email Content
-    const message = {
-      to: process.env.CONTACT_EMAIL,
-      from: {
-        name: "Dimensional Glassworks",
-        email: process.env.CONTACT_EMAIL,
-      },
-      templateId: process.env.CONFIRMATION_TEMPLATE_ID,
-      dynamic_template_data: {
-        // Shipping Data
-        shipping_name: session.shipping_details.name,
-        shipping_address: `${session.shipping_details.address.line1}, ${
-          session.shipping_details.address.line2 ?? ""
-        }`,
-        shipping_city: session.shipping_details.address.city,
-        shipping_state: session.shipping_details.address.state,
-        shipping_zip: session.shipping_details.address.postal_code,
-        shipping_phone: session.customer_details.phone,
-        // Billing Data
-        billing_name: paymentMethod.billing_details.name,
-        fName: paymentMethod.billing_details.name.split(" ")[0],
-        billing_address: `${paymentMethod.billing_details.address.line1}, ${
-          paymentMethod.billing_details.address.line2 ?? ""
-        }`,
-        billing_city: paymentMethod.billing_details.address.city,
-        billing_state: paymentMethod.billing_details.address.state,
-        billing_zip: paymentMethod.billing_details.address.postal_code,
-        billing_phone: paymentMethod.billing_details.phone,
-        billing_cardType: paymentMethod.card.brand,
-        billing_card_last4: paymentMethod.card.last4,
-        // Order Data
-        order_id: session.id.slice(50),
-        order_subtotal: (
-          lineItems.data.reduce((acc, curr) => acc + curr.amount_total, 0) / 100
-        ).toFixed(2), // adjust
-        order_shipping_cost: (session.shipping_cost.amount_total / 100).toFixed(
-          2
-        ),
-        order_shipping_type: "Express-saver", // adjust
-        order_tax: "10.37", // adjust
-        order_total: (session.amount_total / 100).toFixed(2),
-        // Cart Data
-        cartItems: lineItems.data.map((item) => ({
-          name: item.description,
-          price: (item.price.unit_amount / 100).toFixed(2),
-          qty: item.quantity,
-          total: ((item.price.unit_amount * item.quantity) / 100).toFixed(2),
-        })),
-      },
-    };
-
-    mail
-      .send(message)
-      .then(() => {
-        //   console.log("Email sent Successfully");
-        res.status(200).json({
-          emailConfirmation: "Email sent successfully",
-          sessionData: sessionData,
-        });
-      })
-      .catch((err) => {
-        //   console.error(err);
-        res.status(500).send({
-          message: "Email not sent",
-          error: err.message,
-          sessionData: sessionData,
-        });
-      });
-  } else {
+  if (orderConfirmed) {
     res.status(200).json({ sessionData: sessionData });
+    return;
   }
+
+  await prisma.orderHistory.create({
+    data: {
+      sessionId: session.id,
+      email: session.customer_details.email,
+    },
+  });
+
+  sessionData.confirmed = false;
+
+  // Email Content
+  const message = {
+    to: process.env.CONTACT_EMAIL,
+    from: {
+      name: "Dimensional Glassworks",
+      email: process.env.CONTACT_EMAIL,
+    },
+    templateId: process.env.CONFIRMATION_TEMPLATE_ID,
+    dynamic_template_data: {
+      // Shipping Data
+      shipping_name: session.shipping_details.name,
+      shipping_address: `${session.shipping_details.address.line1}, ${
+        session.shipping_details.address.line2 ?? ""
+      }`,
+      shipping_city: session.shipping_details.address.city,
+      shipping_state: session.shipping_details.address.state,
+      shipping_zip: session.shipping_details.address.postal_code,
+      shipping_phone: session.customer_details.phone,
+      // Billing Data
+      billing_name: paymentMethod.billing_details.name,
+      fName: paymentMethod.billing_details.name.split(" ")[0],
+      billing_address: `${paymentMethod.billing_details.address.line1}, ${
+        paymentMethod.billing_details.address.line2 ?? ""
+      }`,
+      billing_city: paymentMethod.billing_details.address.city,
+      billing_state: paymentMethod.billing_details.address.state,
+      billing_zip: paymentMethod.billing_details.address.postal_code,
+      billing_phone: paymentMethod.billing_details.phone,
+      billing_cardType: paymentMethod.card.brand,
+      billing_card_last4: paymentMethod.card.last4,
+      // Order Data
+      order_id: session.id.slice(50),
+      order_subtotal: (
+        lineItems.data.reduce((acc, curr) => acc + curr.amount_total, 0) / 100
+      ).toFixed(2), // adjust
+      order_shipping_cost: (session.shipping_cost.amount_total / 100).toFixed(
+        2
+      ),
+      order_shipping_type: "Express-saver", // adjust
+      order_tax: "10.37", // adjust
+      order_total: (session.amount_total / 100).toFixed(2),
+      // Cart Data
+      cartItems: lineItems.data.map((item) => ({
+        name: item.description,
+        price: (item.price.unit_amount / 100).toFixed(2),
+        qty: item.quantity,
+        total: ((item.price.unit_amount * item.quantity) / 100).toFixed(2),
+      })),
+    },
+  };
+
+  mail
+    .send(message)
+    .then(() => {
+      //   console.log("Email sent Successfully");
+      res.status(200).json({
+        emailConfirmation: "Email sent successfully",
+        sessionData: sessionData,
+      });
+    })
+    .catch((err) => {
+      //   console.error(err);
+      res.status(500).send({
+        message: "Email not sent",
+        error: err.message,
+        sessionData: sessionData,
+      });
+    });
 });
+
+
+// Get Order History by customer email
+
+router.get("/customer", async (req, res) => {
+  const {email} = req.body
+
+  // Find order histories associated with email 
+
+  // const orderHistorySessions = await prisma.orderHistory.findMany({
+  //   where: {
+  //     email
+  //   },
+  //   select: {
+  //     sessionId
+  //   }
+  // })
+
+  const orderHistorySessions = await stripe
+
+
+
+})
+
 
 module.exports = router;
