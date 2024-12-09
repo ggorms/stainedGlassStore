@@ -79,24 +79,24 @@ function OrderConfirmation({ cart, setGuestCart }) {
 
   // Get Map
 
-  // useEffect(() => {
-  //   const fetchMap = async () => {
-  //     if (!loading) {
-  //       try {
-  //         const shippingAddress = sessionData.shippingAddress.address;
-  //         const formattedAddress = `${shippingAddress.line1}, ${shippingAddress.city}, ${shippingAddress.state}, ${shippingAddress.postal_code}`;
-  //         const map = await axios.get(
-  //           `${BASE_URL}/mapQuest/map/${formattedAddress}`
-  //         );
-  //         // console.log(formattedAddress);
-  //         setMap(map.data);
-  //       } catch (error) {
-  //         console.error(error);
-  //       }
-  //     }
-  //   };
-  //   fetchMap();
-  // }, [loading]);
+  useEffect(() => {
+    const fetchMap = async () => {
+      if (!loading) {
+        try {
+          const shippingAddress = sessionData.shippingAddress.address;
+          const formattedAddress = `${shippingAddress.line1}, ${shippingAddress.city}, ${shippingAddress.state}, ${shippingAddress.postal_code}`;
+          const map = await axios.get(
+            `${BASE_URL}/mapQuest/map/${formattedAddress}`
+          );
+          // console.log(formattedAddress);
+          setMap(map.data);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    };
+    fetchMap();
+  }, [loading]);
 
   // console.log(map);
   return (
